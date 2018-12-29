@@ -1,0 +1,65 @@
+//
+//  PrefixHeader.pch
+//  ZhiNengXiaoFu
+//
+//  Created by mac on 2018/7/20.
+//  Copyright © 2018年 henanduxiu. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "MaceColor.h"
+#import "UIImageView+WebCache.h"
+#import "SDCycleScrollView.h"
+#import "WMarco.h"
+#import "UIImage+ColorImage.h"
+#import "UIBarButtonItem+WExtension.h"
+#import "URLMacro.h"
+#import "BaseViewController.h"
+#import "UIButton+WCustomIcon.h"
+#import "WTextView.h"
+#import "JohnTopTitleView.h"
+#import <AFNetworking/AFNetworking.h>
+#import "HttpRequestManager.h"
+#import "Encryption.h"
+#import "SingletonHelper.h"
+#import <MJExtension/MJExtension.h>
+#import "EasyShowView.h"
+#import <WebKit/WebKit.h>
+#import "BusinessDetailController.h"
+#import "UserManager.h"
+#import "IQKeyboardManager.h"
+#import "MJRefresh.h"
+#import "UIColor+HexString.h"
+#import "HZQDatePickerView.h"
+#import "HQPickerView.h"
+#import "LQPhotoPickerViewController.h"
+#import "WProgressHUD.h" //提示效果
+#import "CLPlayerView.h"
+#import "UIView+CLSetRect.h"
+#import "CLPlayerView.h"
+#import "UIColor+HexString.h"
+#import "WPopupMenu.h" //popView
+#import "BannerModel.h"
+#import "JurisdictionMethod.h"
+#endif /* PrefixHeader_pch */
+#import "PickerView.h"
+#import <LTScrollView/LTScrollView-Swift.h>
+#import <LTScrollView/LTScrollView-umbrella.h>
+#define STOREAPPID @"1424842152"
+#import "UIButton+YasinTimerCategory.h"
+#import "UILabel+TextAlign.h"
+#import <JPUSHService.h>
+#import "YYKit.h"
+#import "BlocksKit+UIKit.h"
+
+
+#define kIPhoneX ([UIScreen mainScreen].bounds.size.height == 812.0)
+
+
+
+
+
+
+

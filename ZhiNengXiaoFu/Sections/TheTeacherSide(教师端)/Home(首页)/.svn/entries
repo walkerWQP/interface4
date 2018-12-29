@@ -1,0 +1,73 @@
+10
+
+dir
+272
+http://ios2@61.132.226.224:8081/svn/duxiu/ios/%E7%8B%AC%E7%A7%80%E7%A7%91%E6%8A%80%E4%B8%80%E5%B1%B1%E6%99%BA%E6%85%A7APP%20ios%E7%AB%AF/ZhiNengXiaoFu/ZhiNengXiaoFu/Sections/TheTeacherSide(%E6%95%99%E5%B8%88%E7%AB%AF)/Home(%E9%A6%96%E9%A1%B5)
+http://ios2@61.132.226.224:8081/svn/duxiu
+
+
+
+2018-10-30T03:12:16.928710Z
+271
+ios2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+d466fc26-aeb2-6048-8488-bbf0a50f055a
+
+Consulting(问题咨询)
+dir
+
+CourseManagement(课程管理)
+dir
+
+UploadVideo(视频上传)
+dir
+
+Controller
+dir
+
+SchoolNotice(学校通知)
+dir
+
+GrowthAlbum(成长相册)
+dir
+
+NewGuidelines(新生指南)
+dir
+
+JobManagement(作业管理)
+dir
+
+SleepManagement(就寝管理)
+dir
+
+Model
+dir
+
+ActivityManagement(活动管理)
+dir
+
+View
+dir
+
+TeacherNotified(老师通知)
+dir
+
+SchoolDynamic(学校动态)
+dir
+
+GrowthTrajectory(成长轨迹)
+dir
+

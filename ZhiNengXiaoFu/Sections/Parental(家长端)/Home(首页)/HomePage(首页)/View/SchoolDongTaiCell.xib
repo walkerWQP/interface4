@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="104" id="KGk-i7-Jjw" customClass="SchoolDongTaiCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="104"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="103.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="视频列表" translatesAutoresizingMaskIntoConstraints="NO" id="SLQ-5Z-1ve">
+                        <rect key="frame" x="205" y="10" width="100" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="C1p-vd-9Pn"/>
+                            <constraint firstAttribute="height" constant="80" id="XHP-Sd-AfC"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在2018年8月9号举行的上海市中学生劳动竞猜" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-cc-RbF">
+                        <rect key="frame" x="15" y="49" width="175" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="aw8-kR-ChY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不忘初心" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7f-qI-aau">
+                        <rect key="frame" x="15" y="20" width="175" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="PCc-3x-3eT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="N9S-cc-RbF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="7NL-je-3Vi"/>
+                    <constraint firstItem="N9S-cc-RbF" firstAttribute="top" secondItem="R7f-qI-aau" secondAttribute="bottom" constant="8" id="DH5-E5-3kV"/>
+                    <constraint firstItem="R7f-qI-aau" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ud9-zc-twn"/>
+                    <constraint firstItem="R7f-qI-aau" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="XMm-6q-YDk"/>
+                    <constraint firstItem="SLQ-5Z-1ve" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="eSi-H3-jZL"/>
+                    <constraint firstAttribute="trailing" secondItem="SLQ-5Z-1ve" secondAttribute="trailing" constant="15" id="i0s-3x-lP9"/>
+                    <constraint firstItem="SLQ-5Z-1ve" firstAttribute="leading" secondItem="R7f-qI-aau" secondAttribute="trailing" constant="15" id="lpe-Xa-vDD"/>
+                    <constraint firstItem="SLQ-5Z-1ve" firstAttribute="leading" secondItem="N9S-cc-RbF" secondAttribute="trailing" constant="15" id="yGp-tZ-tdL"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="SchoolDongTaiConnectLabel" destination="N9S-cc-RbF" id="UPU-VN-mhw"/>
+                <outlet property="SchoolDongTaiImg" destination="SLQ-5Z-1ve" id="mT7-oe-MVt"/>
+                <outlet property="SchoolDongTaiTitleLabel" destination="R7f-qI-aau" id="FdR-iJ-wzB"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="142.1289355322339"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="视频列表" width="111" height="92"/>
+    </resources>
+</document>
