@@ -31,11 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"chatroom.admins", @"Admin List");
+    self.title = @"管理员";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -87,7 +87,7 @@
     _currentLongPressIndex = nil;
     
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -128,7 +128,7 @@
     }
     
     self.currentLongPressIndex = indexPath;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"group.removeAdmin", @"Remove from Admin"), NSLocalizedString(@"friend.block", @"add to black list"), NSLocalizedString(@"group.toMute", @"Mute"), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"移出管理员列表", @"加入黑名单", @"禁言", nil];
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
 }
 
@@ -137,7 +137,7 @@
 - (void)tableViewDidTriggerHeaderRefresh
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         EMError *error = nil;
         EMChatroom *chatroom = [[EMClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:weakSelf.chatroom.chatroomId error:&error];
@@ -156,7 +156,7 @@
         }
         else{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+                [weakSelf showHint:@"未能获取组详细信息，请稍后重试"];
             });
         }
     });

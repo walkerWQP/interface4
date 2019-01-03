@@ -31,11 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"chatroom.mutes", @"Mute List");
+    self.title = @"禁言列表";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -87,7 +87,7 @@
     _currentLongPressIndex = nil;
     
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -119,7 +119,7 @@
     }
     
     self.currentLongPressIndex = indexPath;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:nil  otherButtonTitles:NSLocalizedString(@"group.unmute", @"Remove from mutes"), nil];;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil  otherButtonTitles:@"从禁言列表移除", nil];;
     
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
 }
@@ -143,7 +143,7 @@
 {
     NSInteger pageSize = 50;
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     [[EMClient sharedClient].roomManager getChatroomMuteListFromServerWithId:self.chatroom.chatroomId pageNumber:self.page pageSize:pageSize completion:^(NSArray *aMembers, EMError *aError) {
         [weakSelf hideHud];
         [weakSelf tableViewDidFinishTriggerHeader:aIsHeader reload:NO];
@@ -155,7 +155,7 @@
             [weakSelf.dataArray addObjectsFromArray:aMembers];
             [weakSelf.tableView reloadData];
         } else {
-            NSString *errorStr = [NSString stringWithFormat:NSLocalizedString(@"group.fetchMuteFail", @"fail to get mutes: %@"), aError.errorDescription];
+            NSString *errorStr = [NSString stringWithFormat:@"没有得到禁言%@", aError.errorDescription];
             [weakSelf showHint:errorStr];
         }
         

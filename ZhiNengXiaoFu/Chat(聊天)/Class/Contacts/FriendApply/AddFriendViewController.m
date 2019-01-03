@@ -37,7 +37,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    self.title = NSLocalizedString(@"friend.add", @"Add friend");
+    self.title = @"添加好友";
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     [self.view addSubview:self.headerView];
@@ -56,15 +56,15 @@
     
     UIButton *searchButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     searchButton.accessibilityIdentifier = @"search_contact";
-    [searchButton setTitle:NSLocalizedString(@"search", @"Search") forState:UIControlStateNormal];
+    [searchButton setTitle:@"搜索" forState:UIControlStateNormal];
     [searchButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
     [searchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [searchButton addTarget:self action:@selector(searchAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:searchButton]];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    backButton.accessibilityIdentifier = @"back"; 
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -97,7 +97,7 @@
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.font = [UIFont systemFontOfSize:15.0];
         _textField.backgroundColor = [UIColor whiteColor];
-        _textField.placeholder = NSLocalizedString(@"friend.inputNameToSearch", @"input to find friends");
+        _textField.placeholder = @"输入要查找的好友";
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
         [_headerView addSubview:_textField];
@@ -149,22 +149,22 @@
     self.selectedIndexPath = indexPath;
     NSString *buddyName = [self.dataSource objectAtIndex:indexPath.row];
     if ([self didBuddyExist:buddyName]) {
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"friend.repeat", @"'%@'has been your friend!"), buddyName];
+        NSString *message = [NSString stringWithFormat:@"%@是你的朋友!", buddyName];
         
         [EMAlertView showAlertWithTitle:message
                                 message:nil
                         completionBlock:nil
-                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      cancelButtonTitle:@"好的"
                       otherButtonTitles:nil];
         
     }
     else if([self hasSendBuddyRequest:buddyName])
     {
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"friend.repeatApply", @"you have send fridend request to '%@'!"), buddyName];
+        NSString *message = [NSString stringWithFormat:@"你已经发送了好友请求%@", buddyName];
         [EMAlertView showAlertWithTitle:message
                                 message:nil
                         completionBlock:nil
-                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      cancelButtonTitle:@"好的"
                       otherButtonTitles:nil];
         
     }else{
@@ -195,7 +195,7 @@
     searchName = [searchName lowercaseString];
     NSString *loginUsername = [[[EMClient sharedClient] currentUsername] lowercaseString];
     if ([searchName isEqualToString:loginUsername]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notAddSelf", @"can't add yourself as a friend") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"不能把自己加为朋友" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
         [alertView show];
         
         return;
@@ -208,8 +208,8 @@
             ApplyStyle style = [entity.style intValue];
             BOOL isGroup = style == ApplyStyleFriend ? NO : YES;
             if (!isGroup && [entity.applicantUsername isEqualToString:searchName]) {
-                NSString *str = [NSString stringWithFormat:NSLocalizedString(@"friend.repeatInvite", @"%@ have sent the application to you"), searchName];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:str delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+                NSString *str = [NSString stringWithFormat:@"%@发给你申请", searchName];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
                 return;
@@ -247,10 +247,10 @@
 - (void)showMessageAlertView
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:NSLocalizedString(@"saySomething", @"say somthing")
+                                                    message:@"说些什么"
                                                    delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                          otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"确定", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert show];
 }
@@ -265,7 +265,7 @@
             messageStr = [NSString stringWithFormat:@"%@：%@", username, messageTextField.text];
         }
         else{
-            messageStr = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyInvite", @"%@ invite you as a friend"), username];
+            messageStr = [NSString stringWithFormat:@"%@邀请你做朋友", username];
         }
         [self sendFriendApplyAtIndexPath:self.selectedIndexPath
                                  message:messageStr];
@@ -277,14 +277,14 @@
 {
     NSString *buddyName = [self.dataSource objectAtIndex:indexPath.row];
     if (buddyName && buddyName.length > 0) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"friend.sendApply", @"sending application...")];
+        [self showHudInView:self.view hint:@"发送申请"];
         EMError *error = [[EMClient sharedClient].contactManager addContact:buddyName message:message];
         [self hideHud];
         if (error) {
-            [self showHint:NSLocalizedString(@"friend.sendApplyFail", @"send application fails, please operate again")];
+            [self showHint:@"发送申请失败，请重新操作"];
         }
         else{
-            [self showHint:NSLocalizedString(@"friend.sendApplySuccess", @"send successfully")];
+            [self showHint:@"发送成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

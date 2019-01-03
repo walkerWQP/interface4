@@ -33,13 +33,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.groupBlackList", @"Black list");
+    self.title = @"黑名单列表";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"UpdateGroupBans" object:nil];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -125,7 +125,7 @@
 {
     NSString *userName = [self.dataArray objectAtIndex:aIndexPath.row];
     
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -150,13 +150,13 @@
 - (id)setupCellEditActions:(NSIndexPath *)aIndexPath
 {
     if ([UIDevice currentDevice].systemVersion.floatValue < 11.0) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"group.remove", @"Remove") handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
             [self deleteCellAction:indexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
         return @[deleteAction];
     } else {
-        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:NSLocalizedString(@"group.remove", @"Remove") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteCellAction:aIndexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
@@ -186,7 +186,7 @@
 {
     NSInteger pageSize = 50;
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     [[EMClient sharedClient].groupManager getGroupBlacklistFromServerWithId:self.group.groupId pageNumber:self.page pageSize:pageSize completion:^(NSArray *aMembers, EMError *aError) {
         [weakSelf hideHud];
         [weakSelf tableViewDidFinishTriggerHeader:aIsHeader reload:NO];
@@ -198,7 +198,7 @@
             [weakSelf.dataArray addObjectsFromArray:aMembers];
             [weakSelf.tableView reloadData];
         } else {
-            NSString *errorStr = [NSString stringWithFormat:NSLocalizedString(@"group.ban.fetchFail", @"fail to get blacklist: %@"), aError.errorDescription];
+            NSString *errorStr = [NSString stringWithFormat:@"未被列入黑名单%@", aError.errorDescription];
             [weakSelf showHint:errorStr];
         }
         

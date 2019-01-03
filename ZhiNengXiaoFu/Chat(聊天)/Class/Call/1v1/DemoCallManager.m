@@ -85,7 +85,7 @@ static DemoCallManager *callManager = nil;
 //    //录制相关功能初始化
 //    [EMCallRecorderPlugin initGlobalConfig];
     
-    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"calloptions.data"];
+    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"最大分辨率150 - 1000"
     EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];
     if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
         options = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
@@ -120,7 +120,8 @@ static DemoCallManager *callManager = nil;
 {
     [self endCallWithId:self.currentCall.callId reason:EMCallEndReasonNoResponse];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"call.autoHangup", @"No response and Hang up") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"没有响应，挂断 " cancelButtonTitle:@"确定"
+                                                                                            otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -202,7 +203,7 @@ static DemoCallManager *callManager = nil;
     [self _endCallWithId:aSession.callId isNeedHangup:NO reason:aReason];
     if (aReason != EMCallEndReasonHangup) {
         if (aError) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:aError.errorDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:aError.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alertView show];
         } else {
             NSString *reasonStr = @"通话结束";

@@ -31,11 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"chatroom.members", @"Member List");
+    self.title = @"成员列表";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -87,7 +87,7 @@
     _currentLongPressIndex = nil;
     
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -131,9 +131,9 @@
     self.currentLongPressIndex = indexPath;
     UIActionSheet *actionSheet = nil;
     if (self.chatroom.permissionType == EMChatroomPermissionTypeOwner) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:nil  otherButtonTitles:NSLocalizedString(@"group.removeMember", @"Remove from group"), NSLocalizedString(@"friend.block", @"Add to black list"), NSLocalizedString(@"group.toMute", @"Mute"), NSLocalizedString(@"group.addAdmin", @"Add to admin"), nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil  otherButtonTitles:@"移除", @"加入黑名单", @"黑名单", @"升为管理员", nil];
     } else if (self.chatroom.permissionType == EMChatroomPermissionTypeAdmin) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:nil  otherButtonTitles:NSLocalizedString(@"group.removeMember", @"Remove from group"), NSLocalizedString(@"friend.block", @"Add to black list"), NSLocalizedString(@"group.toMute", @"Mute"), nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil  otherButtonTitles:@"移除", @"加入黑名单", @"禁言", nil];
     }
     
     if (actionSheet) {
@@ -159,7 +159,7 @@
 {
     NSInteger pageSize = 50;
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     [[EMClient sharedClient].roomManager getChatroomMemberListFromServerWithId:self.chatroom.chatroomId cursor:self.cursor pageSize:pageSize completion:^(EMCursorResult *aResult, EMError *aError) {
         weakSelf.cursor = aResult.cursor;
         [weakSelf hideHud];
@@ -172,7 +172,7 @@
             [weakSelf.dataArray addObjectsFromArray:aResult.list];
             [weakSelf.tableView reloadData];
         } else {
-            [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+            [weakSelf showHint:@"未能获取组详细信息，请稍后重试"];
         }
         
         if ([aResult.list count] == 0 || [aResult.cursor length] == 0) {

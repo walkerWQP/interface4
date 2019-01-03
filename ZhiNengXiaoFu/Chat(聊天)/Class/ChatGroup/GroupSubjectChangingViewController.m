@@ -40,18 +40,18 @@
 {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
+    self.title = @"修改群名称";
 
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
 
     if (_isOwner)
     {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(save:)];
+        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save:)];
         saveItem.tintColor = [UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0];
         [self.navigationItem setRightBarButtonItem:saveItem];
     }
@@ -60,7 +60,7 @@
     _subjectField = [[UITextField alloc] initWithFrame:frame];
     _subjectField.layer.cornerRadius = 5.0;
     _subjectField.layer.borderWidth = 1.0;
-    _subjectField.placeholder = NSLocalizedString(@"group.setting.subject", @"Please input group name");
+    _subjectField.placeholder = @"请输入群名称";
     _subjectField.text = _group.subject;
     if (!_isOwner)
     {

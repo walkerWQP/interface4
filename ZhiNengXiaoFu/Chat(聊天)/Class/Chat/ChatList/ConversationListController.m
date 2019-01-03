@@ -44,7 +44,9 @@
 
 @interface ConversationListController ()<EaseConversationListViewControllerDelegate, EaseConversationListViewControllerDataSource,EMSearchControllerDelegate>
 
-@property (nonatomic, strong) UIView *networkStateView;
+@property (nonatomic, strong) UIView    *networkStateView;
+
+@property (nonatomic, strong) UIButton  *rightBtn;
 
 @end
 
@@ -56,6 +58,16 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:RGB(44, 198, 255)] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Semibold" size:18],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    //通讯录 ContactListViewController
+    self.rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+    [self.rightBtn setTitle:@"通讯录" forState:UIControlStateNormal];
+    self.rightBtn.titleLabel.font = titFont;
+    [self.rightBtn addTarget:self action:@selector(rightBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBtn];
+    
+    
     
     // Do any additional setup after loading the view.
     self.showRefreshHeader = YES;
@@ -69,6 +81,13 @@
     [self tableViewDidTriggerHeaderRefresh];
     [self removeEmptyConversationsFromDB];
 }
+
+- (void)rightBtn:(UIButton *)sender {
+    ContactListViewController *contactListVC = [ContactListViewController new];
+    [self.navigationController pushViewController:contactListVC animated:YES];
+}
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -241,7 +260,7 @@
         
         NSDictionary *ext = conversationModel.conversation.ext;
         if (ext && [ext[kHaveUnreadAtMessage] intValue] == kAtAllMessage) {
-            latestMessageTitle = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"group.atAll", nil), latestMessageTitle];
+            latestMessageTitle = [NSString stringWithFormat:@"个人消息 %@", latestMessageTitle];
             attributedStr = [[NSMutableAttributedString alloc] initWithString:latestMessageTitle];
             [attributedStr setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:.0 blue:.0 alpha:0.5]} range:NSMakeRange(0, NSLocalizedString(@"group.atAll", nil).length)];
             

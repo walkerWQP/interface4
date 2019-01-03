@@ -30,7 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"setting.editName", @"Edit NickName");
+    self.title = @"更改昵称";
     
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
@@ -50,7 +50,7 @@
 {
     _nickTextField = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)-kTextFieldWidth)/2, 20.0, kTextFieldWidth, kTextFieldHeight)];
     _nickTextField.layer.cornerRadius = 5.0;
-    _nickTextField.placeholder = NSLocalizedString(@"setting.inputName", @"Please input nickname");
+    _nickTextField.placeholder = @"请输入新昵称";
     _nickTextField.font = [UIFont systemFontOfSize:15];
     _nickTextField.backgroundColor = [UIColor whiteColor];
     _nickTextField.returnKeyType = UIReturnKeyNext;
@@ -76,7 +76,7 @@
     _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _saveButton.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-kTextFieldWidth)/2, CGRectGetMaxY(_nickTextField.frame) + 10.0, kTextFieldWidth, kButtonHeight);
     [_saveButton setBackgroundColor:RGBACOLOR(0x00, 0xac, 0xff, 1)];
-    [_saveButton setTitle:NSLocalizedString(@"setting.saveName", @"Save Nickname") forState:UIControlStateNormal];
+    [_saveButton setTitle:@"保存更改昵称" forState:UIControlStateNormal];
     [_saveButton addTarget:self action:@selector(doSave:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveButton];
 }
@@ -86,7 +86,7 @@
     _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)-kTextFieldWidth)/2, CGRectGetMaxY(_saveButton.frame) + 10.0, kTextFieldWidth, 60)];
     _tipLabel.textAlignment = NSTextAlignmentLeft;
     _tipLabel.font = [UIFont systemFontOfSize:14];
-    _tipLabel.text = NSLocalizedString(@"setting.edittips", @"After setting this nickname, chat with the iOS client demo project, iOS will display this nickname is not a EaseMob ID, if the other party to use the Android client this setting is not effective");
+    _tipLabel.text = @"设置次昵称以后，在与iOS客户端中，iOS一侧回现实次昵称而不是ID，如果对方使用安卓s客户端则此设置不生效";
     CGFloat height = 0;
     NSDictionary *attributes = @{NSFontAttributeName :[UIFont systemFontOfSize:14.0f]};
     CGRect rect;
@@ -118,10 +118,10 @@
         [[UserProfileManager sharedInstance] updateUserProfileInBackground:@{kPARSE_HXUSER_NICKNAME:_nickTextField.text} completion:^(BOOL success, NSError *error){}];
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [EMAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                message:NSLocalizedString(@"setting.namenotempty", @"Name cannot be empty")
+        [EMAlertView showAlertWithTitle:@"提示"
+                                message:@"昵称不能为空"
                         completionBlock:nil
-                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      cancelButtonTitle:@"确定"
                       otherButtonTitles:nil];
     }
 }

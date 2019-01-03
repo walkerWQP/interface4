@@ -43,7 +43,7 @@
     {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    self.title = NSLocalizedString(@"title.createChatroom", @"Create a chatroom");
+    self.title = @"创建聊天室";
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
 //    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
@@ -58,7 +58,7 @@
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -96,7 +96,7 @@
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.font = [UIFont systemFontOfSize:15.0];
         _textField.backgroundColor = [UIColor whiteColor];
-        _textField.placeholder = NSLocalizedString(@"chatroom.create.inputName", @"Please input the chatroom name");
+        _textField.placeholder = @"请输入聊天室名称";
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
     }
@@ -114,7 +114,7 @@
         _textView.layer.cornerRadius = 3;
         _textView.font = [UIFont systemFontOfSize:14.0];
         _textView.backgroundColor = [UIColor whiteColor];
-        _textView.placeholder = NSLocalizedString(@"chatroom.create.inputDescribe", @"Please enter a chatroom description");
+        _textView.placeholder = @"请输入聊天室简介";
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
     }
@@ -150,13 +150,13 @@
 {
     NSInteger maxUsersCount = 200;
     if ([selectedSources count] > (maxUsersCount - 1)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.maxUserCount", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群成员员数超过限额" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         
         return NO;
     }
     
-    [self showHudInView:self.view hint:NSLocalizedString(@"chatroom.create.ongoing", @"Create a chatroom...")];
+    [self showHudInView:self.view hint:@"创建一个聊天室..."];
     
     NSMutableArray *source = [NSMutableArray array];
     for (NSString *username in selectedSources) {
@@ -165,7 +165,7 @@
     
     __weak EMCreateChatroomController *weakSelf = self;
     NSString *username = [[EMClient sharedClient] currentUsername];
-    NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"chatroom.somebodyInvite", @"%@ invite you to join chatroom \'%@\'"), username, self.textField.text];
+    NSString *messageStr = [NSString stringWithFormat:@"%@邀请您加入聊天室%@", username, self.textField.text];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -173,11 +173,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
             if (chatroom && !error) {
-                [weakSelf showHint:NSLocalizedString(@"chatroom.create.success", @"create chatroom success")];
+                [weakSelf showHint:@"创建聊天室成功"];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }
             else{
-                [weakSelf showHint:NSLocalizedString(@"chatroom.create.fail", @"Failed to create a chatroom, please operate again")];
+                [weakSelf showHint:@"创建聊天室失败，请重新操作"];
             }
         });
     });
@@ -188,7 +188,7 @@
 
 - (void)doneAction:(id)sender
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"chatroom.create.ongoing", @"Create a chatroom...")];
+    [self showHudInView:self.view hint:@"创建中..."];
     
     __weak EMCreateChatroomController *weakSelf = self;
     
@@ -198,11 +198,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
             if (chatroom && !error) {
-                [weakSelf showHint:NSLocalizedString(@"chatroom.create.success", @"create chatroom success")];
+                [weakSelf showHint:@"创建聊天室成功"];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }
             else{
-                [weakSelf showHint:NSLocalizedString(@"chatroom.create.fail", @"Failed to create a chatroom, please operate again")];
+                [weakSelf showHint:@"创建聊天室失败"];
             }
         });
     });
@@ -211,7 +211,7 @@
 - (void)addContacts:(id)sender
 {
     if (self.textField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"chatroom.create.inputName", @"please input the chtroom name") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入聊天室名称" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }

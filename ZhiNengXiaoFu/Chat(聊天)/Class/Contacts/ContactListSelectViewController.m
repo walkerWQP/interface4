@@ -27,11 +27,11 @@
     self.delegate = self;
     self.dataSource = self;
     
-    self.title = NSLocalizedString(@"title.chooseContact", @"select the contact");
+    self.title = @"选择联系人";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -71,13 +71,13 @@
             [array addObject:chatController];
             [weakself.navigationController setViewControllers:array animated:YES];
         } else {
-            [weakself showHudInView:self.view hint:NSLocalizedString(@"transpondFail", @"transpond Fail")];
+            [weakself showHudInView:self.view hint:@"转发失败"];
         }
     }];
 }
 
 - (void)forwardImageMessageToUser:(id<IUserModel>)userModel {
-    [self showHudInView:self.view hint:NSLocalizedString(@"transponding", @"transponding...")];
+    [self showHudInView:self.view hint:@"转发..."];
     
     __weak typeof(self) weakSelf = self;
     NSString *thumbnailLocalPath = [(EMImageMessageBody *)self.messageModel.message.body thumbnailLocalPath];
@@ -96,7 +96,7 @@
         
         [[EMClient sharedClient].chatManager sendMessage:newMsg progress:nil completion:^(EMMessage *message, EMError *error) {
             if (error) {
-                [weakSelf showHudInView:self.view hint:NSLocalizedString(@"transpondFail", @"transpond Fail")];
+                [weakSelf showHudInView:self.view hint:@"转发失败"];
                 [weakSelf performSelector:@selector(backAction) withObject:nil afterDelay:1];
                 return ;
             }
@@ -120,7 +120,7 @@
     if (!image) {
         [[EMClient sharedClient].chatManager downloadMessageThumbnail:self.messageModel.message progress:nil completion:^(EMMessage *message, EMError *error) {
             if (error) {
-                [weakSelf showHudInView:self.view hint:NSLocalizedString(@"transpondFail", @"transpond Fail")];
+                [weakSelf showHudInView:self.view hint:@"转发失败"];
                 [weakSelf performSelector:@selector(backAction) withObject:nil afterDelay:1];
                 return ;
             }
@@ -134,7 +134,7 @@
 }
 
 - (void)forwardVideoMessageToUser:(id<IUserModel>)userModel {
-    [self showHudInView:self.view hint:NSLocalizedString(@"transponding", @"transponding...")];
+    [self showHudInView:self.view hint:@"转发..."];
     
     __weak typeof(self) weakSelf = self;
     NSString *localPath = [(EMVideoMessageBody *)self.messageModel.message.body localPath];
@@ -151,7 +151,7 @@
         
         [[EMClient sharedClient].chatManager sendMessage:newMsg progress:nil completion:^(EMMessage *message, EMError *error) {
             if (error) {
-                [weakSelf showHudInView:self.view hint:NSLocalizedString(@"transpondFail", @"transpond Fail")];
+                [weakSelf showHudInView:self.view hint:@"转发失败"];
                 [weakSelf performSelector:@selector(backAction) withObject:nil afterDelay:1];
                 return ;
             }
@@ -175,7 +175,7 @@
     if (!localPath || downloadStatus != EMDownloadStatusSuccessed) {
         [[EMClient sharedClient].chatManager downloadMessageAttachment:self.messageModel.message progress:nil completion:^(EMMessage *message, EMError *error) {
             if (error) {
-                [weakSelf showHudInView:self.view hint:NSLocalizedString(@"transpondFail", @"transpond Fail")];
+                [weakSelf showHudInView:self.view hint:@"转发失败"];
                 [weakSelf performSelector:@selector(backAction) withObject:nil afterDelay:1];
                 return ;
             }

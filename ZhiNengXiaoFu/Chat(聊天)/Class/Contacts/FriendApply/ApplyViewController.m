@@ -48,13 +48,13 @@ static ApplyViewController *controller = nil;
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"title.apply", @"Application and notification");
+    self.title = @"申请与通知";
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -124,12 +124,12 @@ static ApplyViewController *controller = nil;
             cell.indexPath = indexPath;
             ApplyStyle applyStyle = [entity.style intValue];
             if (applyStyle == ApplyStyleGroupInvitation) {
-                cell.titleLabel.text = NSLocalizedString(@"title.groupApply", @"Group Notification");
+                cell.titleLabel.text = @"群通知";
                 cell.headerImageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             }
             else if (applyStyle == ApplyStyleJoinGroup)
             {
-                cell.titleLabel.text = NSLocalizedString(@"title.groupApply", @"Group Notification");
+                cell.titleLabel.text = @"群通知";
                 cell.headerImageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             }
             else if(applyStyle == ApplyStyleFriend){
@@ -168,7 +168,7 @@ static ApplyViewController *controller = nil;
 - (void)applyCellAddFriendAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < [self.dataSource count]) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"sendingApply", @"sending apply...")];
+        [self showHudInView:self.view hint:@"发送申请..."];
         
         ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
         ApplyStyle applyStyle = [entity.style intValue];
@@ -193,7 +193,7 @@ static ApplyViewController *controller = nil;
                     [self.tableView reloadData];
                 }
                 else{
-                    [self showHint:NSLocalizedString(@"acceptFail", @"accept failure")];
+                    [self showHint:@"接受失败"];
                 }
             });
         });
@@ -203,7 +203,7 @@ static ApplyViewController *controller = nil;
 - (void)applyCellRefuseFriendAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < [self.dataSource count]) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"sendingApply", @"sending apply...")];
+        [self showHudInView:self.view hint:@"发送申请..."];
         ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
         ApplyStyle applyStyle = [entity.style intValue];
         EMError *error;
@@ -228,7 +228,7 @@ static ApplyViewController *controller = nil;
             [self.tableView reloadData];
         }
         else{
-            [self showHint:NSLocalizedString(@"rejectFail", @"reject failure")];
+            [self showHint:@"拒绝失败"];
             [self.dataSource removeObject:entity];
             NSString *loginUsername = [[EMClient sharedClient] currentUsername];
             [[InvitationManager sharedInstance] removeInvitation:entity loginUser:loginUsername];

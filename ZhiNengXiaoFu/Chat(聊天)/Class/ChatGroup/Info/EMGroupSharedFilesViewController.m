@@ -36,19 +36,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"group.sharedfiles", @"Share File");
+    self.title = @"群共享列表";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI:) name:@"UpdateGroupSharedFile" object:nil];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
     
     UIButton *uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
-    [uploadButton setTitle:NSLocalizedString(@"group.upload", @"Upload") forState:UIControlStateNormal];
+    [uploadButton setTitle:@"上传" forState:UIControlStateNormal];
     [uploadButton addTarget:self action:@selector(uploadAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *uploadItem = [[UIBarButtonItem alloc] initWithCustomView:uploadButton];
     [self.navigationItem setRightBarButtonItem:uploadItem];
@@ -153,13 +153,13 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.download", @"Downloading ...")];
+        [self showHudInView:self.view hint:@"下载中..."];
         [[EMClient sharedClient].groupManager downloadGroupSharedFileWithId:_group.groupId filePath:filePath sharedFileId:file.fileId progress:^(int progress) {
             // NSLog(@"%d",progress);
         } completion:^(EMGroup *aGroup, EMError *aError) {
             [weakSelf hideHud];
             if (aError) {
-                [weakSelf showHint:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"group.downloadFail", @"fail to download share file"), aError.errorDescription]];
+                [weakSelf showHint:[NSString stringWithFormat:@"%@%@",@"下载共享文件失败", aError.errorDescription]];
             }
         }];
     }
@@ -218,7 +218,7 @@
 {
     EMGroupSharedFile *file = [self.dataArray objectAtIndex:aIndexPath.row];
     
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -241,13 +241,13 @@
 - (id)setupCellEditActions:(NSIndexPath *)aIndexPath
 {
     if ([UIDevice currentDevice].systemVersion.floatValue < 11.0) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"group.remove", @"Remove") handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
             [self deleteCellAction:indexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
         return @[deleteAction];
     } else {
-        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:NSLocalizedString(@"group.remove", @"Remove") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteCellAction:aIndexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
@@ -278,7 +278,7 @@
     
     [data writeToFile:filePath atomically:YES];
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.uploading", @"Uploading...")];
+    [self showHudInView:self.view hint:@"上传中..."];
     [[EMClient sharedClient].groupManager uploadGroupSharedFileWithId:_group.groupId filePath:filePath progress:^(int progress){
         // NSLog(@"%d",progress);
     } completion:^(EMGroupSharedFile *aSharedFile, EMError *aError) {
@@ -287,7 +287,7 @@
             [weakSelf.dataArray insertObject:aSharedFile atIndex:0];
             [weakSelf.tableView reloadData];
         } else {
-            [weakSelf showHint:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"setting.uploadFail", @"Failed to upload"), aError.errorDescription]];
+            [weakSelf showHint:[NSString stringWithFormat:@"%@%@",@"上传失败", aError.errorDescription]];
         }
     }];
 }
@@ -333,7 +333,7 @@
 {
     NSInteger pageSize = 10;
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     [[EMClient sharedClient].groupManager getGroupFileListWithId:self.group.groupId pageNumber:self.page pageSize:pageSize completion:^(NSArray *aList, EMError *aError) {
         [weakSelf hideHud];
         [weakSelf tableViewDidFinishTriggerHeader:aIsHeader reload:NO];
@@ -345,7 +345,7 @@
             [weakSelf.dataArray addObjectsFromArray:aList];
             [weakSelf.tableView reloadData];
         } else {
-            NSString *errorStr = [NSString stringWithFormat:NSLocalizedString(@"group.fetchSharedFileFail", @"fail to get share files: %@"), aError.errorDescription];
+            NSString *errorStr = [NSString stringWithFormat:@"无法获得共享文件%@", aError.errorDescription];
             [weakSelf showHint:errorStr];
         }
         

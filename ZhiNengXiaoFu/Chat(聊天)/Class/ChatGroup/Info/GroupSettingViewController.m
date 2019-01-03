@@ -46,16 +46,16 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.groupSetting", @"Group Setting");
+    self.title = @"群设置";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
     
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveAction:)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveAction:)];
     saveItem.accessibilityIdentifier = @"save";
     [self.navigationItem setRightBarButtonItem:saveItem];
     
@@ -118,9 +118,9 @@
         _pushSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_pushSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _pushSwitch.frame.size.height) / 2, _pushSwitch.frame.size.width, _pushSwitch.frame.size.height);
         
         if (_pushSwitch.isOn) {
-            cell.textLabel.text = NSLocalizedString(@"group.setting.receiveAndPrompt", @"receive and prompt group of messages");
+            cell.textLabel.text = @"接收并提示群消息";
         } else {
-            cell.textLabel.text = NSLocalizedString(@"group.setting.receiveAndUnprompt", @"receive not only hint of messages");
+            cell.textLabel.text = @"只接收不提示群消息";
         }
         
         [cell.contentView addSubview:_pushSwitch];
@@ -128,7 +128,7 @@
     } else if(indexPath.row == 0) {
         _blockSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_blockSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _blockSwitch.frame.size.height) / 2, _blockSwitch.frame.size.width, _blockSwitch.frame.size.height);
         
-        cell.textLabel.text = NSLocalizedString(@"group.setting.blockMessage", @"shielding of the message");
+        cell.textLabel.text = @"屏蔽群消息";
         [cell.contentView addSubview:_blockSwitch];
         [cell.contentView bringSubviewToFront:_blockSwitch];
     }
@@ -152,16 +152,16 @@
 
 - (void)enablePush:(BOOL)isEnable
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.setting.save", @"set properties")];
+    [self showHudInView:self.view hint:@"设置属性"];
     
     __weak GroupSettingViewController *weakSelf = self;
     [[EMClient sharedClient].groupManager updatePushServiceForGroup:_group.groupId isPushEnabled:isEnable completion:^(EMGroup *aGroup, EMError *aError) {
         [weakSelf hideHud];
         if (!aError) {
-            [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
+            [weakSelf showHint:@"设置成功"];
         }
         else{
-            [weakSelf showHint:NSLocalizedString(@"group.setting.fail", @"set failure")];
+            [weakSelf showHint:@"设置失败"];
         }
     }];
 }
@@ -188,14 +188,14 @@
 {
     if (_blockSwitch.isOn != _group.isBlocked) {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.setting.save", @"set properties")];
+        [self showHudInView:self.view hint:@"设置属性"];
         if (_blockSwitch.isOn) {
             [[EMClient sharedClient].groupManager blockGroup:_group.groupId completion:^(EMGroup *aGroup, EMError *aError) {
                 [weakSelf hideHud];
                 if (aError) {
-                    [weakSelf showHint:NSLocalizedString(@"group.setting.fail", @"set failure")];
+                    [weakSelf showHint:@"设置失败"];
                 } else {
-                    [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
+                    [weakSelf showHint:@"设置成功"];
                 }
             }];
         }
@@ -203,9 +203,9 @@
             [[EMClient sharedClient].groupManager unblockGroup:_group.groupId completion:^(EMGroup *aGroup, EMError *aError) {
                 [weakSelf hideHud];
                 if (aError) {
-                    [weakSelf showHint:NSLocalizedString(@"group.setting.fail", @"set failure")];
+                    [weakSelf showHint:@"设置失败"];
                 } else {
-                    [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
+                    [weakSelf showHint:@"设置成功"];
                 }
             }];
         }

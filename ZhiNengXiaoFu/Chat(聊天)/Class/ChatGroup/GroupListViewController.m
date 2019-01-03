@@ -43,12 +43,12 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.group", @"Group");
+    self.title = @"群组";
     self.showRefreshHeader = YES;
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -113,11 +113,11 @@
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
-                cell.textLabel.text = NSLocalizedString(@"group.create.group",@"Create a group");
+                cell.textLabel.text = @"新建群聊";
                 cell.imageView.image = [UIImage imageNamed:@"group_creategroup"];
                 break;
             case 1:
-                cell.textLabel.text = NSLocalizedString(@"group.create.join",@"Join public group");
+                cell.textLabel.text = @"添加公开群";
                 cell.imageView.image = [UIImage imageNamed:@"group_joinpublicgroup"];
                 break;
             default:
@@ -295,7 +295,7 @@
                    isHeader:(BOOL)aIsHeader
 {
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

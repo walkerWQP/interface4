@@ -53,11 +53,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"Chatroom Info";
+    self.title = @"聊天室详情";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -82,14 +82,14 @@
         
         _destroyButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 40, _footerView.frame.size.width - 40, 40)];
         _destroyButton.accessibilityIdentifier = @"leave";
-        [_destroyButton setTitle:NSLocalizedString(@"chatroom.destroy", @"dissolution of the group") forState:UIControlStateNormal];
+        [_destroyButton setTitle:@"解散聊天室" forState:UIControlStateNormal];
         [_destroyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_destroyButton addTarget:self action:@selector(destroyAction) forControlEvents:UIControlEventTouchUpInside];
         [_destroyButton setBackgroundColor: [UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
         
         _leaveButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 40, _footerView.frame.size.width - 40, 40)];
         _leaveButton.accessibilityIdentifier = @"leave";
-        [_leaveButton setTitle:NSLocalizedString(@"chatroom.leave", @"quit the group") forState:UIControlStateNormal];
+        [_leaveButton setTitle:@"退出聊天室" forState:UIControlStateNormal];
         [_leaveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_leaveButton addTarget:self action:@selector(leaveAction) forControlEvents:UIControlEventTouchUpInside];
         [_leaveButton setBackgroundColor:[UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
@@ -129,24 +129,24 @@
     
     if (indexPath.row == 0)
     {
-        cell.textLabel.text = NSLocalizedString(@"chatroom.id", @"chatroom Id");
+        cell.textLabel.text = @"聊天室ID";
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = _chatroom.chatroomId;
     }
     else if (indexPath.row == 1)
     {
-        cell.textLabel.text = NSLocalizedString(@"chatroom.description", @"description");
+        cell.textLabel.text = @"描述";
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = _chatroom.description;
     }
     else if (indexPath.row == 2)
     {
-        cell.textLabel.text = NSLocalizedString(@"chatroom.occupantCount", @"members count");
+        cell.textLabel.text = @"聊天室人数";
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", (int)_chatroom.occupantsCount, (int)_chatroom.maxOccupantsCount];
     }
     else if (indexPath.row == 3) {
-        cell.textLabel.text = NSLocalizedString(@"group.owner", @"Owner");
+        cell.textLabel.text = @"群主";
         
         cell.detailTextLabel.text = self.chatroom.owner;
         
@@ -158,17 +158,17 @@
         }
     }
     else if (indexPath.row == 4) {
-        cell.textLabel.text = NSLocalizedString(@"group.admins", @"Admins");
+        cell.textLabel.text = @"管理员列表";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", (int)[self.chatroom.adminList count]];
     }
     else if (indexPath.row == 5) {
-        cell.textLabel.text = NSLocalizedString(@"chatroom.onlineMembers", @"Online Members");
+        cell.textLabel.text = @"在线成员列表";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = @(self.chatroom.occupantsCount).stringValue;
     }
     else if (indexPath.row == 6) {
-        cell.textLabel.text = NSLocalizedString(@"chatroom.announcement", @"Announcement");
+        cell.textLabel.text = @"聊天室公告";
         
         cell.detailTextLabel.text = self.chatroom.announcement;
         
@@ -180,11 +180,11 @@
         }
     }
     else if (indexPath.row == 7) {
-        cell.textLabel.text = NSLocalizedString(@"group.mutes", @"Mutes");
+        cell.textLabel.text = @"禁言列表";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if (indexPath.row == 8) {
-        cell.textLabel.text = NSLocalizedString(@"title.groupBlackList", @"Black list");
+        cell.textLabel.text = @"黑名单列表";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -204,7 +204,7 @@
     
     if (indexPath.row == 3) { //群主转换
         if (self.chatroom.permissionType == EMChatroomPermissionTypeOwner) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"group.changeOwner", @"Change Owner") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"改变群主" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             alert.tag = ALERTVIEW_CHANGEOWNER;
             
@@ -223,7 +223,7 @@
         [self.navigationController pushViewController:membersController animated:YES];
     }
     else if (indexPath.row == 6) { //修改聊天室公告
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"title.groupAnnouncementChanging", @"Change Announcement") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"修改群公告" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         alert.tag = ALERTVIEW_CHANGEANNOUNCEMENT;
         
@@ -256,11 +256,11 @@
         NSString *newOwner = textField.text;
         if ([newOwner length] > 0) {
             EMError *error = nil;
-            [self showHudInView:self.view hint:@"Hold on ..."];
+            [self showHudInView:self.view hint:@"加载中..."];
             [[EMClient sharedClient].roomManager updateChatroomOwner:self.chatroom.chatroomId newOwner:newOwner error:&error];
             [self hideHud];
             if (error) {
-                [self showHint:NSLocalizedString(@"group.changeOwnerFail", @"Failed to change owner")];
+                [self showHint:@"变更群主失败"];
             } else {
                 [self.tableView reloadData];
             }
@@ -269,12 +269,12 @@
     } else if (alertView.tag == ALERTVIEW_CHANGEANNOUNCEMENT) {
         UITextField *textField = [alertView textFieldAtIndex:0];
         NSString *announcement = textField.text;
-        [self showHudInView:self.view hint:@"Hold on ..."];
+        [self showHudInView:self.view hint:@"加载中..."];
         __weak typeof(self) weakSelf = self;
         [[EMClient sharedClient].roomManager updateChatroomAnnouncementWithId:_chatroom.chatroomId announcement:announcement completion:^(EMChatroom *aChatroom, EMError *aError) {
             [weakSelf hideHud];
             if (aError) {
-                [self showHint:NSLocalizedString(@"chatroom.changeAnnouncementFail", @"Fail to change announcement")];
+                [self showHint:@"更改公告失败"];
             } else {
                 [self.tableView reloadData];
             }
@@ -299,14 +299,14 @@
 - (void)leaveAction
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"chatroom.leave", @"leave the chatroom")];
+    [self showHudInView:self.view hint:@"退出聊天室"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         EMError *error = nil;
         [[EMClient sharedClient].roomManager leaveChatroom:weakSelf.chatroom.chatroomId error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
             if (error) {
-                [weakSelf showHint:NSLocalizedString(@"chatroom.leaveFail", @"leave the chatroom failure")];
+                [weakSelf showHint:@"退出聊天室失败"];
             }
             else{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitChat" object:nil];
@@ -318,13 +318,13 @@
 - (void)destroyAction
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"chatroom.destroy", @"destroy the chatroom")];
+    [self showHudInView:self.view hint:@"解散聊天室"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         EMError *error = [[EMClient sharedClient].roomManager destroyChatroom:weakSelf.chatroom.chatroomId];
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
             if (error) {
-                [weakSelf showHint:NSLocalizedString(@"chatroom.destroyFail", @"destroy the chatroom failure")];
+                [weakSelf showHint:@"解散聊天室失败"];
             }
             else{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitChat" object:weakSelf.chatroom.chatroomId];
@@ -337,7 +337,7 @@
 
 - (void)fetchChatroomInfo
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakSelf = self;
     [[EMClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:_chatroom.chatroomId completion:^(EMChatroom *aChatroom, EMError *aError) {
         __strong ChatroomDetailViewController *strongSelf = weakSelf;
@@ -348,7 +348,7 @@
                 [strongSelf reloadDataSource];
             }
             else {
-                [strongSelf showHint:NSLocalizedString(@"chatroom.fetchInfoFail", @"failed to get the chatroom details, please try again later")];
+                [strongSelf showHint:@"未能获取聊天室详细信息，请稍后重试"];
             }
         }
     }];
@@ -357,7 +357,7 @@
         if (!aError) {
             [weakSelf reloadDataSource];
         } else {
-            [weakSelf showHint:NSLocalizedString(@"chatroom.fetchAnnouncementFail", @"failed to get announcement")];
+            [weakSelf showHint:@"未得到公告"];
         }
     }];
 }

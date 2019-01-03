@@ -80,7 +80,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
                                                     message:error.description
                                                    delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"ok", @"确定")
+                                          cancelButtonTitle:@"确定"
                                           otherButtonTitles:nil];
     [alert show];
 }
@@ -145,7 +145,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.content", @"Apns content")
                                                     message:str
                                                    delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"ok", @"确定")
+                                          cancelButtonTitle:@"确定"
                                           otherButtonTitles:nil];
     [alert show];
     

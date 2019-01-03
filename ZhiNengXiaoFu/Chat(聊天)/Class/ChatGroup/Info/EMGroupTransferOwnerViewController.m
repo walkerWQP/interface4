@@ -56,7 +56,7 @@
 
 - (void)_setupNavigationBar
 {
-    self.title = NSLocalizedString(@"group.changeOwner", @"Change Owner");
+    self.title = @"改变群主";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
@@ -65,7 +65,7 @@
     self.navigationItem.leftBarButtonItem = backItem;
     
     UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
-    [doneButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
+    [doneButton setTitle:@"保存" forState:UIControlStateNormal];
     [doneButton addTarget:self action:@selector(doneAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
     self.navigationItem.rightBarButtonItem = doneItem;
@@ -132,7 +132,7 @@
 - (void)doneAction
 {
     if (self.selectedIndexPath) {
-        [self showHudInView:self.view hint:@"Hold on ..."];
+        [self showHudInView:self.view hint:@"加载中..."];
         NSString *newOwner = [self.dataArray objectAtIndex:self.selectedIndexPath.row];
         
         __weak typeof(self) weakSelf = self;
@@ -142,7 +142,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf hideHud];
                 if (error) {
-                    [weakSelf showHint:NSLocalizedString(@"group.changeOwnerFail", @"Failed to change owner")];
+                    [weakSelf showHint:@"改变群主失败"];
                 } else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:nil];
                     [weakSelf backAction];
@@ -157,7 +157,7 @@
 - (void)tableViewDidTriggerHeaderRefresh
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载中..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         EMError *error = nil;
         EMGroup *group = [[EMClient sharedClient].groupManager getGroupSpecificationFromServerWithId:weakSelf.group.groupId error:&error];
@@ -172,7 +172,7 @@
                 [weakSelf fetchMembersWithPage:weakSelf.page isHeader:YES];
             }
             else{
-                [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+                [weakSelf showHint:@"未能获取群详细信息，请稍后重试"];
             }
         });
     });
@@ -188,7 +188,7 @@
 {
     NSInteger pageSize = 50;
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     [[EMClient sharedClient].groupManager getGroupMemberListFromServerWithId:self.group.groupId cursor:self.cursor pageSize:pageSize completion:^(EMCursorResult *aResult, EMError *aError) {
         weakSelf.cursor = aResult.cursor;
         [weakSelf hideHud];
@@ -197,7 +197,7 @@
             [weakSelf.dataArray addObjectsFromArray:aResult.list];
             [weakSelf.tableView reloadData];
         } else {
-            [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+            [weakSelf showHint:@"未能获取群详细信息，请稍后重试"];
         }
         
         if ([aResult.list count] == 0 || [aResult.cursor length] == 0) {

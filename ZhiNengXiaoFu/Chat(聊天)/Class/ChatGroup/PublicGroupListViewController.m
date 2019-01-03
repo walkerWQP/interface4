@@ -46,11 +46,11 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"title.publicGroup", @"Public group");
+    self.title = @"公共群组";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -167,7 +167,7 @@
     else
     {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"searching", @"Searching")];
+        [self showHudInView:self.view hint:@"搜索..."];
         dispatch_async(dispatch_get_main_queue(), ^{
             EMError *error = nil;
             EMGroup *group = [[EMClient sharedClient].groupManager searchPublicGroupWithId:searchBar.text error:&error];
@@ -182,7 +182,7 @@
                 }
                 else
                 {
-                    [strongSelf showHint:NSLocalizedString(@"notFound", @"Can't found")];
+                    [strongSelf showHint:@"没有找到"];
                 }
             }
         });
@@ -262,7 +262,7 @@
 - (void)fetchGroups:(BOOL)aIsHeader
 {
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     
     if (aIsHeader) {
         _cursor = nil;

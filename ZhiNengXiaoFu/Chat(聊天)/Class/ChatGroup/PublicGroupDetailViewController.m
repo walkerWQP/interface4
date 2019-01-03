@@ -57,7 +57,7 @@
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -108,7 +108,7 @@
         
         _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 20, _footerView.frame.size.width - 80, 40)];
         _footerButton.accessibilityIdentifier = @"join";
-        [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
+        [_footerButton setTitle:@"加入群组" forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footerButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
         [_footerButton setBackgroundColor:[UIColor colorWithRed:87 / 255.0 green:186 / 255.0 blue:205 / 255.0 alpha:1.0]];
@@ -143,11 +143,11 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"group.owner", @"Owner");
+        cell.textLabel.text = @"群主";
         cell.detailTextLabel.text = _group.owner;
     }
     else{
-        cell.textLabel.text = NSLocalizedString(@"group.describe", @"Describe");
+        cell.textLabel.text = @"群组简介";
         cell.detailTextLabel.text = _group.description;
     }
     
@@ -201,7 +201,7 @@
 
 - (void)fetchGroupInfo
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     __weak PublicGroupDetailViewController *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -223,11 +223,11 @@
         weakSelf.nameLabel.text = (weakSelf.group.subject && weakSelf.group.subject.length) > 0 ? weakSelf.group.subject : weakSelf.group.groupId;
         if ([weakSelf isJoined:weakSelf.group]) {
             weakSelf.footerButton.enabled = NO;
-            [weakSelf.footerButton setTitle:NSLocalizedString(@"group.joined", @"joined") forState:UIControlStateNormal | UIControlStateDisabled];
+            [weakSelf.footerButton setTitle:@"加入" forState:UIControlStateNormal | UIControlStateDisabled];
         }
         else{
             weakSelf.footerButton.enabled = YES;
-            [weakSelf.footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
+            [weakSelf.footerButton setTitle:@"加入该群" forState:UIControlStateNormal];
         }
         [weakSelf.tableView reloadData];
     });
@@ -235,7 +235,7 @@
 
 - (void)showMessageAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"saySomething", @"say somthing") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"说些什么" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert show];
 }
@@ -253,7 +253,7 @@
 
 - (void)joinGroup:(NSString *)groupId
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.join.ongoing", @"join the group...")];
+    [self showHudInView:self.view hint:@"加入该群..."];
     __weak PublicGroupDetailViewController *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -263,7 +263,7 @@
             if(!error) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             } else {
-                [weakSelf showHint:NSLocalizedString(@"group.join.fail", @"again failed to join the group, please")];
+                [weakSelf showHint:@"未能加入小组，请重试"];
             }
         });
     });
@@ -271,7 +271,7 @@
 
 - (void)applyJoinGroup:(NSString *)groupId withGroupname:(NSString *)groupName message:(NSString *)message
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.sendingApply", @"send group of application...")];
+    [self showHudInView:self.view hint:@"发送群申请"];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -279,7 +279,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
             if (!error) {
-                [weakSelf showHint:NSLocalizedString(@"group.sendApplyRepeat", @"application has been sent")];
+                [weakSelf showHint:@"申请已发送"];
             }
             else{
                 [weakSelf showHint:error.errorDescription];

@@ -38,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"setting.personalInfo", @"Profile");
+    self.title = @"个人信息";
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -103,13 +103,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     if (indexPath.row == 0) {
-        cell.detailTextLabel.text = NSLocalizedString(@"setting.personalInfoUpload", @"Upload HeadImage");
+        cell.detailTextLabel.text = @"头像";
         [cell.contentView addSubview:self.headImageView];
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = NSLocalizedString(@"username", @"username");
+        cell.textLabel.text = @"个人账户";
         cell.detailTextLabel.text = self.usernameLabel.text;
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = NSLocalizedString(@"setting.profileNickname", @"Nickname");
+        cell.textLabel.text = @"昵称";
         UserProfileEntity *entity = [[UserProfileManager sharedInstance] getCurUserProfile];
         if (entity && entity.nickname.length>0) {
             cell.detailTextLabel.text = entity.nickname;
@@ -135,12 +135,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"setting.cameraUpload", @"Take photo"),NSLocalizedString(@"setting.localUpload", @"Photos"), nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照上传",@"相册上传", nil];
         [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
     } else if (indexPath.row == 1) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else if (indexPath.row == 2) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"setting.editName", @"Edit NickName") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"更改昵称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alert show];
     }
@@ -153,7 +153,7 @@
         if(nameTextField.text.length > 0)
         {
             //设置推送设置
-            [self showHint:NSLocalizedString(@"setting.saving", "saving...")];
+            [self showHint:@"保存..."];
             __weak typeof(self) weakSelf = self;
             [[EMClient sharedClient] setApnsNickname:nameTextField.text];
             [[UserProfileManager sharedInstance] updateUserProfileInBackground:@{kPARSE_HXUSER_NICKNAME:nameTextField.text} completion:^(BOOL success, NSError *error) {
@@ -164,7 +164,7 @@
                         if (success) {
                             [strongSelf.tableView reloadData];
                         } else {
-                            [strongSelf showHint:NSLocalizedString(@"setting.saveFailed", "save failed") yOffset:0];
+                            [strongSelf showHint:@"保存失败" yOffset:0];
                         }
                     }
                 });
@@ -178,7 +178,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.uploading", @"uploading...")];
+    [self showHudInView:self.view hint:@"上传中..."];
     
     __weak typeof(self) weakSelf = self;
     UIImage *orgImage = info[UIImagePickerControllerOriginalImage];
@@ -189,14 +189,14 @@
             if (success) {
                 UserProfileEntity *user = [[UserProfileManager sharedInstance] getCurUserProfile];
                 [weakSelf.headImageView imageWithUsername:user.username placeholderImage:orgImage];
-                [self showHint:NSLocalizedString(@"setting.uploadSuccess", @"uploaded successfully")];
+                [self showHint:@"上传成功"];
             } else {
-                [self showHint:NSLocalizedString(@"setting.uploadFail", @"uploaded failed")];
+                [self showHint:@"上传失败"];
             }
         }];
     } else {
         [self hideHud];
-        [self showHint:NSLocalizedString(@"setting.uploadFail", @"uploaded failed")];
+        [self showHint:@"上传失败"];
     }
 }
 
@@ -211,7 +211,7 @@
 {
     if (buttonIndex == 0) {
 #if TARGET_IPHONE_SIMULATOR
-        [self showHint:NSLocalizedString(@"message.simulatorNotSupportCamera", @"simulator does not support taking picture")];
+        [self showHint:@"模拟器不支持拍照"];
 #elif TARGET_OS_IPHONE
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;

@@ -80,11 +80,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = NSLocalizedString(@"title.chooseContact", @"select the contact");
+    self.title = @"选择联系人";
     self.navigationItem.rightBarButtonItem = nil;
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -139,10 +139,10 @@
         _doneButton = [[UIButton alloc] initWithFrame:CGRectMake(_footerView.frame.size.width - 80, 8, 70, _footerView.frame.size.height - 16)];
         _doneButton.accessibilityIdentifier = @"done_button";
         [_doneButton setBackgroundColor:[UIColor colorWithRed:10 / 255.0 green:82 / 255.0 blue:104 / 255.0 alpha:1.0]];
-        [_doneButton setTitle:NSLocalizedString(@"accept", @"Accept") forState:UIControlStateNormal];
+        [_doneButton setTitle:@"接受" forState:UIControlStateNormal];
         [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _doneButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-        [_doneButton setTitle:NSLocalizedString(@"ok", @"OK") forState:UIControlStateNormal];
+        [_doneButton setTitle:@"确定" forState:UIControlStateNormal];
         [_doneButton addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
         [_footerView addSubview:_doneButton];
     }
@@ -243,10 +243,10 @@
         }
         
         if ([self.selectedContacts count] == 0) {
-            [_doneButton setTitle:NSLocalizedString(@"ok", @"OK") forState:UIControlStateNormal];
+            [_doneButton setTitle:@"确定" forState:UIControlStateNormal];
         }
         else{
-            [_doneButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"doneWithCount", @"Done(%i)"), [self.selectedContacts count]] forState:UIControlStateNormal];
+            [_doneButton setTitle:[NSString stringWithFormat:@"完成(%i)", [self.selectedContacts count]] forState:UIControlStateNormal];
         }
     }
 }
@@ -256,7 +256,7 @@
 - (void)loadDataSource
 {
     if (!_presetDataSource) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+        [self showHudInView:self.view hint:@"加载数据..."];
         [_dataSource removeAllObjects];
         [_contactsSource removeAllObjects];
         

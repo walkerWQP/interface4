@@ -76,7 +76,7 @@
 
 - (void)_setupNavigationBar
 {
-    self.title = NSLocalizedString(@"title.groupInfo", @"Group Info");
+    self.title = @"群详情";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
@@ -100,7 +100,7 @@
         _moreCell.contentView.backgroundColor = [UIColor colorWithRed: 249 / 255.0 green: 250 / 255.0 blue: 251 / 255.0 alpha:1.0];
         
         UIButton *moreButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 60)];
-        [moreButton setTitle:NSLocalizedString(@"group.more", @"Load More") forState:UIControlStateNormal];
+        [moreButton setTitle:@"查看更多" forState:UIControlStateNormal];
         [moreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [moreButton addTarget:self action:@selector(moreMemberAction) forControlEvents:UIControlEventTouchUpInside];
         [_moreCell.contentView addSubview:moreButton];
@@ -117,7 +117,7 @@
         
         UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 40, _footerView.frame.size.width - 40, 40)];
         clearButton.accessibilityIdentifier = @"clear_message";
-        [clearButton setTitle:NSLocalizedString(@"group.removeAllMessages", @"remove all messages") forState:UIControlStateNormal];
+        [clearButton setTitle:@"清空聊天记录" forState:UIControlStateNormal];
         [clearButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(clearMessagesAction) forControlEvents:UIControlEventTouchUpInside];
         [clearButton setBackgroundColor:[UIColor greenColor]];
@@ -125,7 +125,7 @@
         
         _leaveButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 120, _footerView.frame.size.width - 40, 40)];
         _leaveButton.accessibilityIdentifier = @"leave";
-        [_leaveButton setTitle:NSLocalizedString(@"group.leave", @"quit the group") forState:UIControlStateNormal];
+        [_leaveButton setTitle:@"解散群组" forState:UIControlStateNormal];
         [_leaveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_leaveButton addTarget:self action:@selector(leaveAction) forControlEvents:UIControlEventTouchUpInside];
         [_leaveButton setBackgroundColor:[UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
@@ -191,10 +191,10 @@
         if (section == 0) {
             if (row == 0) {
                 memberCell.leftLabel.text = self.group.owner;
-                memberCell.rightLabel.text = @"owner";
+                memberCell.rightLabel.text = @"群主";
             } else {
                 memberCell.leftLabel.text = [self.group.adminList objectAtIndex:(row - 1)];
-                memberCell.rightLabel.text = @"admin";
+                memberCell.rightLabel.text = @"成员";
             }
         } else if (section == 1) {
             memberCell.leftLabel.text = [self.showMembers objectAtIndex:row];
@@ -213,45 +213,45 @@
     if (section == 2) {
         switch (row) {
             case 0:
-                cell.textLabel.text = NSLocalizedString(@"group.id", @"GroupID");
+                cell.textLabel.text = @"群组ID";
                 cell.detailTextLabel.text = self.groupId;
                 break;
             case 1:
-                cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
+                cell.textLabel.text = @"群设置";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 2:
-                cell.textLabel.text = NSLocalizedString(@"group.changeOwner", @"Change Owner");
+                cell.textLabel.text = @"改变群主";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 3:
-                cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
+                cell.textLabel.text = @"修改群名称";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 4:
-                cell.textLabel.text = NSLocalizedString(@"group.admins", @"Admin List");
+                cell.textLabel.text = @"管理员列表";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 5:
-                cell.textLabel.text = NSLocalizedString(@"group.announcement", @"Group Announcement");
+                cell.textLabel.text = @"群公告";
                 cell.detailTextLabel.text = _group.announcement;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 6:
-                cell.textLabel.text = NSLocalizedString(@"group.ext", @"Group Extension");
+                cell.textLabel.text = @"群扩展消息";
                 cell.detailTextLabel.text = _group.setting.ext;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 7:
-                cell.textLabel.text = NSLocalizedString(@"group.sharedfiles", @"Share Files");
+                cell.textLabel.text = @"群共享列表";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 8:
-                cell.textLabel.text = NSLocalizedString(@"title.groupBlackList", @"Black List");
+                cell.textLabel.text = @"黑名单列表";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 9:
-                cell.textLabel.text = NSLocalizedString(@"group.mutes", @"Mute List");
+                cell.textLabel.text = @"禁言列表";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
                 
@@ -259,7 +259,7 @@
                 break;
         }
     } else if (section == 3 && row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"title.sendNotifMsg", @"Send notification message");
+        cell.textLabel.text = @"发送群通知消息";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -275,13 +275,13 @@
     headerLabel.textColor = [UIColor whiteColor];
     headerLabel.font = [UIFont boldSystemFontOfSize:15];
     if (section == 0) {
-        headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"group.ownerAdmin", @"Owner / Admin")];
+        headerLabel.text = [NSString stringWithFormat:@"群主/管理员"];
     } else if (section == 1) {
-        headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"group.members", @"Members List")];
+        headerLabel.text = [NSString stringWithFormat:@"普通成员"];
     } else if (section == 2) {
-        headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"title.setting", @"Settings")];
+        headerLabel.text = [NSString stringWithFormat:@"设置"];
     } else if (section == 3) {
-        headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"title.extensions", @"Extensions")];
+        headerLabel.text = [NSString stringWithFormat:@"扩展功能"];
     }
     
     return headerLabel;
@@ -335,31 +335,31 @@
             break;
         case 5:
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"title.groupAnnouncementChanging", @"Change Announcement") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"更改群公告" message:nil preferredStyle:UIAlertControllerStyleAlert];
             __weak typeof(self) weakSelf = self;
-            UIAlertAction *ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSString *announcement = nil;
                 if ([alert.textFields count] > 0) {
                     announcement = alert.textFields.firstObject.text;
                 }
-                [weakSelf showHudInView:weakSelf.view hint:[NSString stringWithFormat:@"%@...",NSLocalizedString(@"title.groupAnnouncementChanging", @"Change Announcement")]];
+                [weakSelf showHudInView:weakSelf.view hint:[NSString stringWithFormat:@"%@...",@"更改群公告"]];
                 [[EMClient sharedClient].groupManager updateGroupAnnouncementWithId:weakSelf.groupId announcement:announcement completion:^(EMGroup *aGroup, EMError *aError) {
                     [weakSelf hideHud];
                     if (aError) {
-                        [weakSelf showHint:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"group.changeAnnouncementFail", @"fail to change announcement"), aError.errorDescription]];
+                        [weakSelf showHint:[NSString stringWithFormat:@"%@%@",@"更改公告失败", aError.errorDescription]];
                     } else {
                         [weakSelf.tableView reloadData];
                     }
                 }];
             }];
             
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             }];
             [alert addAction:ok];
             [alert addAction:cancel];
             
             [alert addTextFieldWithConfigurationHandler:^(UITextField *textField){
-                textField.placeholder = NSLocalizedString(@"group.setting.announcement", @"Please input announcement");
+                textField.placeholder = @"请输入群公告";
                 textField.text = self->_group.announcement;
             }];
             [self presentViewController:alert animated:YES completion:NULL];
@@ -367,31 +367,31 @@
             break;
         case 6:
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"title.groupExtChanging", @"Change Ext") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"修改群扩展信息" message:nil preferredStyle:UIAlertControllerStyleAlert];
             
             __weak typeof(self) weakSelf = self;
-            UIAlertAction *ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSString *announcement = nil;
                 if ([alert.textFields count] > 0) {
                     announcement = alert.textFields.firstObject.text;
                 }
-                [weakSelf showHudInView:weakSelf.view hint:[NSString stringWithFormat:@"%@...",NSLocalizedString(@"title.groupExtChanging", @"Change Announcement")]];
+                [weakSelf showHudInView:weakSelf.view hint:[NSString stringWithFormat:@"%@...",@"修改群扩展信息"]];
                 [[EMClient sharedClient].groupManager updateGroupExtWithId:weakSelf.groupId ext:announcement completion:^(EMGroup *aGroup, EMError *aError) {
                     [weakSelf hideHud];
                     if (aError) {
-                        [weakSelf showHint:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"group.changeExtFail", @"fail to change ext"), aError.errorDescription]];
+                        [weakSelf showHint:[NSString stringWithFormat:@"%@%@",@"更改群扩展失败", aError.errorDescription]];
                     } else {
                         [weakSelf.tableView reloadData];
                     }
                 }];
             }];
             
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }];
             [alert addAction:ok];
             [alert addAction:cancel];
             
             [alert addTextFieldWithConfigurationHandler:^(UITextField *textField){
-                textField.placeholder = NSLocalizedString(@"group.setting.ext", @"Please input ext");
+                textField.placeholder = @"请输入群扩展信息";
                 textField.text = self->_group.setting.ext;
             }];
             [self presentViewController:alert animated:YES completion:NULL];
@@ -427,13 +427,13 @@
 {
     NSInteger maxUsersCount = self.group.setting.maxUsersCount;
     if (([selectedSources count] + self.group.occupantsCount) > maxUsersCount) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.maxUserCount", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群成员数超过限额" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         
         return NO;
     }
     
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.addingOccupant", @"add a group member...")];
+    [self showHudInView:self.view hint:@"添加一个群成员..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -443,7 +443,7 @@
         }
         
         NSString *username = [[EMClient sharedClient] currentUsername];
-        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join group \'%@\'"), username, weakSelf.group.subject];
+        NSString *messageStr = [NSString stringWithFormat:@"%@邀请你加入小组%@", username, weakSelf.group.subject];
         EMError *error = nil;
         weakSelf.group = [[EMClient sharedClient].groupManager addOccupants:source toGroup:weakSelf.group.groupId welcomeMessage:messageStr error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -488,27 +488,27 @@
 - (void)clearMessagesAction
 {
     __weak typeof(self) weakSelf = self;
-    [EMAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                            message:NSLocalizedString(@"sureToDelete", @"please make sure to delete")
+    [EMAlertView showAlertWithTitle:@"提示"
+                            message:@"请确定删除"
                     completionBlock:^(NSUInteger buttonIndex, EMAlertView *alertView) {
                         if (buttonIndex == 1) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATIONNAME_DELETEALLMESSAGE object:weakSelf.groupId];
                         }
-                    } cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                  otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+                    } cancelButtonTitle:@"取消"
+                  otherButtonTitles:@"确定", nil];
 }
 
 - (void)leaveAction
 {
     __weak typeof(self) weakSelf = self;
     if (self.group.permissionType == EMGroupPermissionTypeOwner) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
+        [self showHudInView:self.view hint:@"解散群"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
             EMError *error = [[EMClient sharedClient].groupManager destroyGroup:weakSelf.group.groupId];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf hideHud];
                 if (error) {
-                    [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+                    [weakSelf showHint:@"解散群失败"];
                 }
                 else{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitChat" object:nil];
@@ -517,14 +517,14 @@
         });
         
     } else {
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];
+        [self showHudInView:self.view hint:@"退出群"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
             EMError *error = nil;
             [[EMClient sharedClient].groupManager leaveGroup:weakSelf.group.groupId error:&error];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf hideHud];
                 if (error) {
-                    [weakSelf showHint:NSLocalizedString(@"group.leaveFail", @"exit the group failure")];
+                    [weakSelf showHint:@"退出群失败"];
                 }
                 else{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitChat" object:nil];
@@ -563,9 +563,9 @@
     }
     
     if (self.group.permissionType == EMGroupPermissionTypeOwner) {
-        [self.leaveButton setTitle:NSLocalizedString(@"group.destroy", @"dissolution of the group") forState:UIControlStateNormal];
+        [self.leaveButton setTitle:@"解散群组" forState:UIControlStateNormal];
     } else {
-        [self.leaveButton setTitle:NSLocalizedString(@"group.leave", @"quit the group") forState:UIControlStateNormal];
+        [self.leaveButton setTitle:@"退出群" forState:UIControlStateNormal];
     }
     
     [self.tableView reloadData];
@@ -576,7 +576,7 @@
 - (void)fetchGroupInfo
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         EMError *error = nil;
         EMGroup *group = [[EMClient sharedClient].groupManager getGroupSpecificationFromServerWithId:weakSelf.groupId error:&error];
@@ -600,7 +600,7 @@
         }
         else{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+                [weakSelf showHint:@"未能获取群详细信息，请稍后重试"];
             });
         }
         
@@ -610,7 +610,7 @@
         if (!aError) {
             [weakSelf.tableView reloadData];
         } else {
-            [weakSelf showHint:NSLocalizedString(@"group.fetchAnnouncementFail", @"fail to get announcement")];
+            [weakSelf showHint:@"未得到通知"];
         }
     }];
 }
@@ -618,14 +618,14 @@
 - (void)fetchGroupMembers
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     [[EMClient sharedClient].groupManager getGroupMemberListFromServerWithId:self.groupId cursor:@"" pageSize:10 completion:^(EMCursorResult *aResult, EMError *aError) {
         [weakSelf hideHud];
         if (!aError) {
             weakSelf.showMembers = aResult.list;
             [weakSelf reloadUI];
         } else {
-            [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
+            [weakSelf showHint:@"未能获取群详细信息，请稍后重试"];
         }
     }];
 }

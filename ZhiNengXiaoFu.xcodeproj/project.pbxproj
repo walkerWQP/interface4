@@ -319,8 +319,6 @@
 		CD7AF9D521D5C7B700B85456 /* EaseMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF8C121D5C7B600B85456 /* EaseMessageModel.m */; };
 		CD7AF9D621D5C7B700B85456 /* EaseConversationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF8C921D5C7B600B85456 /* EaseConversationModel.m */; };
 		CD7AF9D721D5C7B700B85456 /* EaseUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF8CA21D5C7B600B85456 /* EaseUserModel.m */; };
-		CD7AF9EB21D5C7B700B85456 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7AF8FC21D5C7B600B85456 /* libopencore-amrwb.a */; };
-		CD7AF9EC21D5C7B700B85456 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7AF90221D5C7B600B85456 /* libopencore-amrnb.a */; };
 		CD7AF9ED21D5C7B700B85456 /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF90521D5C7B600B85456 /* wav.mm */; };
 		CD7AF9EE21D5C7B700B85456 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF90621D5C7B600B85456 /* amrFileCodec.mm */; };
 		CD7AF9EF21D5C7B700B85456 /* EMVoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD7AF90921D5C7B600B85456 /* EMVoiceConverter.mm */; };
@@ -444,7 +442,6 @@
 		CD7AFBBD21D5CA7B00B85456 /* EMRefreshViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFAC521D5CA7900B85456 /* EMRefreshViewController.m */; };
 		CD7AFBBE21D5CA7B00B85456 /* EMButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFAC721D5CA7900B85456 /* EMButton.m */; };
 		CD7AFBBF21D5CA7B00B85456 /* EMStreamView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFACC21D5CA7900B85456 /* EMStreamView.m */; };
-		CD7AFBC021D5CA7B00B85456 /* libHyphenateVideoRecorderPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7AFACF21D5CA7900B85456 /* libHyphenateVideoRecorderPlugin.a */; };
 		CD7AFBC121D5CA7B00B85456 /* MeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFAD121D5CA7900B85456 /* MeetingViewController.m */; };
 		CD7AFBC221D5CA7B00B85456 /* DemoConfManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFAD221D5CA7900B85456 /* DemoConfManager.m */; };
 		CD7AFBC321D5CA7B00B85456 /* Live2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFAD321D5CA7900B85456 /* Live2ViewController.m */; };
@@ -776,6 +773,8 @@
 		CD8A6E6D21C9D93500BA5090 /* ClassScheduleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8A6E6C21C9D93500BA5090 /* ClassScheduleModel.m */; };
 		CD8A6E7021C9ED4300BA5090 /* LeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8A6E6F21C9ED4300BA5090 /* LeftCell.m */; };
 		CD8A6E7321C9ED8B00BA5090 /* RightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8A6E7221C9ED8B00BA5090 /* RightCell.m */; };
+		CD8BEA7A21D7677000D6DD26 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7AF90221D5C7B600B85456 /* libopencore-amrnb.a */; };
+		CD8BEA7B21D7678500D6DD26 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7AF8FC21D5C7B600B85456 /* libopencore-amrwb.a */; };
 		CD99E26121D375BB009BC3FB /* ZXCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD99E26021D375BB009BC3FB /* ZXCycleScrollView.m */; };
 		CD99E26321D37BD9009BC3FB /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD99E26221D37BD9009BC3FB /* MineViewController.m */; };
 		CD9C16BE216EED920094E897 /* TongZhiNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9C16BD216EED920094E897 /* TongZhiNewCell.m */; };
@@ -2204,6 +2203,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD8BEA7B21D7678500D6DD26 /* libopencore-amrwb.a in Frameworks */,
+				CD8BEA7A21D7677000D6DD26 /* libopencore-amrnb.a in Frameworks */,
 				CD7AFE3521D5F71D00B85456 /* Security.framework in Frameworks */,
 				CD7AFA5C21D5C91D00B85456 /* Bugly.framework in Frameworks */,
 				CD7AFE3321D5F6EF00B85456 /* MessageUI.framework in Frameworks */,
@@ -2227,11 +2228,8 @@
 				CD7AFE1221D5F5A500B85456 /* CFNetwork.framework in Frameworks */,
 				CD7AFE1021D5F59300B85456 /* UIKit.framework in Frameworks */,
 				CD7AFE0E21D5F57900B85456 /* Foundation.framework in Frameworks */,
-				CD7AF9EB21D5C7B700B85456 /* libopencore-amrwb.a in Frameworks */,
-				CD7AF9EC21D5C7B700B85456 /* libopencore-amrnb.a in Frameworks */,
 				498C64A662A4583AE32A8276 /* Pods_ZhiNengXiaoFu.framework in Frameworks */,
 				CD7AFA5D21D5C91D00B85456 /* Parse.framework in Frameworks */,
-				CD7AFBC021D5CA7B00B85456 /* libHyphenateVideoRecorderPlugin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4680,7 +4678,7 @@
 			children = (
 				CD7AF8A221D5C7B600B85456 /* Util */,
 				CD7AF8BF21D5C7B600B85456 /* Model */,
-				CD7AF8CB21D5C7B600B85456 /* 3rdparty */,
+				CD7AF8CB21D5C7B600B85456 /* 3rdparty1 */,
 				CD7AF97E21D5C7B600B85456 /* ViewController */,
 				CD7AF98B21D5C7B600B85456 /* Views */,
 				CD7AF9C121D5C7B600B85456 /* Helper */,
@@ -4755,14 +4753,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		CD7AF8CB21D5C7B600B85456 /* 3rdparty */ = {
+		CD7AF8CB21D5C7B600B85456 /* 3rdparty1 */ = {
 			isa = PBXGroup;
 			children = (
 				CD7AF8F921D5C7B600B85456 /* DeviceHelper */,
 				CD7AF91E21D5C7B600B85456 /* MWPhotoBrowser */,
 				CD7AF97921D5C7B600B85456 /* MBProgressHUD */,
 			);
-			path = 3rdparty;
+			path = 3rdparty1;
 			sourceTree = "<group>";
 		};
 		CD7AF8F921D5C7B600B85456 /* DeviceHelper */ = {
@@ -5180,13 +5178,13 @@
 		CD7AFA5021D5C91C00B85456 /* SlimeRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA5121D5C91C00B85456 /* sr_refresh.png */,
-				CD7AFA5221D5C91C00B85456 /* SRSlimeView.h */,
-				CD7AFA5321D5C91C00B85456 /* SRRefreshView.m */,
-				CD7AFA5421D5C91C00B85456 /* SRSlimeView.m */,
 				CD7AFA5521D5C91C00B85456 /* SRDefine.h */,
-				CD7AFA5621D5C91C00B85456 /* sr_refresh@2X.png */,
+				CD7AFA5221D5C91C00B85456 /* SRSlimeView.h */,
+				CD7AFA5421D5C91C00B85456 /* SRSlimeView.m */,
 				CD7AFA5721D5C91C00B85456 /* SRRefreshView.h */,
+				CD7AFA5321D5C91C00B85456 /* SRRefreshView.m */,
+				CD7AFA5121D5C91C00B85456 /* sr_refresh.png */,
+				CD7AFA5621D5C91C00B85456 /* sr_refresh@2X.png */,
 			);
 			path = SlimeRefresh;
 			sourceTree = "<group>";
@@ -5194,8 +5192,8 @@
 		CD7AFA5821D5C91C00B85456 /* TTGlobalUICommon */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA5921D5C91C00B85456 /* TTGlobalUICommon.m */,
 				CD7AFA5A21D5C91C00B85456 /* TTGlobalUICommon.h */,
+				CD7AFA5921D5C91C00B85456 /* TTGlobalUICommon.m */,
 			);
 			path = TTGlobalUICommon;
 			sourceTree = "<group>";
@@ -5203,13 +5201,13 @@
 		CD7AFA7021D5CA7900B85456 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA7121D5CA7900B85456 /* ContactListSelectViewController.h */,
 				CD7AFA7221D5CA7900B85456 /* RealtimeSearchUtil.h */,
-				CD7AFA7321D5CA7900B85456 /* ContactListViewController.h */,
-				CD7AFA7421D5CA7900B85456 /* FriendApply */,
-				CD7AFA7D21D5CA7900B85456 /* ContactListSelectViewController.m */,
-				CD7AFA7E21D5CA7900B85456 /* ContactListViewController.m */,
 				CD7AFA7F21D5CA7900B85456 /* RealtimeSearchUtil.m */,
+				CD7AFA7321D5CA7900B85456 /* ContactListViewController.h */,
+				CD7AFA7E21D5CA7900B85456 /* ContactListViewController.m */,
+				CD7AFA7121D5CA7900B85456 /* ContactListSelectViewController.h */,
+				CD7AFA7D21D5CA7900B85456 /* ContactListSelectViewController.m */,
+				CD7AFA7421D5CA7900B85456 /* FriendApply */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -5217,14 +5215,14 @@
 		CD7AFA7421D5CA7900B85456 /* FriendApply */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA7521D5CA7900B85456 /* ApplyFriendCell.m */,
-				CD7AFA7621D5CA7900B85456 /* ApplyViewController.m */,
 				CD7AFA7721D5CA7900B85456 /* AddFriendCell.h */,
-				CD7AFA7821D5CA7900B85456 /* AddFriendViewController.m */,
-				CD7AFA7921D5CA7900B85456 /* ApplyFriendCell.h */,
 				CD7AFA7A21D5CA7900B85456 /* AddFriendCell.m */,
+				CD7AFA7921D5CA7900B85456 /* ApplyFriendCell.h */,
+				CD7AFA7521D5CA7900B85456 /* ApplyFriendCell.m */,
 				CD7AFA7B21D5CA7900B85456 /* ApplyViewController.h */,
+				CD7AFA7621D5CA7900B85456 /* ApplyViewController.m */,
 				CD7AFA7C21D5CA7900B85456 /* AddFriendViewController.h */,
+				CD7AFA7821D5CA7900B85456 /* AddFriendViewController.m */,
 			);
 			path = FriendApply;
 			sourceTree = "<group>";
@@ -5232,23 +5230,23 @@
 		CD7AFA8021D5CA7900B85456 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA8121D5CA7900B85456 /* EMServiceCheckViewController.h */,
-				CD7AFA8221D5CA7900B85456 /* DebugViewController.m */,
-				CD7AFA8321D5CA7900B85456 /* PushNotificationViewController.m */,
-				CD7AFA8421D5CA7900B85456 /* SettingsViewController.m */,
-				CD7AFA8521D5CA7900B85456 /* EMDevicesViewController.m */,
-				CD7AFA8621D5CA7900B85456 /* EditNicknameViewController.m */,
-				CD7AFA8721D5CA7900B85456 /* BlackListViewController.m */,
-				CD7AFA8821D5CA7900B85456 /* MessageSettingsViewController.h */,
-				CD7AFA8921D5CA7900B85456 /* UserProfileEditViewController.m */,
 				CD7AFA8A21D5CA7900B85456 /* DebugViewController.h */,
-				CD7AFA8B21D5CA7900B85456 /* PushNotificationViewController.h */,
-				CD7AFA8C21D5CA7900B85456 /* EMServiceCheckViewController.m */,
+				CD7AFA8221D5CA7900B85456 /* DebugViewController.m */,
 				CD7AFA8D21D5CA7900B85456 /* BlackListViewController.h */,
-				CD7AFA8E21D5CA7900B85456 /* EditNicknameViewController.h */,
-				CD7AFA8F21D5CA7900B85456 /* EMDevicesViewController.h */,
+				CD7AFA8721D5CA7900B85456 /* BlackListViewController.m */,
 				CD7AFA9021D5CA7900B85456 /* SettingsViewController.h */,
+				CD7AFA8421D5CA7900B85456 /* SettingsViewController.m */,
+				CD7AFA8F21D5CA7900B85456 /* EMDevicesViewController.h */,
+				CD7AFA8521D5CA7900B85456 /* EMDevicesViewController.m */,
+				CD7AFA8E21D5CA7900B85456 /* EditNicknameViewController.h */,
+				CD7AFA8621D5CA7900B85456 /* EditNicknameViewController.m */,
 				CD7AFA9121D5CA7900B85456 /* UserProfileEditViewController.h */,
+				CD7AFA8921D5CA7900B85456 /* UserProfileEditViewController.m */,
+				CD7AFA8B21D5CA7900B85456 /* PushNotificationViewController.h */,
+				CD7AFA8321D5CA7900B85456 /* PushNotificationViewController.m */,
+				CD7AFA8121D5CA7900B85456 /* EMServiceCheckViewController.h */,
+				CD7AFA8C21D5CA7900B85456 /* EMServiceCheckViewController.m */,
+				CD7AFA8821D5CA7900B85456 /* MessageSettingsViewController.h */,
 				CD7AFA9221D5CA7900B85456 /* MessageSettingsViewController.m */,
 			);
 			path = Settings;
@@ -5257,11 +5255,11 @@
 		CD7AFA9321D5CA7900B85456 /* Chatroom */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA9421D5CA7900B85456 /* EMCreateChatroomController.m */,
-				CD7AFA9521D5CA7900B85456 /* ChatroomListViewController.m */,
-				CD7AFA9621D5CA7900B85456 /* Info */,
 				CD7AFAA121D5CA7900B85456 /* ChatroomListViewController.h */,
+				CD7AFA9521D5CA7900B85456 /* ChatroomListViewController.m */,
 				CD7AFAA221D5CA7900B85456 /* EMCreateChatroomController.h */,
+				CD7AFA9421D5CA7900B85456 /* EMCreateChatroomController.m */,
+				CD7AFA9621D5CA7900B85456 /* Info */,
 			);
 			path = Chatroom;
 			sourceTree = "<group>";
@@ -5269,16 +5267,16 @@
 		CD7AFA9621D5CA7900B85456 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFA9721D5CA7900B85456 /* EMChatroomBansViewController.h */,
-				CD7AFA9821D5CA7900B85456 /* EMChatroomMutesViewController.h */,
-				CD7AFA9921D5CA7900B85456 /* EMChatroomAdminsViewController.h */,
-				CD7AFA9A21D5CA7900B85456 /* ChatroomDetailViewController.m */,
-				CD7AFA9B21D5CA7900B85456 /* EMChatroomMembersViewController.m */,
-				CD7AFA9C21D5CA7900B85456 /* EMChatroomBansViewController.m */,
-				CD7AFA9D21D5CA7900B85456 /* EMChatroomMutesViewController.m */,
 				CD7AFA9E21D5CA7900B85456 /* ChatroomDetailViewController.h */,
+				CD7AFA9A21D5CA7900B85456 /* ChatroomDetailViewController.m */,
+				CD7AFA9721D5CA7900B85456 /* EMChatroomBansViewController.h */,
+				CD7AFA9C21D5CA7900B85456 /* EMChatroomBansViewController.m */,
+				CD7AFA9821D5CA7900B85456 /* EMChatroomMutesViewController.h */,
+				CD7AFA9D21D5CA7900B85456 /* EMChatroomMutesViewController.m */,
+				CD7AFA9921D5CA7900B85456 /* EMChatroomAdminsViewController.h */,
 				CD7AFA9F21D5CA7900B85456 /* EMChatroomAdminsViewController.m */,
 				CD7AFAA021D5CA7900B85456 /* EMChatroomMembersViewController.h */,
+				CD7AFA9B21D5CA7900B85456 /* EMChatroomMembersViewController.m */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -5331,19 +5329,19 @@
 		CD7AFAB121D5CA7900B85456 /* 1v1 */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFAB221D5CA7900B85456 /* Call1v1VideoViewController.h */,
-				CD7AFAB321D5CA7900B85456 /* Call1v1AudioViewController.m */,
-				CD7AFAB421D5CA7900B85456 /* EMCallOptions+NSCoding.m */,
-				CD7AFAB521D5CA7900B85456 /* EM1v1CallViewController.h */,
+				CD7AFABE21D5CA7900B85456 /* DemoCallManager.h */,
 				CD7AFAB621D5CA7900B85456 /* DemoCallManager.m */,
-				CD7AFAB721D5CA7900B85456 /* EMVideoInfoViewController.h */,
-				CD7AFAB821D5CA7900B85456 /* EMVideoInfoViewController.xib */,
+				CD7AFAB521D5CA7900B85456 /* EM1v1CallViewController.h */,
+				CD7AFABC21D5CA7900B85456 /* EM1v1CallViewController.m */,
+				CD7AFAB221D5CA7900B85456 /* Call1v1VideoViewController.h */,
 				CD7AFAB921D5CA7900B85456 /* Call1v1VideoViewController.m */,
 				CD7AFABA21D5CA7900B85456 /* Call1v1AudioViewController.h */,
+				CD7AFAB321D5CA7900B85456 /* Call1v1AudioViewController.m */,
 				CD7AFABB21D5CA7900B85456 /* EMCallOptions+NSCoding.h */,
-				CD7AFABC21D5CA7900B85456 /* EM1v1CallViewController.m */,
+				CD7AFAB421D5CA7900B85456 /* EMCallOptions+NSCoding.m */,
+				CD7AFAB721D5CA7900B85456 /* EMVideoInfoViewController.h */,
 				CD7AFABD21D5CA7900B85456 /* EMVideoInfoViewController.m */,
-				CD7AFABE21D5CA7900B85456 /* DemoCallManager.h */,
+				CD7AFAB821D5CA7900B85456 /* EMVideoInfoViewController.xib */,
 			);
 			path = 1v1;
 			sourceTree = "<group>";
@@ -5403,11 +5401,11 @@
 		CD7AFAD521D5CA7900B85456 /* Invite */ = {
 			isa = PBXGroup;
 			children = (
+				CD7AFADA21D5CA7900B85456 /* ConfInviteUserCell.h */,
+				CD7AFAD821D5CA7900B85456 /* ConfInviteUserCell.m */,
+				CD7AFAD721D5CA7900B85456 /* ConfInviteUserCell.xib */,
 				CD7AFAD921D5CA7900B85456 /* ConfInviteUsersViewController.h */,
 				CD7AFAD621D5CA7900B85456 /* ConfInviteUsersViewController.m */,
-				CD7AFADA21D5CA7900B85456 /* ConfInviteUserCell.h */,
-				CD7AFAD721D5CA7900B85456 /* ConfInviteUserCell.xib */,
-				CD7AFAD821D5CA7900B85456 /* ConfInviteUserCell.m */,
 			);
 			path = Invite;
 			sourceTree = "<group>";
@@ -5563,16 +5561,16 @@
 		CD7AFB6021D5CA7A00B85456 /* Robot */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFB6121D5CA7A00B85456 /* RobotListViewController.h */,
-				CD7AFB6221D5CA7A00B85456 /* EMRobotChatTextBubbleView.m */,
-				CD7AFB6321D5CA7A00B85456 /* RobotChatViewController.h */,
 				CD7AFB6421D5CA7A00B85456 /* RobotManager.h */,
-				CD7AFB6521D5CA7A00B85456 /* EMRotbotChatViewCell.m */,
-				CD7AFB6621D5CA7A00B85456 /* RobotListViewController.m */,
-				CD7AFB6721D5CA7A00B85456 /* EMRobotChatTextBubbleView.h */,
-				CD7AFB6821D5CA7A00B85456 /* RobotChatViewController.m */,
 				CD7AFB6921D5CA7A00B85456 /* RobotManager.m */,
 				CD7AFB6A21D5CA7A00B85456 /* EMRotbotChatViewCell.h */,
+				CD7AFB6521D5CA7A00B85456 /* EMRotbotChatViewCell.m */,
+				CD7AFB6121D5CA7A00B85456 /* RobotListViewController.h */,
+				CD7AFB6621D5CA7A00B85456 /* RobotListViewController.m */,
+				CD7AFB6321D5CA7A00B85456 /* RobotChatViewController.h */,
+				CD7AFB6821D5CA7A00B85456 /* RobotChatViewController.m */,
+				CD7AFB6721D5CA7A00B85456 /* EMRobotChatTextBubbleView.h */,
+				CD7AFB6221D5CA7A00B85456 /* EMRobotChatTextBubbleView.m */,
 			);
 			path = Robot;
 			sourceTree = "<group>";
@@ -5580,25 +5578,25 @@
 		CD7AFB6B21D5CA7A00B85456 /* ChatGroup */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFB6C21D5CA7A00B85456 /* SearchMessageViewController.h */,
-				CD7AFB6D21D5CA7A00B85456 /* ContactSelectionViewController.m */,
-				CD7AFB6E21D5CA7A00B85456 /* GroupSubjectChangingViewController.h */,
-				CD7AFB6F21D5CA7A00B85456 /* GroupListViewController.h */,
-				CD7AFB7021D5CA7A00B85456 /* CreateGroupViewController.m */,
-				CD7AFB7121D5CA7A00B85456 /* PublicGroupDetailViewController.h */,
-				CD7AFB7221D5CA7A00B85456 /* PublicGroupListViewController.h */,
-				CD7AFB7321D5CA7A00B85456 /* ContactView.m */,
-				CD7AFB7421D5CA7A00B85456 /* SearchChatViewController.m */,
-				CD7AFB7521D5CA7A00B85456 /* GroupSubjectChangingViewController.m */,
-				CD7AFB7621D5CA7A00B85456 /* ContactSelectionViewController.h */,
-				CD7AFB7721D5CA7A00B85456 /* SearchMessageViewController.m */,
-				CD7AFB7821D5CA7A00B85456 /* Info */,
-				CD7AFB9121D5CA7A00B85456 /* CreateGroupViewController.h */,
-				CD7AFB9221D5CA7A00B85456 /* GroupListViewController.m */,
-				CD7AFB9321D5CA7A00B85456 /* PublicGroupDetailViewController.m */,
-				CD7AFB9421D5CA7A00B85456 /* SearchChatViewController.h */,
 				CD7AFB9521D5CA7A00B85456 /* ContactView.h */,
+				CD7AFB7321D5CA7A00B85456 /* ContactView.m */,
+				CD7AFB6F21D5CA7A00B85456 /* GroupListViewController.h */,
+				CD7AFB9221D5CA7A00B85456 /* GroupListViewController.m */,
+				CD7AFB9421D5CA7A00B85456 /* SearchChatViewController.h */,
+				CD7AFB7421D5CA7A00B85456 /* SearchChatViewController.m */,
+				CD7AFB9121D5CA7A00B85456 /* CreateGroupViewController.h */,
+				CD7AFB7021D5CA7A00B85456 /* CreateGroupViewController.m */,
+				CD7AFB6C21D5CA7A00B85456 /* SearchMessageViewController.h */,
+				CD7AFB7721D5CA7A00B85456 /* SearchMessageViewController.m */,
+				CD7AFB7221D5CA7A00B85456 /* PublicGroupListViewController.h */,
 				CD7AFB9621D5CA7A00B85456 /* PublicGroupListViewController.m */,
+				CD7AFB7621D5CA7A00B85456 /* ContactSelectionViewController.h */,
+				CD7AFB6D21D5CA7A00B85456 /* ContactSelectionViewController.m */,
+				CD7AFB7121D5CA7A00B85456 /* PublicGroupDetailViewController.h */,
+				CD7AFB9321D5CA7A00B85456 /* PublicGroupDetailViewController.m */,
+				CD7AFB6E21D5CA7A00B85456 /* GroupSubjectChangingViewController.h */,
+				CD7AFB7521D5CA7A00B85456 /* GroupSubjectChangingViewController.m */,
+				CD7AFB7821D5CA7A00B85456 /* Info */,
 			);
 			path = ChatGroup;
 			sourceTree = "<group>";
@@ -5606,30 +5604,30 @@
 		CD7AFB7821D5CA7A00B85456 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AFB7921D5CA7A00B85456 /* EMGroupMembersViewController.m */,
 				CD7AFB7A21D5CA7A00B85456 /* EMMemberCell.h */,
-				CD7AFB7B21D5CA7A00B85456 /* group_add@2x.png */,
-				CD7AFB7C21D5CA7A00B85456 /* EMGroupAdminsViewController.m */,
-				CD7AFB7D21D5CA7A00B85456 /* EMGroupInfoViewController.h */,
-				CD7AFB7E21D5CA7A00B85456 /* GroupSettingViewController.h */,
-				CD7AFB7F21D5CA7A00B85456 /* EMGroupMutesViewController.h */,
-				CD7AFB8021D5CA7A00B85456 /* EMGroupSharedFilesViewController.m */,
-				CD7AFB8121D5CA7A00B85456 /* EMGroupBansViewController.h */,
-				CD7AFB8221D5CA7A00B85456 /* EMGroupTransferOwnerViewController.h */,
-				CD7AFB8321D5CA7A00B85456 /* shape_left@2x.png */,
-				CD7AFB8421D5CA7A00B85456 /* EMGroupAdminsViewController.h */,
 				CD7AFB8521D5CA7A00B85456 /* EMMemberCell.m */,
-				CD7AFB8621D5CA7A00B85456 /* EMGroupMembersViewController.h */,
 				CD7AFB8721D5CA7A00B85456 /* EMMemberCell.xib */,
-				CD7AFB8821D5CA7A00B85456 /* check@2x.png */,
-				CD7AFB8921D5CA7A00B85456 /* GroupSettingViewController.m */,
+				CD7AFB7D21D5CA7A00B85456 /* EMGroupInfoViewController.h */,
 				CD7AFB8A21D5CA7A00B85456 /* EMGroupInfoViewController.m */,
-				CD7AFB8B21D5CA7A00B85456 /* shape_right@2x.png */,
+				CD7AFB7E21D5CA7A00B85456 /* GroupSettingViewController.h */,
+				CD7AFB8921D5CA7A00B85456 /* GroupSettingViewController.m */,
+				CD7AFB8121D5CA7A00B85456 /* EMGroupBansViewController.h */,
 				CD7AFB8C21D5CA7A00B85456 /* EMGroupBansViewController.m */,
-				CD7AFB8D21D5CA7A00B85456 /* EMGroupSharedFilesViewController.h */,
+				CD7AFB7F21D5CA7A00B85456 /* EMGroupMutesViewController.h */,
 				CD7AFB8E21D5CA7A00B85456 /* EMGroupMutesViewController.m */,
-				CD7AFB8F21D5CA7A00B85456 /* default_avatar@2x.png */,
+				CD7AFB8421D5CA7A00B85456 /* EMGroupAdminsViewController.h */,
+				CD7AFB7C21D5CA7A00B85456 /* EMGroupAdminsViewController.m */,
+				CD7AFB8621D5CA7A00B85456 /* EMGroupMembersViewController.h */,
+				CD7AFB7921D5CA7A00B85456 /* EMGroupMembersViewController.m */,
+				CD7AFB8D21D5CA7A00B85456 /* EMGroupSharedFilesViewController.h */,
+				CD7AFB8021D5CA7A00B85456 /* EMGroupSharedFilesViewController.m */,
+				CD7AFB8221D5CA7A00B85456 /* EMGroupTransferOwnerViewController.h */,
 				CD7AFB9021D5CA7A00B85456 /* EMGroupTransferOwnerViewController.m */,
+				CD7AFB7B21D5CA7A00B85456 /* group_add@2x.png */,
+				CD7AFB8321D5CA7A00B85456 /* shape_left@2x.png */,
+				CD7AFB8821D5CA7A00B85456 /* check@2x.png */,
+				CD7AFB8B21D5CA7A00B85456 /* shape_right@2x.png */,
+				CD7AFB8F21D5CA7A00B85456 /* default_avatar@2x.png */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -7245,6 +7243,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NBZT2UT4S6;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -7264,6 +7263,8 @@
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/Class/Call/plugin",
+					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty1/DeviceHelper/VoiceConvert/opencore-amrnb",
+					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty1/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -7274,6 +7275,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7 armv7s arm64e";
 			};
 			name = Debug;
 		};
@@ -7290,6 +7292,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NBZT2UT4S6;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -7309,6 +7312,8 @@
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/Class/Call/plugin",
+					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty1/DeviceHelper/VoiceConvert/opencore-amrnb",
+					"$(PROJECT_DIR)/ZhiNengXiaoFu/Chat(聊天)/EaseUI/EMUIKit/3rdparty1/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -7319,6 +7324,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7 armv7s arm64e";
 			};
 			name = Release;
 		};

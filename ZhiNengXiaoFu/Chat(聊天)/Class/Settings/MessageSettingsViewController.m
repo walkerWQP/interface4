@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"setting.message", nil);
+    self.title = @"消息设置";
     
     self.tableView.rowHeight = 60;
     self.tableView.tableFooterView = [[UIView alloc] init];
@@ -63,7 +63,7 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"setting.message.showTyping", nil);
+        cell.textLabel.text = @"单聊显示正在输入";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.typingSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.typingSwitch.frame.size.width + 10), (tableView.rowHeight - self.typingSwitch.frame.size.height) / 2, self.typingSwitch.frame.size.width, self.typingSwitch.frame.size.height);
         [cell.contentView addSubview:self.typingSwitch];

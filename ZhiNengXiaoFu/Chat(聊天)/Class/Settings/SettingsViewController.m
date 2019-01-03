@@ -48,7 +48,7 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.setting", @"Setting");
+    self.title = @"设置";
     self.navigationItem.backBarButtonItem.accessibilityIdentifier = @"back";
     
     self.tableView.tableFooterView = self.footerView;
@@ -184,7 +184,7 @@
     }
     
     if (indexPath.section == 1) {
-        cell.textLabel.text = NSLocalizedString(@"setting.message", nil);
+        cell.textLabel.text = @"消息设置";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
@@ -202,57 +202,57 @@
 #endif
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"setting.autoLogin", @"automatic login");
+        cell.textLabel.text = @"自动登录";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.autoLoginSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoLoginSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoLoginSwitch.frame.size.height) / 2, self.autoLoginSwitch.frame.size.width, self.autoLoginSwitch.frame.size.height);
         [cell.contentView addSubview:self.autoLoginSwitch];
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
+        cell.textLabel.text = @"消息推送设置";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
+        cell.textLabel.text = @"黑名单";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = NSLocalizedString(@"title.debug", @"Debug");
+        cell.textLabel.text = @"诊断";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 4) {
-        cell.textLabel.text = NSLocalizedString(@"setting.deleteConWhenLeave", @"Delete conversation when leave a group");
+        cell.textLabel.text = @"退出时删除会话";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.delConversationSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.delConversationSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.delConversationSwitch.frame.size.height) / 2, self.delConversationSwitch.frame.size.width, self.delConversationSwitch.frame.size.height);
         [cell.contentView addSubview:self.delConversationSwitch];
     } else if (indexPath.row == 5) {
-        cell.textLabel.text = NSLocalizedString(@"setting.autoAcceptGrupInvite", @"Auto accept group invite");
+        cell.textLabel.text = @"自动统一进群邀请";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.groupInviteSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.groupInviteSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.groupInviteSwitch.frame.size.height) / 2, self.groupInviteSwitch.frame.size.width, self.groupInviteSwitch.frame.size.height);
         [cell.contentView addSubview:self.groupInviteSwitch];
     } else if (indexPath.row == 6) {
-        cell.textLabel.text = NSLocalizedString(@"setting.iospushname", @"iOS push nickname");
+        cell.textLabel.text = @"iOS离线推送昵称";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 7) {
-        cell.textLabel.text = NSLocalizedString(@"setting.personalInfo", nil);
+        cell.textLabel.text = @"个人信息";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 8) {
-        cell.textLabel.text = NSLocalizedString(@"setting.sortbyservertime", @"Sort message by server time");
+        cell.textLabel.text = @"信息根据服务器时间排序";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.sortMethodSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.sortMethodSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.sortMethodSwitch.frame.size.height) / 2, self.sortMethodSwitch.frame.size.width, self.sortMethodSwitch.frame.size.height);
         [cell.contentView addSubview:self.sortMethodSwitch];
     } else if (indexPath.row == 9) {
-        cell.textLabel.text = NSLocalizedString(@"setting.enableDeliveryAck", @"Whether to send delivery ack");
+        cell.textLabel.text = @"是否自动发送信息送达回执";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.deliveryAckSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.deliveryAckSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.deliveryAckSwitch.frame.size.height) / 2, self.deliveryAckSwitch.frame.size.width, self.deliveryAckSwitch.frame.size.height);
         [cell.contentView addSubview:self.deliveryAckSwitch];
     } else if (indexPath.row == 10) {
-        cell.textLabel.text = NSLocalizedString(@"setting.messageRource", @"The priority server gets the message");
+        cell.textLabel.text = @"优先服务器获取消息";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.historySwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.historySwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.historySwitch.frame.size.height) / 2, self.historySwitch.frame.size.width, self.historySwitch.frame.size.height);
         [cell.contentView addSubview:self.historySwitch];
     } else if (indexPath.row == 11) {
-        cell.textLabel.text = NSLocalizedString(@"title.autoTransferAttachments",@"The message attachment is uploaded to Hyphenate");
+        cell.textLabel.text = @"消息福建上到环信服务器";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.autoTransferMessageFileSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoTransferMessageFileSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoTransferMessageFileSwitch.frame.size.height) / 2, self.autoTransferMessageFileSwitch.frame.size.width, self.autoTransferMessageFileSwitch.frame.size.height);
         [cell.contentView addSubview:self.autoTransferMessageFileSwitch];
     } else if (indexPath.row == 12) {
-        cell.textLabel.text = NSLocalizedString(@"title.autoDownloadThumbnail", @"Weather to Automatic download thumbnail");
+        cell.textLabel.text = @"是否自动下载缩略图";
         cell.accessoryType = UITableViewCellAccessoryNone;
         self.thumbnailSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.thumbnailSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.thumbnailSwitch.frame.size.height) / 2, self.thumbnailSwitch.frame.size.width, self.thumbnailSwitch.frame.size.height);
         [cell.contentView addSubview:self.thumbnailSwitch];
@@ -319,7 +319,7 @@
         logoutButton.accessibilityIdentifier = @"logoff";
         [logoutButton setBackgroundColor:RGBACOLOR(0xfe, 0x64, 0x50, 1)];
         NSString *username = [[EMClient sharedClient] currentUsername];
-        NSString *logoutButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"setting.loginUser", @"log out(%@)"), username];
+        NSString *logoutButtonTitle = [[NSString alloc] initWithFormat:@"注销%@", username];
         [logoutButton setTitle:logoutButtonTitle forState:UIControlStateNormal];
         [logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [logoutButton addTarget:self action:@selector(logoutAction) forControlEvents:UIControlEventTouchUpInside];
@@ -390,7 +390,7 @@
 - (void)logoutAction
 {
     __weak SettingsViewController *weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
+    [self showHudInView:self.view hint:@"正在退出"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = [[EMClient sharedClient] logout:YES];
         dispatch_async(dispatch_get_main_queue(), ^{

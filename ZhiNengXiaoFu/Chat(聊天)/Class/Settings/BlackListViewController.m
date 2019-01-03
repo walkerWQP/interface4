@@ -49,7 +49,7 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"friend.black", @"Black List");
+    self.title = @"黑名单";
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -260,7 +260,7 @@
 
 - (void)reloadDataSource
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakself = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [weakself.dataSource removeAllObjects];
@@ -293,13 +293,13 @@
 - (id)setupCellEditActions:(NSIndexPath *)aIndexPath
 {
     if ([UIDevice currentDevice].systemVersion.floatValue < 11.0) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"delete",@"Delete") handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
             [self deleteCellAction:indexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
         return @[deleteAction];
     } else {
-        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:NSLocalizedString(@"delete",@"Delete") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteCellAction:aIndexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];

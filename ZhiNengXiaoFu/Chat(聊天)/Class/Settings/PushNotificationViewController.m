@@ -43,10 +43,10 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
+    self.title = @"消息推送设置";
     
     UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-    [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
+    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
     [saveButton addTarget:self action:@selector(savePushOptions) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
@@ -109,7 +109,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 1) {
-        return NSLocalizedString(@"setting.notDisturb", @"Do Not Disturb");
+        return @"功能消息免打扰";
     }
     return nil;
 }
@@ -125,7 +125,7 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = NSLocalizedString(@"setting.showDetail", @"notify the display messages");
+            cell.textLabel.text = @"通知显示消息详情";
             
             self.pushDisplaySwitch.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.height);
             [cell.contentView addSubview:self.pushDisplaySwitch];
@@ -134,17 +134,17 @@
     else if (indexPath.section == 1)
     {
         if (indexPath.row == 0) {
-            cell.textLabel.text = NSLocalizedString(@"setting.open", @"On");
+            cell.textLabel.text = @"开启";
             cell.accessoryType = _noDisturbingStatus == EMPushNoDisturbStatusDay ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
         }
         else if (indexPath.row == 1)
         {
-            cell.textLabel.text = NSLocalizedString(@"setting.nightOpen", @"On only from 10pm to 7am.");
+            cell.textLabel.text = @"只在夜间开启(22:00 - 7:00)";
             cell.accessoryType = _noDisturbingStatus == EMPushNoDisturbStatusCustom ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
         }
         else if (indexPath.row == 2)
         {
-            cell.textLabel.text = NSLocalizedString(@"setting.close", @"Off");
+            cell.textLabel.text = @"关闭";
             cell.accessoryType = _noDisturbingStatus == EMPushNoDisturbStatusClose ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
         }
     }
@@ -180,8 +180,8 @@
             case 0:
             {
                 needReload = NO;
-                [EMAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                        message:NSLocalizedString(@"setting.sureNotDisturb", @"this setting will cause all day in the don't disturb mode, will no longer receive push messages. Whether or not to continue?")
+                [EMAlertView showAlertWithTitle:@"提示"
+                                        message:@"此设置将导致全天处于不打扰模式，将不再接收推送消息。是否继续?"
                                 completionBlock:^(NSUInteger buttonIndex, EMAlertView *alertView) {
                                     switch (buttonIndex) {
                                         case 0: {
@@ -194,8 +194,8 @@
                                         } break;
                                     }
                                     
-                                } cancelButtonTitle:NSLocalizedString(@"no", @"NO")
-                              otherButtonTitles:NSLocalizedString(@"yes", @"YES"), nil];
+                                } cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
                 
             } break;
             case 1:
@@ -276,7 +276,7 @@
 - (void)loadPushOptions
 {
     __weak typeof(self) weakself = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Please wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     [[EMClient sharedClient] getPushNotificationOptionsFromServerWithCompletion:^(EMPushOptions *aOptions, EMError *aError) {
         [weakself hideHud];
         if (!aError) {

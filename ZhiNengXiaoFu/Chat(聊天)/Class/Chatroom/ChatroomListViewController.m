@@ -42,12 +42,12 @@
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"title.chatroom",@"chatroom");
+    self.title = @"聊天室";
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -199,7 +199,7 @@
     else
     {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"searching", @"Searching")];
+        [self showHudInView:self.view hint:@"搜索中..."];
         dispatch_async(dispatch_get_main_queue(), ^{
             EMError *error = nil;
             EMChatroom *chatroom = [[EMClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:searchBar.text error:&error];
@@ -215,7 +215,7 @@
                 }
                 else
                 {
-                    [strongSelf showHint:NSLocalizedString(@"notFound", @"Can't found")];
+                    [strongSelf showHint:@"找不到"];
                 }
             }
         });
@@ -331,7 +331,7 @@
                       isHeader:(BOOL)aIsHeader
 {
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载中..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

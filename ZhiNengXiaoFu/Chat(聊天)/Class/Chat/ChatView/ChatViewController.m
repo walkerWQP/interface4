@@ -87,7 +87,7 @@
                 [[EMClient sharedClient].roomManager leaveChatroom:chatter error:&error];
                 if (error !=nil) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Leave chatroom '%@' failed [%@]", chatter, error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:[NSString stringWithFormat:@"离开聊天室%@失败", chatter, error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                         [alertView show];
                     });
                 }
@@ -149,7 +149,7 @@
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -317,7 +317,7 @@
     if (chatGroup) {
         if (!chatGroup.occupants) {
             __weak ChatViewController* weakSelf = self;
-            [self showHudInView:self.view hint:@"Fetching group members..."];
+            [self showHudInView:self.view hint:@"数据加载"];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 EMError *error = nil;
                 EMGroup *group = [[EMClient sharedClient].groupManager getGroupSpecificationFromServerWithId:chatGroup.groupId error:&error];
@@ -326,7 +326,7 @@
                     if (strongSelf) {
                         [strongSelf hideHud];
                         if (error) {
-                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Fetching group members failed [%@]", error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:[NSString stringWithFormat:@"获取组成员失败%@", error.errorDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                             [alertView show];
                         }
                         else {
@@ -481,9 +481,9 @@
         
         NSString *text;
         if ([msg.from isEqualToString:[EMClient sharedClient].currentUsername]) {
-            text = [NSString stringWithFormat:NSLocalizedString(@"message.recall", @"You recall a message")];
+            text = [NSString stringWithFormat:@"你回忆起一条信息"];
         } else {
-            text = [NSString stringWithFormat:NSLocalizedString(@"message.recallByOthers", @"%@ recall a message"),msg.from];
+            text = [NSString stringWithFormat:@"记得一个消息%@",msg.from];
         }
         
         [self _recallWithMessage:msg text:text isSave:NO];
@@ -580,7 +580,7 @@
     [[EMDingMessageHelper sharedHelper] deleteConversation:self.conversation.conversationId];
     
     if (self.dataArray.count == 0) {
-        [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
+        [self showHint:@"没有消息"];
         return;
     }
     
@@ -594,11 +594,11 @@
             [self.dataArray removeAllObjects];
             
             [self.tableView reloadData];
-            [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
+            [self showHint:@"没有消息"];
         }
     }
     else if ([sender isKindOfClass:[UIButton class]]){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"sureToDelete", @"please make sure to delete") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定删除吗?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     }
 }
@@ -611,9 +611,9 @@
         [[EMClient sharedClient].chatManager recallMessage:model.message
                                                 completion:^(EMMessage *aMessage, EMError *aError) {
                                                     if (!aError) {
-                                                        [weakSelf _recallWithMessage:aMessage text:NSLocalizedString(@"message.recall", @"You recall a message") isSave:YES];
+                                                        [weakSelf _recallWithMessage:aMessage text:@"你撤回一条信息" isSave:YES];
                                                     } else {
-                                                        [weakSelf showHint:[NSString stringWithFormat:NSLocalizedString(@"recallFailed", @"Recall failed:%@"), aError.errorDescription]];
+                                                        [weakSelf showHint:[NSString stringWithFormat:@"撤回失败%@", aError.errorDescription]];
                                                     }
                                                     weakSelf.menuIndexPath = nil;
                                                 }];
@@ -761,19 +761,19 @@
     }
     
     if (_deleteMenuItem == nil) {
-        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"delete", @"Delete") action:@selector(deleteMenuAction:)];
+        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMenuAction:)];
     }
     
     if (_copyMenuItem == nil) {
-        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy") action:@selector(copyMenuAction:)];
+        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyMenuAction:)];
     }
     
     if (_transpondMenuItem == nil) {
-        _transpondMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"transpond", @"Transpond") action:@selector(transpondMenuAction:)];
+        _transpondMenuItem = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(transpondMenuAction:)];
     }
     
     if (_recallItem == nil) {
-        _recallItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"recall", @"Recall") action:@selector(recallMenuAction:)];
+        _recallItem = [[UIMenuItem alloc] initWithTitle:@"撤回" action:@selector(recallMenuAction:)];
     }
     
     NSMutableArray *items = [NSMutableArray array];

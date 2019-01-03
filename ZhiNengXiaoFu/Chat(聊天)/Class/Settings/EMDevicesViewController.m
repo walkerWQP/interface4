@@ -28,9 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"setting.deviceResources", @"List of logged devices");
+    self.title = @"设备列表";
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"setting.kickAllDevices", @"KickAll") style:UIBarButtonItemStylePlain target:self action:@selector(kickAllAction)];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"所有" style:UIBarButtonItemStylePlain target:self action:@selector(kickAllAction)];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     self.tableView.rowHeight = 50;
@@ -76,20 +76,20 @@
         tag = [aNotif.object intValue];
     }
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"getPermission", @"Get Permission") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"获得许可" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"username", @"Username");
+        textField.placeholder = @"昵称";
     }];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"password", @"Password");
+        textField.placeholder = @"密码";
         textField.secureTextEntry = YES;
     }];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:cancelAction];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *usernameField = alertController.textFields.firstObject;
         self.username = usernameField.text;
         
@@ -193,13 +193,13 @@
 - (id)setupCellEditActions:(NSIndexPath *)aIndexPath
 {
     if ([UIDevice currentDevice].systemVersion.floatValue < 11.0) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"delete",@"Delete") handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
             [self deleteCellAction:indexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
         return @[deleteAction];
     } else {
-        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:NSLocalizedString(@"delete",@"Delete") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteCellAction:aIndexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
@@ -217,7 +217,7 @@
 
 - (void)kickAllDevices
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Waiting...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakself = self;
     [[EMClient sharedClient] kickAllDevicesWithUsername:self.username password:self.password completion:^(EMError *aError) {
         [weakself hideHud];
@@ -231,7 +231,7 @@
 
 - (void)kickOneDevice
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Waiting...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakself = self;
     
     EMDeviceConfig *device = [self.dataSource objectAtIndex:self.willKickDeviceIndex.row];
@@ -261,7 +261,7 @@
 
 - (void)fetchDataFromServer
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakself = self;
     [[EMClient sharedClient] getLoggedInDevicesFromServerWithUsername:self.username password:self.password completion:^(NSArray *aList, EMError *aError) {
         [weakself hideHud];

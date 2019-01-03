@@ -46,8 +46,8 @@
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
     
-    self.title = NSLocalizedString(@"title.notifMsg", @"Notification message");
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"send", @"Send") style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
+    self.title = @"通知消息";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.textView = [[UITextView alloc] initWithFrame:CGRectMake(20, 20, self.view.frame.size.width - 40, 150)];

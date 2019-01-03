@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"title.profile", @"Profile");
+    self.title = @"个人信息";
     
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
@@ -94,13 +94,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     if (indexPath.row == 0) {
-        cell.detailTextLabel.text = NSLocalizedString(@"setting.personalInfoUpload", @"Upload HeadImage");
+        cell.detailTextLabel.text = @"头像";
         [cell.contentView addSubview:self.headImageView];
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = NSLocalizedString(@"username", @"username");
+        cell.textLabel.text = @"个人账户";
         cell.detailTextLabel.text = self.usernameLabel.text;
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = NSLocalizedString(@"setting.profileNickname", @"Nickname");
+        cell.textLabel.text = @"昵称";
         UserProfileEntity *entity = [[UserProfileManager sharedInstance] getUserProfileByUsername:_username];
         if (entity && entity.nickname.length>0) {
             cell.detailTextLabel.text = entity.nickname;
@@ -131,7 +131,7 @@
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -140,7 +140,7 @@
 - (void)loadUserProfile
 {
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"数据加载..."];
     __weak typeof(self) weakself = self;
     [[UserProfileManager sharedInstance] loadUserProfileInBackground:@[_username] saveToLoacal:YES completion:^(BOOL success, NSError *error) {
         [weakself hideHud];

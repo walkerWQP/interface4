@@ -170,7 +170,7 @@ static ChatDemoHelper *helper = nil;
 - (void)userAccountDidLoginFromOtherDevice
 {
     [self _clearHelper];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的登录帐户已经在其他地方" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
@@ -179,7 +179,7 @@ static ChatDemoHelper *helper = nil;
 - (void)userAccountDidRemoveFromServer
 {
     [self _clearHelper];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的帐户已从服务器端移除" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
@@ -188,7 +188,7 @@ static ChatDemoHelper *helper = nil;
 - (void)userDidForbidByServer
 {
     [self _clearHelper];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"servingIsBanned", @"Serving is banned") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"服务是被禁止的" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
@@ -198,7 +198,7 @@ static ChatDemoHelper *helper = nil;
 {
     [self _clearHelper];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:aError.errorDescription delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:aError.errorDescription delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
@@ -223,7 +223,7 @@ static ChatDemoHelper *helper = nil;
                                        ext:(NSString *)aExt
 {
     NSString *message = [NSString stringWithFormat:@"%li-%@-%@", (long)aEvent, aTarget, aExt];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.multi.contact", @"Contact Multi-devices") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"接触无需多设备" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     switch (aEvent) {
@@ -255,7 +255,7 @@ static ChatDemoHelper *helper = nil;
                                      ext:(id)aExt
 {
     NSString *message = [NSString stringWithFormat:@"%li-%@-%@", (long)aEvent, aGroupId, aExt];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.multi.group", @"Group Multi-devices") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"接触无需多设备" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     
     switch (aEvent) {
@@ -398,9 +398,9 @@ static ChatDemoHelper *helper = nil;
     for (EMMessage *msg in aMessages) {
         NSString *text;
         if ([msg.from isEqualToString:[EMClient sharedClient].currentUsername]) {
-            text = [NSString stringWithFormat:NSLocalizedString(@"message.recall", @"You recall a message")];
+            text = [NSString stringWithFormat:@"你撤回一条消息"];
         } else {
-            text = [NSString stringWithFormat:NSLocalizedString(@"message.recallByOthers", @"%@ recall a message"),msg.from];
+            text = [NSString stringWithFormat:@"%@撤回消息",msg.from];
         }
         EMMessage *message = [EaseSDKHelper getTextMessage:text to:msg.conversationId messageType:msg.chatType messageExt:@{@"em_recall":@(YES)}];
         message.isRead = YES;
@@ -459,11 +459,11 @@ static ChatDemoHelper *helper = nil;
 - (void)didReceiveLeavedGroup:(EMGroup *)aGroup
                        reason:(EMGroupLeaveReason)aReason
 {
-    NSString *str = NSLocalizedString(@"group.leaved", nil);
+    NSString *str = @"退出群";
     if (aReason == EMGroupLeaveReasonBeRemoved) {
-        str = [NSString stringWithFormat:NSLocalizedString(@"group.kicked", nil), aGroup.subject, aGroup.groupId];
+        str = [NSString stringWithFormat:@"你被踢出群%@%@", aGroup.subject, aGroup.groupId];
     } else if (aReason == EMGroupLeaveReasonDestroyed) {
-        str = [NSString stringWithFormat:NSLocalizedString(@"group.destroyed", nil), aGroup.subject, aGroup.groupId];
+        str = [NSString stringWithFormat:@"群%@%@已解散", aGroup.subject, aGroup.groupId];
     }
     
     if (str.length > 0) {
@@ -500,10 +500,10 @@ static ChatDemoHelper *helper = nil;
     }
     
     if (!aReason || aReason.length == 0) {
-        aReason = [NSString stringWithFormat:NSLocalizedString(@"group.applyJoin", @"%@ apply to join groups\'%@\'"), aApplicant, aGroup.subject];
+        aReason = [NSString stringWithFormat:@"%@申请加入群%@", aApplicant, aGroup.subject];
     }
     else{
-        aReason = [NSString stringWithFormat:NSLocalizedString(@"group.applyJoinWithName", @"%@ apply to join groups\'%@\'：%@"), aApplicant, aGroup.subject, aReason];
+        aReason = [NSString stringWithFormat:@"%@申请加入群%@", aApplicant, aGroup.subject, aReason];
     }
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":aGroup.subject, @"groupId":aGroup.groupId, @"username":aApplicant, @"groupname":aGroup.subject, @"applyMessage":aReason, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleJoinGroup]}];
@@ -524,7 +524,7 @@ static ChatDemoHelper *helper = nil;
                inviter:(NSString *)aInviter
                message:(NSString *)aMessage
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:[NSString stringWithFormat:NSLocalizedString(@"group.inviteSomeone", nil), aInviter, aGroup.subject, aGroup.groupId] delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@邀请你加入群", aInviter, aGroup.subject, aGroup.groupId] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -532,16 +532,16 @@ static ChatDemoHelper *helper = nil;
                           invitee:(NSString *)aInvitee
                            reason:(NSString *)aReason
 {
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.declinedInvite", nil), aInvitee, aGroup.subject];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    NSString *message = [NSString stringWithFormat:@"%@拒接群邀请%@", aInvitee, aGroup.subject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
 - (void)groupInvitationDidAccept:(EMGroup *)aGroup
                          invitee:(NSString *)aInvitee
 {
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.acceptedInvite", nil), aInvitee, aGroup.subject, aGroup.groupId];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    NSString *message = [NSString stringWithFormat:@"%@接受了群邀请%@%@", aInvitee, aGroup.subject, aGroup.groupId];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -549,16 +549,16 @@ static ChatDemoHelper *helper = nil;
                              reason:(NSString *)aReason
 {
     if (!aReason || aReason.length == 0) {
-        aReason = [NSString stringWithFormat:NSLocalizedString(@"group.beRefusedToJoin", @"be refused to join the group\'%@\'"), aGroupId];
+        aReason = [NSString stringWithFormat:@"%@被拒绝加入群", aGroupId];
     }
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:aReason delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:aReason delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
 - (void)joinGroupRequestDidApprove:(EMGroup *)aGroup
 {
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.agreedAndJoined", @"agreed to join the group of \'%@\'"), aGroup.subject];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    NSString *message = [NSString stringWithFormat:@"同意加入%@", aGroup.subject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -590,7 +590,7 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.update", @"Group update") message:NSLocalizedString(@"group.toMute", @"Mute") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群公告" message:@"禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -599,7 +599,7 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.update", @"Group update")  message:NSLocalizedString(@"group.unmute", @"Unmute") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群公告" message:@"静音状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -608,8 +608,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:@"%@ %@", aAdmin, NSLocalizedString(@"group.becomeAdmin", @"Become Admin")];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.adminUpdate", @"Group Admin Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@ 成为管理", aAdmin];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"管理员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -618,8 +618,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:@"%@ %@", aAdmin, NSLocalizedString(@"group.beRemovedAdmin", @"is removed from admin list")];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.adminUpdate", @"Group Admin Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@ 是否从管理列表中删除", aAdmin];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"管理员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -629,8 +629,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"group.changeOwnerTo", @"Change owner %@ to %@"), aOldOwner, aNewOwner];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.ownerUpdate", @"Group Owner Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"更改群主%@为%@", aOldOwner, aNewOwner];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群公告" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -639,8 +639,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:@"%@ %@ %@", aUsername, NSLocalizedString(@"group.join", @"Join the group"), aGroup.subject];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.membersUpdate", @"Group Members Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@ 加入群 %@", aUsername, aGroup.subject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群成员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -649,8 +649,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:@"%@ %@ %@", aUsername, NSLocalizedString(@"group.leave", @"Leave group"), aGroup.subject];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.membersUpdate", @"Group Members Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@ 退出 %@", aUsername, aGroup.subject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群成员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -659,8 +659,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupDetail" object:aGroup];
     
-    NSString *msg = aAnnouncement == nil ? [NSString stringWithFormat:NSLocalizedString(@"group.clearAnnouncement", @"Group:%@ Announcement is clear"), aGroup.subject] : [NSString stringWithFormat:NSLocalizedString(@"group.updateAnnouncement", @"Group:%@ Announcement: %@"), aGroup.subject, aAnnouncement];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.announcementUpdate", @"Group Announcement Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = aAnnouncement == nil ? [NSString stringWithFormat:@"%@公告是清楚的", aGroup.subject] : [NSString stringWithFormat:@"%@公告%@", aGroup.subject, aAnnouncement];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群公告更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -669,8 +669,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupSharedFile" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"group.uploadSharedFile", @"Group:%@ Upload file ID: %@"), aGroup.subject, aSharedFile.fileId];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.sharedFileUpdate", @"Group SharedFile Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@上传文件%@", aGroup.subject, aSharedFile.fileId];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群共享更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -679,8 +679,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGroupSharedFile" object:aGroup];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"group.removeSharedFile", @"Group:%@ Remove file ID: %@"), aGroup.subject, aFileId];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.sharedFileUpdate", @"Group SharedFile Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@删除文件%@", aGroup.subject, aFileId];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"群共享更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -688,15 +688,15 @@ static ChatDemoHelper *helper = nil;
 
 - (void)didReceiveAgreedFromUsername:(NSString *)aUsername
 {
-    NSString *msgstr = [NSString stringWithFormat:NSLocalizedString(@"friend.acceptedToAdd", nil), aUsername];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:msgstr delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msgstr = [NSString stringWithFormat:@"%@接受你的好友请求", aUsername];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:msgstr delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
 - (void)didReceiveDeclinedFromUsername:(NSString *)aUsername
 {
-    NSString *msgstr = [NSString stringWithFormat:NSLocalizedString(@"friend.declinedToAdd", nil), aUsername];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:msgstr delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msgstr = [NSString stringWithFormat:@"%@拒绝好友请求", aUsername];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:msgstr delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -721,7 +721,7 @@ static ChatDemoHelper *helper = nil;
             [_mainVC.navigationController setViewControllers:viewControllers animated:YES];
         }
     }
-    [_mainVC showHint:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"delete", @"delete"), aUsername]];
+    [_mainVC showHint:[NSString stringWithFormat:@"删除 %@", aUsername]];
     [_contactViewVC reloadDataSource];
 }
 
@@ -738,7 +738,7 @@ static ChatDemoHelper *helper = nil;
     }
     
     if (!aMessage) {
-        aMessage = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
+        aMessage = [NSString stringWithFormat:@"%@加你为好友", aUsername];
     }
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":aUsername, @"username":aUsername, @"applyMessage":aMessage, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleFriend]}];
     [[ApplyViewController shareController] addNewApply:dic];
@@ -754,15 +754,15 @@ static ChatDemoHelper *helper = nil;
                 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:0.01 repeats:NO];
                 UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
                 content.sound = [UNNotificationSound defaultSound];
-                content.body =[NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
+                content.body =[NSString stringWithFormat:@"%@加你为好友"), aUsername];
                 UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:[[NSNumber numberWithDouble:[NSDate timeIntervalSinceReferenceDate] * 1000] stringValue] content:content trigger:trigger];
                 [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
             }
             else {
                 UILocalNotification *notification = [[UILocalNotification alloc] init];
                 notification.fireDate = [NSDate date]; //触发通知的时间
-                notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
-                notification.alertAction = NSLocalizedString(@"open", @"Open");
+                notification.alertBody = [NSString stringWithFormat:@"%@加你为好友", aUsername];
+                notification.alertAction = @"打开";
                 notification.timeZone = [NSTimeZone defaultTimeZone];
             }
         }
@@ -797,7 +797,7 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.update", @"Chatroom Update") message:NSLocalizedString(@"chatroom.mute", @"Mute") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"聊天室公告" message:@"禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -806,7 +806,7 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.update", @"Chatroom Update") message:NSLocalizedString(@"chatroom.unmute", @"Unmute")  delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"聊天室公告" message:@"解除禁言"  delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -815,8 +815,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"chatroom.becomeAdmin", @"%@ become admin"), aAdmin];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.adminUpdate", @"Admin Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@成为管理", aAdmin];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"管理员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -825,8 +825,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"chatroom.beRemovedAdmin", @"%@ is removed from admin list"), aAdmin];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.adminUpdate", @"Admin Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"%@是否从管理列表中删除？", aAdmin];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"管理员更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -836,9 +836,9 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"chatroom.changeOwnerTo", @"Change Chatroom Owner %@ to %@"), aOldOwner, aNewOwner];
+    NSString *msg = [NSString stringWithFormat:@"改变聊天室所有者%@为%@", aOldOwner, aNewOwner];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.ownerUpdate", @"Chatroom Owner Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"聊天室公告" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -847,8 +847,8 @@ static ChatDemoHelper *helper = nil;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateChatroomDetail" object:aChatroom];
     
-    NSString *msg = aAnnouncement == nil ? [NSString stringWithFormat:NSLocalizedString(@"chatroom.clearAnnouncement", @"Chatroom:%@ Announcement is clear"), aChatroom.subject] : [NSString stringWithFormat:NSLocalizedString(@"chatroom.updateAnnouncement", Chatroom:%@ Announcement: %@), aChatroom.subject, aAnnouncement];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"chatroom.announcementUpdate", @"Chatroom Announcement Update") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"Ok") otherButtonTitles:nil, nil];
+    NSString *msg = aAnnouncement == nil ? [NSString stringWithFormat:@"%@聊天室公告", aChatroom.subject] : [NSString stringWithFormat:@"聊天室:%@声明:%@", aChatroom.subject, aAnnouncement];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"聊天室公告更新" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
 }
 

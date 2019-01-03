@@ -68,6 +68,13 @@
     [[UserProfileManager sharedInstance] loadUserProfileInBackgroundWithBuddy:self.contactsSource saveToLoacal:YES completion:NULL];
     
     [self setupSearchController];
+    
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [addButton setImage:[UIImage imageNamed:@"添加"] forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addContactAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,18 +91,17 @@
 
 #pragma mark - getter
 
-- (NSArray *)rightItems
-{
-    if (_rightItems == nil) {
-        UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [addButton setImage:[UIImage imageNamed:@"addContact.png"] forState:UIControlStateNormal];
-        [addButton addTarget:self action:@selector(addContactAction) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-        _rightItems = @[addItem];
-    }
-    
-    return _rightItems;
-}
+//- (NSArray *)rightItems {
+//    if (_rightItems == nil) {
+//        UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//        [addButton setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
+//        [addButton addTarget:self action:@selector(addContactAction) forControlEvents:UIControlEventTouchUpInside];
+//        UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+//        _rightItems = @[addItem];
+//    }
+//
+//    return _rightItems;
+//}
 
 #pragma mark - Table view data source
 
@@ -127,7 +133,7 @@
                 cell = [[EaseUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             cell.avatarView.image = [UIImage imageNamed:@"newFriends"];
-            cell.titleLabel.text = NSLocalizedString(@"title.apply", @"Application and notification");
+            cell.titleLabel.text = @"申请与通知";
             cell.avatarView.badge = self.unapplyCount;
             return cell;
         }
@@ -140,19 +146,19 @@
         
         if (indexPath.row == 1) {
             cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/group"];
-            cell.titleLabel.text = NSLocalizedString(@"title.group", @"Group");
+            cell.titleLabel.text = @"群组";
         }
         else if (indexPath.row == 2) {
             cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/group"];
-            cell.titleLabel.text = NSLocalizedString(@"title.chatroom",@"chatroom");
+            cell.titleLabel.text = @"聊天室";
         }
         else if (indexPath.row == 3) {
             cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
-            cell.titleLabel.text = NSLocalizedString(@"title.conference",@"Mutil Conference");
+            cell.titleLabel.text = @"多人音视频会议";
         }
         else if (indexPath.row == 4) {
             cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
-            cell.titleLabel.text = NSLocalizedString(@"title.customConference",@"Custom Video Conference");
+            cell.titleLabel.text = @"自定义视频会议";
         }
         
         return cell;
@@ -261,7 +267,7 @@
             }];
             [alertController addAction:mixAction];
             
-            [alertController addAction: [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style: UIAlertActionStyleCancel handler:nil]];
+            [alertController addAction: [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:nil]];
             
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -339,7 +345,7 @@
                 }
             }
             else{
-                [weakSelf showHint:[NSString stringWithFormat:NSLocalizedString(@"deleteFailed", @"Delete failed:%@"), error.errorDescription]];
+                [weakSelf showHint:[NSString stringWithFormat:@"删除失败:%@", error.errorDescription]];
                 [weakSelf.tableView reloadData];
             }
         });
@@ -359,7 +365,7 @@
     _currentLongPressIndex = nil;
     
     [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
+    [self showHudInView:self.view hint:@"请稍等..."];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -387,7 +393,7 @@
     }
     
     _currentLongPressIndex = indexPath;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") destructiveButtonTitle:NSLocalizedString(@"friend.block", @"join the blacklist") otherButtonTitles:nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"加入黑名单" otherButtonTitles:nil, nil];
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
 }
                                                
@@ -417,20 +423,20 @@
 - (void)deleteCellAction:(NSIndexPath *)aIndexPath
 {
     self.indexPath = aIndexPath;
-    UIAlertView *alertView = [[ UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"message.deleteConversation", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    UIAlertView *alertView = [[ UIAlertView alloc] initWithTitle:@"提示" message:@"是否删除对话?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alertView show];
 }
 
 - (id)setupCellEditActions:(NSIndexPath *)aIndexPath
 {
     if ([UIDevice currentDevice].systemVersion.floatValue < 11.0) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"delete",@"Delete") handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
             [self deleteCellAction:indexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
         return @[deleteAction];
     } else {
-        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:NSLocalizedString(@"delete",@"Delete") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self deleteCellAction:aIndexPath];
         }];
         deleteAction.backgroundColor = [UIColor redColor];
@@ -577,7 +583,7 @@
 
 - (void)tableViewDidTriggerHeaderRefresh
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [self showHudInView:self.view hint:@"加载数据..."];
     __weak typeof(self) weakself = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
@@ -604,7 +610,7 @@
         }
         else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakself showHint:NSLocalizedString(@"loadDataFailed", @"Load data failed.")];
+                [weakself showHint:@"加载数据失败。"];
                 [weakself reloadDataSource];
             });
         }

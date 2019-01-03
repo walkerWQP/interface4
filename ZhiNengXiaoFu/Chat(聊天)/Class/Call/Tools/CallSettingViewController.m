@@ -31,7 +31,7 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"setting.call", nil);
+    self.title = @"音视频设置";
     
     self.fixedSwitch = [[UISwitch alloc] init];
     [self.fixedSwitch addTarget:self action:@selector(fixedSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -142,11 +142,11 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = NSLocalizedString(@"setting.call.push", nil);
+            cell.textLabel.text = @"是否发送离线推送";
             cell.accessoryType = UITableViewCellAccessoryNone;
             [cell.contentView addSubview:self.callPushSwitch];
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = NSLocalizedString(@"setting.call.showInfo", nil);
+            cell.textLabel.text = @"显示视频通话信息";
             cell.accessoryType = UITableViewCellAccessoryNone;
             [cell.contentView addSubview:self.showCallInfoSwitch];
         }
@@ -158,27 +158,27 @@
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 1) {
-            cell.textLabel.text = NSLocalizedString(@"setting.call.maxVKbps", nil);
+            cell.textLabel.text = @"固定视频分辨率";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 2) {
-            cell.textLabel.text = NSLocalizedString(@"setting.call.minVKbps", nil);
+            cell.textLabel.text = @"视频最大码率";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
         if (self.fixedSwitch.isOn) {
             if (indexPath.row == 0) {
-                cell.textLabel.text = NSLocalizedString(@"setting.call.fixedResolution", nil);
+                cell.textLabel.text = @"视频最小码率";
                 [cell.contentView addSubview:self.fixedSwitch];
             } else if (indexPath.row == 3) {
-                cell.textLabel.text = NSLocalizedString(@"setting.call.resolution", nil);
+                cell.textLabel.text = @"视频分辨率";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
         } else {
             if (indexPath.row == 0) {
-                cell.textLabel.text = NSLocalizedString(@"setting.call.autoResolution", nil);
+                cell.textLabel.text = @"自动调配视频分辨率";
                 [cell.contentView addSubview:self.fixedSwitch];
             } else if (indexPath.row == 3) {
-                cell.textLabel.text = NSLocalizedString(@"setting.call.maxFramerate", nil);
+                cell.textLabel.text = @"视频最大帧率";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
         }
@@ -200,7 +200,7 @@
     
     if (indexPath.section == 2) {
         if (indexPath.row == 1) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"setting.call.maxVKbps", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"视频分辨率最大?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             alert.tag = FIXED_BITRATE_ALERTVIEW_TAG;
             
@@ -210,7 +210,7 @@
             
             [alert show];
         } else if (indexPath.row == 2) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"setting.call.minVKbps", @"Video min kbps") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"视频最小分辨率?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             alert.tag = AUTO_MINKBPS_ALERTVIEW_TAG;
             
@@ -227,7 +227,7 @@
             }
         } else {
             if (indexPath.row == 3) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"setting.call.maxFramerate", @"Video max framerate") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"视频最大帧速率" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 alert.tag = AUTO_MAXRATE_ALERTVIEW_TAG;
                 
@@ -260,7 +260,7 @@
                 options.maxVideoKbps = value;
                 [[DemoCallManager sharedManager] saveCallOptions];
             } else {
-                [self showHint:NSLocalizedString(@"setting.call.maxVKbpsTips", @"Video kbps should be 150-1000")];
+                [self showHint:@"视频分辨率150-1000"];
             }
         } else if (alertView.tag == AUTO_MAXRATE_ALERTVIEW_TAG) {
             EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];

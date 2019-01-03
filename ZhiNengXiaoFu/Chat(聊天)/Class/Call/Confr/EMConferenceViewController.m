@@ -514,7 +514,7 @@
     __weak typeof(self) weakSelf = self;
     [[EMClient sharedClient].conferenceManager subscribeConference:self.conference streamId:aStream.streamId remoteVideoView:remoteView completion:^(EMError *aError) {
         if (aError) {
-            NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alert.conference.subFail", @"Sub stream-%@ failed!"), aStream.userName];
+            NSString *message = [NSString stringWithFormat:@"%@失败", aStream.userName];
             [weakSelf showHint:message];
             [weakSelf.streamItemDict removeObjectForKey:aStream.streamId];
             return ;

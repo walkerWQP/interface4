@@ -38,11 +38,11 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"title.debug", @"Debug");
+    self.title = @"诊断";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -95,15 +95,15 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"setting.sdkVersion", @"SDK version");
+        cell.textLabel.text = @"SDK版本";
         NSString *ver = [[EMClient sharedClient] version];
         cell.detailTextLabel.text = ver;
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = NSLocalizedString(@"setting.emailLog", @"Email send logs");
+        cell.textLabel.text = @"邮件发送日志";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = NSLocalizedString(@"setting.deviceResources", @"List of logged devices");
+        cell.textLabel.text = @"登陆设备列表";
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = NSLocalizedString(@"setting.serviceDiagnose", @"Make a diagnose for service");
+        cell.textLabel.text = @"服务诊断";
     }
     
     return cell;

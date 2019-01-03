@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = NSLocalizedString(@"title.readList", @"Read Users");
+    self.title = @"阅读用户";
     
     self.dataArray = [[NSMutableArray alloc] init];
     NSArray *array = [[EMDingMessageHelper sharedHelper] usersHasReadMessage:self.message];

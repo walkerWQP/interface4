@@ -19,11 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = NSLocalizedString(@"setting.serviceDiagnose", @"Make a diagnose for service");
+    self.title = @"服务诊断";
     [self.view addSubview:self.textView];
     [self showTextFieldAlertView];
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"setting.serviceCheck", @"Check") style:UIBarButtonItemStylePlain target:self action:@selector(showTextFieldAlertView)];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"诊断" style:UIBarButtonItemStylePlain target:self action:@selector(showTextFieldAlertView)];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
@@ -50,21 +50,21 @@
 
 - (void)showTextFieldAlertView
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"getPermission", @"Get Permission") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"获取权限" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = [EMClient sharedClient].currentUsername;
-        textField.placeholder = NSLocalizedString(@"username", @"Username");
+        textField.placeholder = @"昵称";
     }];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"password", @"Password");
+        textField.placeholder = @"密码";
         textField.secureTextEntry = YES;
     }];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:cancelAction];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *usernameField = alertController.textFields.firstObject;
         
         UITextField *passwordField = alertController.textFields.lastObject;
