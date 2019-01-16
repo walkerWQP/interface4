@@ -27,18 +27,7 @@
     [navbar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     
     [[UITabBar appearance] setTintColor:tabBarColor];
-//    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"chooseLoginState"] isEqualToString:@"2"]) {
-//        [navbar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
-//
-//        [[UITabBar appearance] setTintColor:tabBarColor];
-//
-//    }else
-//    {
-//        [navbar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
-//
-//        [[UITabBar appearance] setTintColor:tabBarColor];
-//
-//    }
+
     
     [navbar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Semibold" size:18],NSForegroundColorAttributeName:[UIColor blackColor]}];

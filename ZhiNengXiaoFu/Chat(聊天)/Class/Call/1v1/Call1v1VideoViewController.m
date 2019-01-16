@@ -58,19 +58,19 @@
     CGFloat width = 80;
     CGFloat height = 50;
     CGFloat padding = ([UIScreen mainScreen].bounds.size.width - width * 4) / 5;
-   
-//#ifdef DEBUG
-//    self.recorderButton = [[EMButton alloc] initWithTitle:@"屏幕录制" target:self action:@selector(recorderButtonAction)];
-//    [self.recorderButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//    [self.recorderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-//    [self.recorderButton setImage:[UIImage imageNamed:@"recorder_gray"] forState:UIControlStateNormal];
-//    [self.recorderButton setImage:[UIImage imageNamed:@"recorder_white"] forState:UIControlStateSelected];
-//    [self.view addSubview:self.recorderButton];
-//    [self.recorderButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.view).offset(padding);
-//        make.bottom.equalTo(self.hangupButton.mas_top).offset(-40);
-//    }];
-//#endif
+    
+    //#ifdef DEBUG
+    //    self.recorderButton = [[EMButton alloc] initWithTitle:@"屏幕录制" target:self action:@selector(recorderButtonAction)];
+    //    [self.recorderButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    //    [self.recorderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    //    [self.recorderButton setImage:[UIImage imageNamed:@"recorder_gray"] forState:UIControlStateNormal];
+    //    [self.recorderButton setImage:[UIImage imageNamed:@"recorder_white"] forState:UIControlStateSelected];
+    //    [self.view addSubview:self.recorderButton];
+    //    [self.recorderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    //        make.left.equalTo(self.view).offset(padding);
+    //        make.bottom.equalTo(self.hangupButton.mas_top).offset(-40);
+    //    }];
+    //#endif
     
     self.switchCameraButton = [[EMButton alloc] initWithTitle:@"切换摄像头" target:self action:@selector(switchCameraButtonAction:)];
     [self.switchCameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -127,7 +127,7 @@
     width = 80;
     CGSize size = [UIScreen mainScreen].bounds.size;
     height = size.height / size.width * width;
-
+    
     self.minVideoView = [[UIView alloc] init];
     self.minVideoView.tag = TAG_MINVIDEOVIEW_LOCAL;
     self.minVideoView.backgroundColor = [UIColor blackColor];

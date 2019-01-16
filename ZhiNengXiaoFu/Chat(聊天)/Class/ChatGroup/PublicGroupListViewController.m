@@ -11,12 +11,10 @@
   */
 
 #import "PublicGroupListViewController.h"
-
 #import "PublicGroupDetailViewController.h"
 #import "RealtimeSearchUtil.h"
 #import <Hyphenate/EMCursorResult.h>
 #import "BaseTableViewCell.h"
-
 #import "UIViewController+SearchController.h"
 
 #define FetchPublicGroupsPageSize   50
@@ -44,8 +42,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
     self.title = @"公共群组";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -64,7 +60,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dealloc
@@ -81,13 +76,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.dataSource count];
 }
 
@@ -96,7 +89,6 @@
     static NSString *CellIdentifier = @"GroupCell";
     BaseTableViewCell *cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
     if (cell == nil) {
         cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }

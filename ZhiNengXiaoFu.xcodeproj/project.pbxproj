@@ -4604,10 +4604,10 @@
 		CD7AF86E21D5C68A00B85456 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CD7AF86F21D5C68A00B85456 /* GettingMoreFooterView.h */,
-				CD7AF87021D5C68A00B85456 /* EMRemarkImageView.m */,
-				CD7AF87121D5C68A00B85456 /* GettingMoreFooterView.m */,
 				CD7AF87221D5C68A00B85456 /* EMRemarkImageView.h */,
+				CD7AF87021D5C68A00B85456 /* EMRemarkImageView.m */,
+				CD7AF86F21D5C68A00B85456 /* GettingMoreFooterView.h */,
+				CD7AF87121D5C68A00B85456 /* GettingMoreFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";

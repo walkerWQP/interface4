@@ -117,23 +117,6 @@ static JurisdictionMethod *jurisdictionMethod;
     
 }
 
-//+ (BOOL)notificationJurisdiction {
-//        //iOS8 check if user allow notification
-//    if (IOS_VERSION_8_OR_ABOVE) {// system is iOS8
-//        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
-//        if (UIUserNotificationTypeNone != setting.types) return YES;
-//
-//    } else {//iOS7
-//        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-//        if(UIRemoteNotificationTypeNone != type) return YES;
-//    }
-//    return NO;
-//}
-//
-//- (void)notificationJurisdictionAlert
-//{
-//    UIAlertView *notificationAlert = [[UIAlertView alloc] initWithTitle:@"打开通知服务" message:@"通知服务未开启，请进入系统【设置】>【通知】>【快鸟先锋】中打开允许通知开关." delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即开启", nil];
-//    [notificationAlert show];
-//}
+
 
 @end

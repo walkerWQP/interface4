@@ -514,6 +514,7 @@
 
 
 - (void)person:(UIButton *)sender {
+    NSLog(@"11111111");
     PersonalDataViewController *personalDataVC = [[PersonalDataViewController alloc] init];
     [self.navigationController pushViewController:personalDataVC animated:YES];
 }

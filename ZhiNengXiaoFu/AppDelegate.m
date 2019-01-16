@@ -47,10 +47,17 @@
 
 @implementation AppDelegate
 
-#define EaseMobAppKey @"easemob-demo#chatdemoui"
+#define EaseMobAppKey @"1101181224097655#duxiu-keji-2018"
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-   
+    
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    }
+
+    //添加，注册好友回调代理
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    
     _connectionState = EMConnectionConnected;
     
     [[UITabBar appearance] setTranslucent:NO];
@@ -64,6 +71,7 @@
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = YES;
+    
     
     //添加初始化 APNs 代码
     //Required
@@ -96,9 +104,9 @@
 #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
 #ifdef DEBUG
-    apnsCertName = @"chatdemoui_dev";
+    apnsCertName = @"";
 #else
-    apnsCertName = @"chatdemoui";
+    apnsCertName = @"";
     
     //环信Demo中使用Bugly收集crash信息，没有使用cocoapods,库存放在ChatDemo-UI3.0/ChatDemo-UI3.0/3rdparty/Bugly.framework，可自行删除
     //如果你自己的项目也要使用bugly，请按照bugly官方教程自行配置
@@ -118,10 +126,29 @@ didFinishLaunchingWithOptions:launchOptions
                 apnsCertName:apnsCertName
                  otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
     
+    [self loginHunXin];
+    
     return YES;
 }
 
+//用户A发送加B为好友申请，用户B会受到这个回调
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername message:(NSString *)aMessage {
+    NSLog(@"用户：%@向你发送好友请求%@",aUsername,aMessage);;
+}
 
+- (void)loginHunXin {
+    
+    
+    EMError *error = [[EMClient sharedClient] loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"] password:@"000000"];
+    if (!error) {
+        NSLog(@"环信登录成功");
+        [[EMClient sharedClient].options setIsAutoLogin:YES];
+    } else {
+        NSLog(@"环信登录失败");
+        
+    }
+    
+}
 
 //设置引导页面
 
@@ -402,36 +429,33 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    //    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-    //    content.body = self.remoteNotificationUserInfo[@"data"][@"content"];
-    //    content.userInfo = self.remoteNotificationUserInfo;
-    //    content.sound = [UNNotificationSound defaultSound];
-    //    [content setValue:@(YES) forKeyPath:@"shouldAlwaysAlertWhileAppIsForeground"];//很重要的设置
-    //
-    //    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"Notif" content:content trigger:nil];
-    //    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-    //    }];
-    
     if (_mainController) {
-//        [_mainController jumpToChatList];
+        [_mainController jumpToChatList];
     }
     [self easemobApplication:application didReceiveRemoteNotification:userInfo];
-    
-    
 }
 
-//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-//{
-//    if (_mainController) {
-//        [_mainController didReceiveLocalNotification:notification];
-//    }
-//}
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    if (_mainController) {
+        [_mainController didReceiveLocalNotification:notification];
+    }
+}
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
     NSDictionary *userInfo = notification.request.content.userInfo;
     [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
 }
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    if (_mainController) {
+        [_mainController didReceiveUserNotification:response.notification];
+    }
+    completionHandler();
+}
+
 
 //ios 系统6以下 不考虑
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -447,8 +471,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
     
     if (@available(iOS 11.0, *))
     {
@@ -465,7 +489,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
     if ([SingletonHelper manager].force == 1) {
         
         [self hsUpdateApp:[SingletonHelper manager].version force:[SingletonHelper manager].force];

@@ -17,7 +17,7 @@
 
 static ApplyViewController *controller = nil;
 
-@interface ApplyViewController ()<ApplyFriendCellDelegate>
+@interface ApplyViewController ()<ApplyFriendCellDelegate,EMChatManagerDelegate, EMContactManagerDelegate>
 
 @end
 
@@ -43,6 +43,19 @@ static ApplyViewController *controller = nil;
     return controller;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //添加，注册好友回调代理
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    //    [self.tableView reloadData];
+}
+
+//用户A发送加B为好友申请，用户B会受到这个回调
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername message:(NSString *)aMessage {
+    NSLog(@"qqqqqqqqqq用户：%@向你发送好友请求%@",aUsername,aMessage);;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -54,7 +67,7 @@ static ApplyViewController *controller = nil;
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
-    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -68,12 +81,6 @@ static ApplyViewController *controller = nil;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-//    [self.tableView reloadData];
-}
 
 #pragma mark - getter
 
@@ -181,7 +188,7 @@ static ApplyViewController *controller = nil;
             {
                 error = [[EMClient sharedClient].groupManager acceptJoinApplication:entity.groupId applicant:entity.applicantUsername];
             }
-            else if(applyStyle == ApplyStyleFriend){
+            else if(applyStyle == ApplyStyleFriend){ //同意加好友的申请
                 error = [[EMClient sharedClient].contactManager acceptInvitationForUsername:entity.applicantUsername];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -215,7 +222,7 @@ static ApplyViewController *controller = nil;
         {
             error = [[EMClient sharedClient].groupManager declineJoinApplication:entity.groupId applicant:entity.applicantUsername reason:nil];
         }
-        else if(applyStyle == ApplyStyleFriend){
+        else if(applyStyle == ApplyStyleFriend){ //拒绝加好友的申请
             [[EMClient sharedClient].contactManager declineInvitationForUsername:entity.applicantUsername];
         }
         
@@ -234,7 +241,7 @@ static ApplyViewController *controller = nil;
             [[InvitationManager sharedInstance] removeInvitation:entity loginUser:loginUsername];
             
             [self.tableView reloadData];
-
+            
         }
     }
 }
@@ -289,7 +296,7 @@ static ApplyViewController *controller = nil;
             
             [_dataSource insertObject:newEntity atIndex:0];
             [self.tableView reloadData];
-
+            
         }
     }
 }

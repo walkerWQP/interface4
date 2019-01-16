@@ -11,7 +11,6 @@
  */
 
 #import "SearchMessageViewController.h"
-
 #import "UIImageView+HeadImage.h"
 #import "UIViewController+SearchController.h"
 #import "SearchChatViewController.h"
@@ -194,7 +193,6 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         if (indexPath.section == 0) {
             EMMessage *message = [weakSelf.resultController.displaySource objectAtIndex:indexPath.row];
-
             SearchChatViewController *chatView = [[SearchChatViewController alloc] initWithConversationChatter:weakSelf.conversation.conversationId conversationType:weakSelf.conversation.type fromMessageId:message.messageId];
             [weakSelf.navigationController pushViewController:chatView animated:YES];
         } else {

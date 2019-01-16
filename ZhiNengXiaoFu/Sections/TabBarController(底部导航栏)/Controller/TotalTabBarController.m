@@ -7,6 +7,7 @@
 //
 
 #import "TotalTabBarController.h"
+
 //家长端
 #import "HomePageJViewController.h"
 #import "ClassHomeViewController.h"
@@ -35,10 +36,15 @@ static NSString *kMessageType = @"MessageType";
 static NSString *kConversationChatter = @"ConversationChatter";
 static NSString *kGroupName = @"GroupName";
 
+#if DEMO_CALL == 1
 #import <Hyphenate/Hyphenate.h>
 #import "DemoConfManager.h"
 
-@interface TotalTabBarController ()<EMCallManagerDelegate>
+@interface TotalTabBarController () <UIAlertViewDelegate, EMCallManagerDelegate>
+#else
+
+@interface TotalTabBarController ()<UIAlertViewDelegate>
+#endif
 {
     EMConnectionState _connectionState;
 }
@@ -49,6 +55,14 @@ static NSString *kGroupName = @"GroupName";
 
 @implementation TotalTabBarController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"chooseLoginState"] isEqualToString:@"2"]) {
@@ -57,24 +71,43 @@ static NSString *kGroupName = @"GroupName";
         [[UITabBar appearance] setTintColor:THEMECOLOR];
     }
     
+    
+    
+    //if 使tabBarController中管理的viewControllers都符合 UIRectEdgeNone
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        [self setEdgesForExtendedLayout: UIRectEdgeNone];
+    }
+    
+    
     //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
     //    [self didUnreadMessagesCountChanged];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUnreadMessageCount) name:@"setupUnreadMessageCount" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTabBarThree:) name:@"changeTabBarThree" object:nil];
+    
+
+    
+    
+    
     [[UITabBar appearance] setTintColor:tabBarColor];
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"chooseLoginState"] isEqualToString:@"2"]) {
         
         [self setupChildViewController:@"首页" viewController:[HomeTViewController new] image:@"首页图标" selectedImage:@"首页图标拷贝"];
-        [self setupChildViewController:@"班级信息" viewController:[ConversationListController new] image:@"班级管理" selectedImage:@"班级管理1"];
+        
+        _chatListVC = [[ConversationListController alloc] initWithNibName:nil bundle:nil];
+        [_chatListVC networkChanged:_connectionState];
+        _chatListVC.tabBarItem.tag = 0;
+        _chatListVC.tabBarItem.accessibilityIdentifier = @"conversation";
+        [self setupChildViewController:@"会话" viewController:_chatListVC image:@"班级管理" selectedImage:@"班级管理1"];
+        
         [self setupChildViewController:@"到校情况" viewController:[SignClassViewController new] image:@"到校情况2" selectedImage:@"到校情况"];
         [self setupChildViewController:@"我的" viewController:[MyViewController new] image:@"我的拷贝" selectedImage:@"我的"];
         
     } else {
 
         [self setupChildViewController:@"首页" viewController:[HomePageJViewController new] image:@"首页未选" selectedImage:@"首页选中"];
-        [self setupChildViewController:@"班级信息" viewController:[ConversationListController new] image:@"班级未选" selectedImage:@"班级选中"];
+        [self setupChildViewController:@"会话" viewController:[ConversationListController new] image:@"班级未选" selectedImage:@"班级选中"];
         [self setupChildViewController:@"进出安全" viewController:[QianDaoViewController new] image:@"进出未选" selectedImage:@"进出选中"];
         [self setupChildViewController:@"我的" viewController:[MineViewController new] image:@"我的未选" selectedImage:@"我的选中"];
         
@@ -92,57 +125,7 @@ static NSString *kGroupName = @"GroupName";
 
 }
 
-- (void)changeTabBarThree:(NSNotification *)notify {
-    self.selectedViewController = [self.viewControllers objectAtIndex:2];
-    UINavigationController *nav= (UINavigationController*)self.viewControllers[2];
-    [nav popToRootViewControllerAnimated:NO];
-}
 
-- (void)setupChildViewController:(NSString *)title viewController:(UIViewController *)controller image:(NSString *)image selectedImage:(NSString *)selectedImage {
-    UITabBarItem *item = [[UITabBarItem alloc]init];
-    item.image = [[UIImage imageNamed:image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item.selectedImage = [[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item.title = title;
-    controller.tabBarItem = item;
-    MainNavigationController *navController = [[MainNavigationController alloc]initWithRootViewController:controller];
-    [self addChildViewController:navController];
-}
-
-
-
-// 统计未读消息数
--(void)setupUnreadMessageCount
-{
-    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
-    NSInteger unreadCount = 0;
-    for (EMConversation *conversation in conversations) {
-        unreadCount += conversation.unreadMessagesCount;
-    }
-    if (_chatListVC) {
-        if (unreadCount > 0) {
-            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
-        }else{
-            _chatListVC.tabBarItem.badgeValue = nil;
-        }
-    }
-    
-    UIApplication *application = [UIApplication sharedApplication];
-    [application setApplicationIconBadgeNumber:unreadCount];
-}
-
-- (void)setupUntreatedApplyCount
-{
-    NSInteger unreadCount = [[[ApplyViewController shareController] dataSource] count];
-    if (_contactsVC) {
-        if (unreadCount > 0) {
-            _contactsVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
-        }else{
-            _contactsVC.tabBarItem.badgeValue = nil;
-        }
-    }
-    
-    [self.contactsVC reloadApplyView];
-}
 
 - (void)networkChanged:(EMConnectionState)connectionState
 {
@@ -290,6 +273,58 @@ static NSString *kGroupName = @"GroupName";
     }
 }
 
+
+- (void)changeTabBarThree:(NSNotification *)notify {
+    self.selectedViewController = [self.viewControllers objectAtIndex:2];
+    UINavigationController *nav= (UINavigationController*)self.viewControllers[2];
+    [nav popToRootViewControllerAnimated:NO];
+}
+
+- (void)setupChildViewController:(NSString *)title viewController:(UIViewController *)controller image:(NSString *)image selectedImage:(NSString *)selectedImage {
+    UITabBarItem *item = [[UITabBarItem alloc]init];
+    item.image = [[UIImage imageNamed:image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item.selectedImage = [[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item.title = title;
+    controller.tabBarItem = item;
+    MainNavigationController *navController = [[MainNavigationController alloc]initWithRootViewController:controller];
+    [self addChildViewController:navController];
+}
+
+
+
+
+// 统计未读消息数
+-(void)setupUnreadMessageCount
+{
+    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    if (_chatListVC) {
+        if (unreadCount > 0) {
+            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+        }else{
+            _chatListVC.tabBarItem.badgeValue = nil;
+        }
+    }
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    [application setApplicationIconBadgeNumber:unreadCount];
+}
+
+- (void)setupUntreatedApplyCount
+{
+    NSInteger unreadCount = [[[ApplyViewController shareController] dataSource] count];
+    if (_contactsVC) {
+        if (unreadCount > 0) {
+            _contactsVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+        }else{
+            _contactsVC.tabBarItem.badgeValue = nil;
+        }
+    }
+}
+
 #pragma mark - 自动登录回调
 
 - (void)willAutoReconnect{
@@ -297,7 +332,7 @@ static NSString *kGroupName = @"GroupName";
     NSNumber *showreconnect = [ud objectForKey:@"identifier_showreconnect_enable"];
     if (showreconnect && [showreconnect boolValue]) {
         [self hideHud];
-        [self showHint:NSLocalizedString(@"reconnection.ongoing", @"reconnecting...")];
+        [self showHint:@"重新连接..."];
     }
 }
 
@@ -307,14 +342,12 @@ static NSString *kGroupName = @"GroupName";
     if (showreconnect && [showreconnect boolValue]) {
         [self hideHud];
         if (error) {
-            [self showHint:NSLocalizedString(@"reconnection.fail", @"reconnection failure, later will continue to reconnection")];
+            [self showHint:@"重新连接失败，稍后将继续重新连接"];
         }else{
-            [self showHint:NSLocalizedString(@"reconnection.success", @"reconnection successful！")];
+            [self showHint:@"重新连接成功!"];
         }
     }
 }
-
-#pragma mark - public
 
 - (void)jumpToChatList
 {
@@ -351,8 +384,7 @@ static NSString *kGroupName = @"GroupName";
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    if (userInfo)
-    {
+    if (userInfo) {
         if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
             //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
             //            [chatController hideImagePicker];
@@ -374,7 +406,11 @@ static NSString *kGroupName = @"GroupName";
                     {
                         [self.navigationController popViewControllerAnimated:NO];
                         EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        //                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
                         chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
                         [self.navigationController pushViewController:chatViewController animated:NO];
                     }
                     *stop= YES;
@@ -385,7 +421,11 @@ static NSString *kGroupName = @"GroupName";
                 ChatViewController *chatViewController = nil;
                 NSString *conversationChatter = userInfo[kConversationChatter];
                 EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                //                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
                 chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
                 [self.navigationController pushViewController:chatViewController animated:NO];
             }
         }];
@@ -396,6 +436,7 @@ static NSString *kGroupName = @"GroupName";
         [self setSelectedViewController:_chatListVC];
     }
 }
+
 
 - (void)didReceiveUserNotification:(UNNotification *)notification
 {
@@ -423,7 +464,11 @@ static NSString *kGroupName = @"GroupName";
                     {
                         [self.navigationController popViewControllerAnimated:NO];
                         EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        //                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
                         chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
                         [self.navigationController pushViewController:chatViewController animated:NO];
                     }
                     *stop= YES;
@@ -434,7 +479,11 @@ static NSString *kGroupName = @"GroupName";
                 ChatViewController *chatViewController = nil;
                 NSString *conversationChatter = userInfo[kConversationChatter];
                 EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                //                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
                 chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
                 [self.navigationController pushViewController:chatViewController animated:NO];
             }
         }];
@@ -445,5 +494,7 @@ static NSString *kGroupName = @"GroupName";
         [self setSelectedViewController:_chatListVC];
     }
 }
+
+
 
 @end

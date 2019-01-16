@@ -63,8 +63,8 @@
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:searchButton]];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    backButton.accessibilityIdentifier = @"back"; 
-    [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
+    backButton.accessibilityIdentifier = @"back";
+    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
@@ -154,17 +154,17 @@
         [EMAlertView showAlertWithTitle:message
                                 message:nil
                         completionBlock:nil
-                      cancelButtonTitle:@"好的"
+                      cancelButtonTitle:@"确定"
                       otherButtonTitles:nil];
         
     }
     else if([self hasSendBuddyRequest:buddyName])
     {
-        NSString *message = [NSString stringWithFormat:@"你已经发送了好友请求%@", buddyName];
+        NSString *message = [NSString stringWithFormat:@"您已将好友请求发送到%@", buddyName];
         [EMAlertView showAlertWithTitle:message
                                 message:nil
                         completionBlock:nil
-                      cancelButtonTitle:@"好的"
+                      cancelButtonTitle:@"确定"
                       otherButtonTitles:nil];
         
     }else{
@@ -195,7 +195,7 @@
     searchName = [searchName lowercaseString];
     NSString *loginUsername = [[[EMClient sharedClient] currentUsername] lowercaseString];
     if ([searchName isEqualToString:loginUsername]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"不能把自己加为朋友" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"不能添加自己为好友" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         
         return;
@@ -208,7 +208,7 @@
             ApplyStyle style = [entity.style intValue];
             BOOL isGroup = style == ApplyStyleFriend ? NO : YES;
             if (!isGroup && [entity.applicantUsername isEqualToString:searchName]) {
-                NSString *str = [NSString stringWithFormat:@"%@发给你申请", searchName];
+                NSString *str = [NSString stringWithFormat:@"%@给你发送了一个好友申请", searchName];
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
@@ -247,7 +247,7 @@
 - (void)showMessageAlertView
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:@"说些什么"
+                                                    message:@"说些什么吧"
                                                    delegate:self
                                           cancelButtonTitle:@"取消"
                                           otherButtonTitles:@"确定", nil];
@@ -265,7 +265,7 @@
             messageStr = [NSString stringWithFormat:@"%@：%@", username, messageTextField.text];
         }
         else{
-            messageStr = [NSString stringWithFormat:@"%@邀请你做朋友", username];
+            messageStr = [NSString stringWithFormat:@"%@添加你为好友", username];
         }
         [self sendFriendApplyAtIndexPath:self.selectedIndexPath
                                  message:messageStr];
@@ -277,7 +277,7 @@
 {
     NSString *buddyName = [self.dataSource objectAtIndex:indexPath.row];
     if (buddyName && buddyName.length > 0) {
-        [self showHudInView:self.view hint:@"发送申请"];
+        [self showHudInView:self.view hint:@"发送通知..."];
         EMError *error = [[EMClient sharedClient].contactManager addContact:buddyName message:message];
         [self hideHud];
         if (error) {

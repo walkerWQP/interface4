@@ -27,7 +27,7 @@
 
 @property (nonatomic, weak) ConversationListController *conversationListVC;
 
-@property (nonatomic, weak) TotalTabBarController      *mainVC;
+@property (nonatomic, weak) TotalTabBarController    *mainVC;
 
 @property (nonatomic, weak) ChatViewController *chatVC;
 

@@ -45,7 +45,7 @@
         _addButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width - 60, 0, 50, 30)];
         _addButton.accessibilityIdentifier = @"accept";
         [_addButton setBackgroundColor:[UIColor colorWithRed:10 / 255.0 green:82 / 255.0 blue:104 / 255.0 alpha:1.0]];
-        [_addButton setTitle:NSLocalizedString(@"accept", @"Accept") forState:UIControlStateNormal];
+        [_addButton setTitle:@"接受" forState:UIControlStateNormal];
         _addButton.clipsToBounds = YES;
         [_addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
@@ -55,7 +55,7 @@
         _refuseButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width - 120, 0, 50, 30)];
         _refuseButton.accessibilityIdentifier = @"decline";
         [_refuseButton setBackgroundColor:[UIColor colorWithRed:87 / 255.0 green:186 / 255.0 blue:205 / 255.0 alpha:1.0]];
-        [_refuseButton setTitle:NSLocalizedString(@"reject", @"Reject") forState:UIControlStateNormal];
+        [_refuseButton setTitle:@"拒绝" forState:UIControlStateNormal];
         _refuseButton.clipsToBounds = YES;
         [_refuseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _refuseButton.titleLabel.font = [UIFont systemFontOfSize:14.0];

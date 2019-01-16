@@ -11,14 +11,14 @@
 #import <Hyphenate/Hyphenate.h>
 #import "EMCallOptions+NSCoding.h"
 
-@class MainViewController;
+@class TotalTabBarController;
 @interface DemoCallManager : NSObject
 
 #if DEMO_CALL == 1
 
 @property (nonatomic) BOOL isCalling;
 
-@property (strong, nonatomic) MainViewController *mainController;
+@property (strong, nonatomic) TotalTabBarController *mainController;
 
 + (instancetype)sharedManager;
 

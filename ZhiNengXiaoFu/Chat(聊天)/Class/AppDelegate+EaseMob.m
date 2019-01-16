@@ -77,8 +77,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 // 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
-                                                    message:error.description
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册推送失败"                               message:error.description
                                                    delegate:nil
                                           cancelButtonTitle:@"确定"
                                           otherButtonTitles:nil];
@@ -119,17 +118,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
         navigationController = [[MainNavigationController alloc] initWithRootViewController:loginController];
         [self clearParse];
     }
-    
-    //设置7.0以下的导航栏
-//    if ([UIDevice currentDevice].systemVersion.floatValue < 7.0){
-//        navigationController.navigationBar.barStyle = UIBarStyleDefault;
-//        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"titleBar"]
-//                                                 forBarMetrics:UIBarMetricsDefault];
-//        [navigationController.navigationBar.layer setMasksToBounds:YES];
-//    }
-//
-//    navigationController.navigationBar.accessibilityIdentifier = @"navigationbar";
-//    self.window.rootViewController = navigationController;
+
 }
 
 #pragma mark - EMPushManagerDelegateDevice
@@ -142,7 +131,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                                                         options:NSJSONWritingPrettyPrinted error:&parseError];
     NSString *str =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.content", @"Apns content")
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"推送内容"
                                                     message:str
                                                    delegate:nil
                                           cancelButtonTitle:@"确定"

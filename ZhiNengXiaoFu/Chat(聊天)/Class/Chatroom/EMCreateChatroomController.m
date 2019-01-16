@@ -38,7 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
     {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
@@ -100,7 +99,6 @@
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
     }
-    
     return _textField;
 }
 
@@ -118,7 +116,6 @@
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
     }
-    
     return _textView;
 }
 

@@ -61,7 +61,6 @@
         _blockSelectedUsernames = [NSMutableArray array];
         [_blockSelectedUsernames addObjectsFromArray:blockUsernames];
     }
-    
     return self;
 }
 
@@ -79,7 +78,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.title = @"选择联系人";
     self.navigationItem.rightBarButtonItem = nil;
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -177,7 +175,6 @@
         NSString *username = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         return ![self isBlockUsername:username];
     }
-    
     return YES;
 }
 
@@ -246,7 +243,7 @@
             [_doneButton setTitle:@"确定" forState:UIControlStateNormal];
         }
         else{
-            [_doneButton setTitle:[NSString stringWithFormat:@"完成(%i)", [self.selectedContacts count]] forState:UIControlStateNormal];
+            [_doneButton setTitle:[NSString stringWithFormat:@"完成(%lu)", (unsigned long)[self.selectedContacts count]] forState:UIControlStateNormal];
         }
     }
 }

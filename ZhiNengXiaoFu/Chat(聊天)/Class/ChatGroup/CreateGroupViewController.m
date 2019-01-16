@@ -11,7 +11,6 @@
   */
 
 #import "CreateGroupViewController.h"
-
 #import "ContactSelectionViewController.h"
 #import "EMTextView.h"
 
@@ -48,7 +47,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
     {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
@@ -81,7 +79,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - getter
@@ -104,7 +101,6 @@
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
     }
-    
     return _textField;
 }
 
@@ -122,7 +118,6 @@
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
     }
-    
     return _textView;
 }
 

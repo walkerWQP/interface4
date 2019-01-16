@@ -42,7 +42,7 @@
 
 @end
 
-@interface ConversationListController ()<EaseConversationListViewControllerDelegate, EaseConversationListViewControllerDataSource,EMSearchControllerDelegate>
+@interface ConversationListController ()<EaseConversationListViewControllerDelegate, EaseConversationListViewControllerDataSource,EMSearchControllerDelegate,EMChatManagerDelegate>
 
 @property (nonatomic, strong) UIView    *networkStateView;
 
@@ -76,10 +76,107 @@
     
     [self networkStateView];
     
-    [self setupSearchController];
+//    [self setupSearchController];
     
     [self tableViewDidTriggerHeaderRefresh];
     [self removeEmptyConversationsFromDB];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+     [self refresh];
+    [self loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"] password:@"000000"];
+}
+
+
+/*!
+ @method
+ @brief 好友请求被接受时的回调
+ @discussion
+ @param username 之前发出的好友请求被用户username接受了
+ */
+- (void)didAcceptedByBuddy:(NSString *)username
+{
+    NSString *message = [NSString stringWithFormat:@"%@ 同意了你的好友请求",username];
+    
+    // 提示
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"好友添加消息" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+/*!
+ @method
+ @brief 好友请求被拒绝时的回调
+ @discussion
+ @param username 之前发出的好友请求被用户username拒绝了
+ */
+- (void)didRejectedByBuddy:(NSString *)username
+{
+    NSString *message = [NSString stringWithFormat:@"%@ 拒绝了你的好友请求",username];
+    
+    // 提示
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"好友添加消息" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+
+
+
+
+
+//点击登陆后的操作
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+{
+    [self showHudInView:self.view hint:@"正在登录中..."];
+    //异步登陆账号
+    __weak typeof(self) weakself = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself hideHud];
+            if (!error) {
+                //设置是否自动登录
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+                
+                //发送自动登陆状态通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:[NSNumber numberWithBool:YES]];
+                
+            } else {
+                switch (error.code)
+                {
+                    case EMErrorUserNotFound:
+                        TTAlertNoTitle(@"用户不存在!");
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        TTAlertNoTitle(@"没有网络连接!");
+                        break;
+                    case EMErrorServerNotReachable:
+                        TTAlertNoTitle(@"连接到服务器失败!");
+                        break;
+                    case EMErrorUserAuthenticationFailed:
+                        TTAlertNoTitle(error.errorDescription);
+                        break;
+                    case EMErrorServerTimeout:
+                        TTAlertNoTitle(@"连接到服务器超时!");
+                        break;
+                    case EMErrorServerServingForbidden:
+                        TTAlertNoTitle(@"服务是被禁止的");
+                        break;
+                    case EMErrorUserLoginTooManyDevices:
+                        TTAlertNoTitle(@"登录太多设备");
+                        break;
+                    default:
+                        TTAlertNoTitle(@"登录失败");
+                        break;
+                }
+            }
+        });
+    });
 }
 
 - (void)rightBtn:(UIButton *)sender {
@@ -89,11 +186,7 @@
 
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self refresh];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -133,7 +226,7 @@
         label.font = [UIFont systemFontOfSize:15.0];
         label.textColor = [UIColor grayColor];
         label.backgroundColor = [UIColor clearColor];
-        label.text = NSLocalizedString(@"network.disconnection", @"网络断开");
+        label.text = @"网络断开";
         [_networkStateView addSubview:label];
     }
     
@@ -366,6 +459,9 @@
 //    self.tableView.tableHeaderView = searchBar;
 //    [searchBar sizeToFit];
 }
+
+
+
 
 #pragma mark - public
 

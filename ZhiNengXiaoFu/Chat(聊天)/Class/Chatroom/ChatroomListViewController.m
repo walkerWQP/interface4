@@ -40,11 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
     self.title = @"聊天室";
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     backButton.accessibilityIdentifier = @"back";
     [backButton setImage:[UIImage imageNamed:@"返回白"] forState:UIControlStateNormal];
@@ -60,7 +56,7 @@
 
     self.page = 1;
     self.showRefreshHeader = YES;
-    [self setupSearchController];
+//    [self setupSearchController];
     
     [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeChatroom:) name:@"ExitChat" object:nil];
@@ -71,7 +67,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dealloc
@@ -93,13 +88,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.dataArray count];
 }
 
@@ -108,7 +101,6 @@
     static NSString *CellIdentifier = @"GroupCell";
     BaseTableViewCell *cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
     if (cell == nil) {
         cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
@@ -144,8 +136,7 @@
 
 #pragma mark - EMChatroomManagerDelegate
 
-- (void)didReceiveKickedFromChatroom:(EMChatroom *)aChatroom
-                              reason:(EMChatroomBeKickedReason)aReason
+- (void)didReceiveKickedFromChatroom:(EMChatroom *)aChatroom reason:(EMChatroomBeKickedReason)aReason
 {
     //    if (aReason != EMChatroomBeKickedReasonDestroyed)
     //    {

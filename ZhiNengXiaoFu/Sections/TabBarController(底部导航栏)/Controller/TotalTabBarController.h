@@ -16,9 +16,9 @@
 
 @interface TotalTabBarController : UITabBarController
 
-@property (nonatomic, strong) ConversationListController *chatListVC;
-@property (nonatomic, strong) ContactListViewController  *contactsVC;
-@property (nonatomic, strong) SettingsViewController     *settingsVC;
+@property (nonatomic, strong) ConversationListController *chatListVC; //会话
+@property (nonatomic, strong) ContactListViewController  *contactsVC; //通讯录
+@property (nonatomic, strong) SettingsViewController     *settingsVC; //设置
 
 - (void)jumpToChatList;
 

@@ -67,7 +67,7 @@
     // 环信UIdemo中有用到Parse, 加载用户好友个人信息
     [[UserProfileManager sharedInstance] loadUserProfileInBackgroundWithBuddy:self.contactsSource saveToLoacal:YES completion:NULL];
     
-    [self setupSearchController];
+//    [self setupSearchController];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [addButton setImage:[UIImage imageNamed:@"添加"] forState:UIControlStateNormal];
@@ -80,8 +80,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self loginHunXin];
     [self reloadApplyView];
+}
+
+
+- (void)loginHunXin {
+    
+    
+    EMError *error = [[EMClient sharedClient] loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"] password:@"000000"];
+    if (!error) {
+        NSLog(@"环信登录成功");
+        [[EMClient sharedClient].options setIsAutoLogin:YES];
+    } else {
+        NSLog(@"环信登录失败");
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,19 +104,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - getter
-
-//- (NSArray *)rightItems {
-//    if (_rightItems == nil) {
-//        UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//        [addButton setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
-//        [addButton addTarget:self action:@selector(addContactAction) forControlEvents:UIControlEventTouchUpInside];
-//        UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-//        _rightItems = @[addItem];
-//    }
-//
-//    return _rightItems;
-//}
 
 #pragma mark - Table view data source
 
@@ -115,7 +117,7 @@
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 4;
+        return 2;
     } else if (section == 1) {
         return [self.otherPlatformIds count];
     }
@@ -148,18 +150,18 @@
             cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/group"];
             cell.titleLabel.text = @"群组";
         }
-        else if (indexPath.row == 2) {
-            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/group"];
-            cell.titleLabel.text = @"聊天室";
-        }
-        else if (indexPath.row == 3) {
-            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
-            cell.titleLabel.text = @"多人音视频会议";
-        }
-        else if (indexPath.row == 4) {
-            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
-            cell.titleLabel.text = @"自定义视频会议";
-        }
+//        else if (indexPath.row == 2) {
+//            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/group"];
+//            cell.titleLabel.text = @"聊天室";
+//        }
+//        else if (indexPath.row == 3) {
+//            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
+//            cell.titleLabel.text = @"多人音视频会议";
+//        }
+//        else if (indexPath.row == 4) {
+//            cell.avatarView.image = [UIImage imageNamed:@"EaseUIResource.bundle/chatBar_colorMore_videoCall"];
+//            cell.titleLabel.text = @"自定义视频会议";
+//        }
         
         return cell;
     } else if (indexPath.section == 1) {

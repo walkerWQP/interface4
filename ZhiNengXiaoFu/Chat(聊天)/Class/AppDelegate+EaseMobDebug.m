@@ -20,22 +20,22 @@
 
 -(BOOL)isSpecifyServer
 {
-//    EMOptions *options0 = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
-//
-//    options0.enableDnsConfig = NO;
-//    options0.chatPort = 6717;
-//    options0.chatServer = @"39.96.116.29";
-//    options0.restServer = @"39.96.116.29:8080";
-//
-//    options0.apnsCertName = @"demoappstore-dev";
-//    options0.enableConsoleLog = YES;
-//
-//    [[EMClient sharedClient] initializeSDKWithOptions:options0];
-//
-//
-//    return YES;
+    //    EMOptions *options0 = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
+    //
+    //    options0.enableDnsConfig = NO;
+    //    options0.chatPort = 6717;
+    //    options0.chatServer = @"39.96.116.29";
+    //    options0.restServer = @"39.96.116.29:8080";
+    //
+    //    options0.apnsCertName = @"demoappstore-dev";
+    //    options0.enableConsoleLog = YES;
+    //
+    //    [[EMClient sharedClient] initializeSDKWithOptions:options0];
+    //
+    //
+    //    return YES;
     
-
+    
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
@@ -57,14 +57,14 @@
     NSString *appkey = [ud stringForKey:@"identifier_appkey"];
     if ([appkey length] == 0)
     {
-        appkey = @"easemob-demo#chatdemoui";
+        appkey = @"1101181224097655#duxiu-keji-2018";
         [ud setObject:appkey forKey:@"identifier_appkey"];
     }
     
     NSString *imServer = [ud stringForKey:@"identifier_imserver"];
     if ([imServer length] == 0)
     {
-        imServer = @"msync-im1.sandbox.easemob.com";
+        imServer = @"";
         [ud setObject:imServer forKey:@"identifier_imserver"];
     }
     
@@ -78,7 +78,7 @@
     NSString *restServer = [ud stringForKey:@"identifier_restserver"];
     if ([restServer length] == 0)
     {
-        restServer = @"a1.sdb.easemob.com";
+        restServer = @"";
         [ud setObject:restServer forKey:@"identifier_restserver"];
     }
     

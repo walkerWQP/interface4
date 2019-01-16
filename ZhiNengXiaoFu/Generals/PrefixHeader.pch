@@ -68,13 +68,34 @@
 #import <Hyphenate/Hyphenate.h>
 #import "ZXCycleScrollView.h"
 
+//#import <UIKit/UIKit.h>
+//#import <Foundation/Foundation.h>
+//#import "EMAlertView.h"
+//#import "TTGlobalUICommon.h"
+#import "EaseUI.h"
+//#import "ChatDemoHelper.h"
+//#import "DemoConfManager.h"
+
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+
 #import "EMAlertView.h"
 #import "TTGlobalUICommon.h"
-#import "EaseUI.h"
-#import "ChatDemoHelper.h"
-#import "DemoConfManager.h"
+
+#define DEMO_CALL 1
+
+#if DEMO_CALL == 1
+#import <Hyphenate/Hyphenate.h>
+#else
+#import <HyphenateLite/HyphenateLite.h>
+#endif
+#endif
 
 
 

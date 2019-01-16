@@ -10,15 +10,15 @@
 
 #import "ConfInviteUsersViewController.h"
 
-@class MainViewController;
+@class TotalTabBarController;
 @class EMConferenceViewController;
 @interface DemoConfManager : NSObject
 
-//#if DEMO_CALL == 1
+#if DEMO_CALL == 1
 
 @property (nonatomic) BOOL isCalling;
 
-@property (strong, nonatomic) MainViewController *mainController;
+@property (strong, nonatomic) TotalTabBarController *mainController;
 
 + (instancetype)sharedManager;
 
@@ -32,6 +32,6 @@
 - (void)endConference:(EMCallConference *)aCall
             isDestroy:(BOOL)aIsDestroy;
 
-//#endif
+#endif
 
 @end

@@ -50,5 +50,7 @@
 @property (nonatomic, assign) NSInteger      location_open;
 //定位url
 @property (nonatomic, strong) NSString       *location_url;
+//环信账号
+@property (nonatomic, strong) NSString       *easemob_num;
 
 @end

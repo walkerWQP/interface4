@@ -13,9 +13,9 @@
 #endif /* URLMacro_h */
 
 //正式
-#define YUMING  @"http://app.duxiukeji.com/"
+//#define YUMING  @"http://app.duxiukeji.com/"
 //测试
-//#define YUMING  @"http://test.duxiukeji.com/"
+#define YUMING  @"http://test.duxiukeji.com/"
 
 //登录接口
 #define LOGIN  [NSString stringWithFormat:@"%@index/login/login",YUMING]
@@ -324,3 +324,9 @@
 
 //教师查看信息被查看情况
 #define GetReadURL [NSString stringWithFormat:@"%@index/read/get_read",YUMING]
+
+//保存环信num
+#define SaveEasemobNumURL [NSString stringWithFormat:@"%@index/user/save_easemob_num",YUMING]
+
+//获取用户环信通讯录
+#define GetAddressURL [NSString stringWithFormat:@"%@index/address/get_address",YUMING]

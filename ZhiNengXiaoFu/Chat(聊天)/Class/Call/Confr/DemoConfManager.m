@@ -13,7 +13,7 @@
 #import <Hyphenate/Hyphenate.h>
 
 #import "DemoCallManager.h"
-#import "MainViewController.h"
+#import "TotalTabBarController.h"
 
 #import "MeetingViewController.h"
 #import "Live2ViewController.h"

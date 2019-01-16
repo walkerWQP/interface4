@@ -11,13 +11,11 @@
   */
 
 #import "GroupListViewController.h"
-
 #import "BaseTableViewCell.h"
 #import "ChatViewController.h"
 #import "CreateGroupViewController.h"
 #import "PublicGroupListViewController.h"
 #import "RealtimeSearchUtil.h"
-
 #import "UIViewController+SearchController.h"
 
 @interface GroupListViewController ()<EMSearchControllerDelegate, EMGroupManagerDelegate>
@@ -42,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.title = @"群组";
     self.showRefreshHeader = YES;
     
@@ -53,9 +50,7 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
     
-    [self setupSearchController];
-    
-    // Registered as SDK delegate
+//    [self setupSearchController];
     [[EMClient sharedClient].groupManager removeDelegate:self];
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     
@@ -67,7 +62,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)dealloc
@@ -87,15 +81,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     if (section == 0) {
-        return 2;
+        return 1;
     }
     return [self.dataSource count];
 }
@@ -116,10 +108,10 @@
                 cell.textLabel.text = @"新建群聊";
                 cell.imageView.image = [UIImage imageNamed:@"group_creategroup"];
                 break;
-            case 1:
-                cell.textLabel.text = @"添加公开群";
-                cell.imageView.image = [UIImage imageNamed:@"group_joinpublicgroup"];
-                break;
+//            case 1:
+//                cell.textLabel.text = @"添加公开群";
+//                cell.imageView.image = [UIImage imageNamed:@"group_joinpublicgroup"];
+//                break;
             default:
                 break;
         }
@@ -135,7 +127,6 @@
             cell.textLabel.text = group.groupId;
         }
     }
-    
     return cell;
 }
 
@@ -175,8 +166,7 @@
     if (section == 0)
     {
         return 0;
-    }
-    else{
+    } else {
         return 22;
     }
 }

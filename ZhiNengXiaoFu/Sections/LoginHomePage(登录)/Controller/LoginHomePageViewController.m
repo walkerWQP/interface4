@@ -335,6 +335,28 @@
                     NSString *location_urlStr = [NSString stringWithFormat:@"%@",self.personInfoModel.location_url];
                     [[NSUserDefaults standardUserDefaults] setObject:location_urlStr forKey:@"location_urlStr"];
                     
+                    NSString *easemob_num = [NSString stringWithFormat:@"%@",self.personInfoModel.easemob_num];
+                    [[NSUserDefaults standardUserDefaults] setObject:easemob_num forKey:@"easemob_num"];
+                    
+                    
+                    NSLog(@"%@",[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"]]);
+                    
+                    
+                    if (![self.personInfoModel.easemob_num isEqualToString:@""]) {
+                        [self loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"] password:@"000000"];
+                    } else {
+                        NSLog(@"%ld",(long)self.teacherChooseState);
+                        if (self.teacherChooseState == 0) { //家长登陆 1
+                            NSString *huanXinNum = [NSString stringWithFormat:@"%ld_%@_%@",self.personInfoModel.school_id,self.personInfoModel.ID,@"1"];
+                            [self registeredLetter:huanXinNum];
+                        } else {
+                            NSString *huanXinNum = [NSString stringWithFormat:@"%ld_%@_%@",self.personInfoModel.school_id,self.personInfoModel.ID,@"2"];
+                            [self registeredLetter:huanXinNum];
+                        }
+                    }
+                    
+                    //设置推送设置
+                    [[EMClient sharedClient] setApnsNickname:self.personInfoModel.name];
                     
                     //存储学生和家长信息
                     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.personInfoModel];
@@ -342,7 +364,6 @@
                     [user setObject:data forKey:@"personInfo"];
                     //同步到本地
                     [user synchronize];
-                    
                     
                     NSString *keyDic = [NSString stringWithFormat:@"%ld:%@:%@:%@", self.personInfoModel.school_id, self.personInfoModel.ID, chooseLoginState, self.personInfoModel.token];
                     NSString *key = [[SingletonHelper manager] encode:keyDic];
@@ -370,6 +391,151 @@
        }
 
     }
+}
+
+//注册环信
+- (void)registeredLetter:(NSString *)userID {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] registerWithUsername:userID password:@"000000"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                [self loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:@"easemob_num"] password:@"000000"];
+                NSDictionary *dic = @{@"key":[UserManager key]};
+                [[HttpRequestManager sharedSingleton] POST:SaveEasemobNumURL parameters:dic success:^(NSURLSessionDataTask *task, id responseObject) {
+                    NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    
+                }];
+            }else{
+                switch (error.code) {
+                    case EMErrorServerNotReachable:
+                        TTAlertNoTitle(@"连接到服务器失败!");
+                        break;
+                    case EMErrorUserAlreadyExist:
+                        
+                    {
+                        TTAlertNoTitle(@"您注册的用户已经存在!");
+                        NSDictionary *dic = @{@"key":[UserManager key]};
+                        [[HttpRequestManager sharedSingleton] POST:SaveEasemobNumURL parameters:dic success:^(NSURLSessionDataTask *task, id responseObject) {
+                            NSLog(@"%@",[responseObject objectForKey:@"msg"]);
+                        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                            
+                        }];
+                    }
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        TTAlertNoTitle(@"没有网络连接!");
+                        break;
+                    case EMErrorServerTimeout:
+                        TTAlertNoTitle(@"连接到服务器超时!");
+                        break;
+                    case EMErrorServerServingForbidden:
+                        TTAlertNoTitle(@"服务是被禁止的");
+                        break;
+                    case EMErrorExceedServiceLimit:
+                        TTAlertNoTitle(@"超出服务限制");
+                        break;
+                    default:
+                        TTAlertNoTitle(@"注册失败");
+                        break;
+                }
+            }
+        });
+    });
+}
+
+//登录环信
+- (void)loginHuanXin:(NSString *)huanXinID {
+    __weak typeof(self) weakself = self;
+    [[EMClient sharedClient] loginWithUsername:huanXinID token:@"000000" completion:^(NSString *aUsername, EMError *aError) {
+        [weakself hideHud];
+        if (!aError) {
+            //保存最近一次登录用户名
+            [weakself saveLastLoginUsername];
+            //发送自动登陆状态通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:[NSNumber numberWithBool:YES]];
+            
+        } else {
+            TTAlertNoTitle(@"登录失败");
+        }
+    }];
+}
+
+
+//点击登陆后的操作
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+{
+    [self showHudInView:self.view hint:@"正在登录中..."];
+    //异步登陆账号
+    __weak typeof(self) weakself = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself hideHud];
+            if (!error) {
+                //设置是否自动登录
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+                
+                //保存最近一次登录用户名
+                [weakself saveLastLoginUsername];
+                //发送自动登陆状态通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:[NSNumber numberWithBool:YES]];
+                
+            } else {
+                switch (error.code)
+                {
+                    case EMErrorUserNotFound:
+                        TTAlertNoTitle(@"用户不存在!");
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        TTAlertNoTitle(@"没有网络连接!");
+                        break;
+                    case EMErrorServerNotReachable:
+                        TTAlertNoTitle(@"连接到服务器失败!");
+                        break;
+                    case EMErrorUserAuthenticationFailed:
+                        TTAlertNoTitle(error.errorDescription);
+                        break;
+                    case EMErrorServerTimeout:
+                        TTAlertNoTitle(@"连接到服务器超时!");
+                        break;
+                    case EMErrorServerServingForbidden:
+                        TTAlertNoTitle(@"服务是被禁止的");
+                        break;
+                    case EMErrorUserLoginTooManyDevices:
+                        TTAlertNoTitle(@"登录太多设备");
+                        break;
+                    default:
+                        TTAlertNoTitle(@"登录失败");
+                        break;
+                }
+            }
+        });
+    });
+}
+
+
+
+- (void)saveLastLoginUsername
+{
+    NSString *username = [[EMClient sharedClient] currentUsername];
+    if (username && username.length > 0) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+        [ud synchronize];
+    }
+}
+
+- (NSString*)lastLoginUsername
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *username = [ud objectForKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+    if (username && username.length > 0) {
+        return username;
+    }
+    return nil;
 }
 
 //- (void)pushJiGuangId

@@ -17,7 +17,7 @@
 #import "DemoConfManager.h"
 //#import "EMCallRecorderPlugin.h"
 
-#import "MainViewController.h"
+#import "TotalTabBarController.h"
 #import "Call1v1AudioViewController.h"
 #import "Call1v1VideoViewController.h"
 
@@ -82,10 +82,10 @@ static DemoCallManager *callManager = nil;
     [[EMClient sharedClient].callManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].callManager setBuilderDelegate:self];
     
-//    //录制相关功能初始化
-//    [EMCallRecorderPlugin initGlobalConfig];
+    //    //录制相关功能初始化
+    //    [EMCallRecorderPlugin initGlobalConfig];
     
-    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"最大分辨率150 - 1000"
+    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"calloptions.data"];
     EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];
     if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
         options = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
@@ -99,19 +99,19 @@ static DemoCallManager *callManager = nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMake1v1Call:) name:KNOTIFICATION_MAKE1V1CALL object:nil];
     
-//    __weak typeof(self) weakSelf = self;
-//    self.callCenter = [[CTCallCenter alloc] init];
-//    self.callCenter.callEventHandler = ^(CTCall* call) {
-////        if(call.callState == CTCallStateConnected) {
-////            [weakSelf hangupCallWithReason:EMCallEndReasonBusy];
-////        }
-//
-//        if(call.callState == CTCallStateConnected) {
-//            [weakSelf.currentController muteCall];
-//        } else if(call.callState == CTCallStateDisconnected) {
-//            [weakSelf.currentController resumeCall];
-//        }
-//    };
+    //    __weak typeof(self) weakSelf = self;
+    //    self.callCenter = [[CTCallCenter alloc] init];
+    //    self.callCenter.callEventHandler = ^(CTCall* call) {
+    ////        if(call.callState == CTCallStateConnected) {
+    ////            [weakSelf hangupCallWithReason:EMCallEndReasonBusy];
+    ////        }
+    //
+    //        if(call.callState == CTCallStateConnected) {
+    //            [weakSelf.currentController muteCall];
+    //        } else if(call.callState == CTCallStateDisconnected) {
+    //            [weakSelf.currentController resumeCall];
+    //        }
+    //    };
 }
 
 #pragma mark - Call Timeout Before Answered
@@ -120,8 +120,7 @@ static DemoCallManager *callManager = nil;
 {
     [self endCallWithId:self.currentCall.callId reason:EMCallEndReasonNoResponse];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"没有响应，挂断 " cancelButtonTitle:@"确定"
-                                                                                            otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"call.autoHangup", @"No response and Hang up") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -227,7 +226,7 @@ static DemoCallManager *callManager = nil;
                     break;
             }
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:reasonStr delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:reasonStr delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alertView show];
         }
     }
@@ -245,7 +244,7 @@ static DemoCallManager *callManager = nil;
                       status:(EMCallNetworkStatus)aStatus
 {
     if ([aSession.callId isEqualToString:self.currentCall.callId]) {
-//        [self.currentController setNetwork:aStatus];
+        //        [self.currentController setNetwork:aStatus];
     }
 }
 
@@ -279,21 +278,21 @@ static DemoCallManager *callManager = nil;
     EMCallType type = (EMCallType)[[notify.object objectForKey:@"type"] integerValue];
     if (type == EMCallTypeVideo) {
         [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:NO];
-//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//
-//        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"title.conference.default", @"Default") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:NO];
-//        }];
-//        [alertController addAction:defaultAction];
-//
-//        UIAlertAction *customAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"title.conference.custom", @"Custom") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:YES];
-//        }];
-//        [alertController addAction:customAction];
-//
-//        [alertController addAction: [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style: UIAlertActionStyleCancel handler:nil]];
-//
-//        [self.mainController.navigationController presentViewController:alertController animated:YES completion:nil];
+        //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        //
+        //        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"title.conference.default", @"Default") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //            [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:NO];
+        //        }];
+        //        [alertController addAction:defaultAction];
+        //
+        //        UIAlertAction *customAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"title.conference.custom", @"Custom") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //            [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:YES];
+        //        }];
+        //        [alertController addAction:customAction];
+        //
+        //        [alertController addAction: [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Cancel") style: UIAlertActionStyleCancel handler:nil]];
+        //
+        //        [self.mainController.navigationController presentViewController:alertController animated:YES completion:nil];
     } else {
         [self _makeCallWithUsername:[notify.object valueForKey:@"chatter"] type:type isCustomVideoData:NO];
     }
@@ -314,7 +313,7 @@ static DemoCallManager *callManager = nil;
             if (aError || aCallSession == nil) {
                 weakSelf.isCalling = NO;
                 
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"call.initFailed", @"Establish call failure") message:aError.errorDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"建立呼叫失败" message:aError.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
                 return;
@@ -375,7 +374,7 @@ static DemoCallManager *callManager = nil;
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (error.code == EMErrorNetworkUnavailable) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"network.disconnection", @"Network disconnection") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"网络断开" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                     [alertView show];
                 }
                 else{

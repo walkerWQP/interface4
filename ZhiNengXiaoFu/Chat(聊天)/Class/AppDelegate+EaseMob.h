@@ -22,4 +22,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)easemobApplication:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo;
+
 @end
+
