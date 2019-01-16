@@ -146,7 +146,6 @@ static ApplyViewController *controller = nil;
             cell.contentLabel.text = entity.reason;
         }
     }
-    
     return cell;
 }
 

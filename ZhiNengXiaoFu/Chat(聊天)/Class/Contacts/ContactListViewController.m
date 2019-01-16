@@ -38,7 +38,7 @@
 
 @end
 
-@interface ContactListViewController ()<UISearchBarDelegate, UIActionSheetDelegate, EaseUserCellDelegate, EMSearchControllerDelegate>
+@interface ContactListViewController ()<UISearchBarDelegate, UIActionSheetDelegate, EaseUserCellDelegate, EMSearchControllerDelegate,EMContactManagerDelegate>
 {
     NSIndexPath *_currentLongPressIndex;
 }
@@ -58,7 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.title = @"通讯录";
     self.showRefreshHeader = YES;
     
     _contactsSource = [NSMutableArray array];
@@ -74,13 +74,21 @@
     [addButton addTarget:self action:@selector(addContactAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
+    //添加，注册好友回调代理
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     
+    
+}
+
+//用户A发送加B为好友申请，用户B会受到这个回调
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername message:(NSString *)aMessage {
+    NSLog(@"用户：%@向你发送好友请求%@",aUsername,aMessage);;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loginHunXin];
+//    [self loginHunXin];
     [self reloadApplyView];
 }
 

@@ -20,21 +20,6 @@
 
 -(BOOL)isSpecifyServer
 {
-    //    EMOptions *options0 = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
-    //
-    //    options0.enableDnsConfig = NO;
-    //    options0.chatPort = 6717;
-    //    options0.chatServer = @"39.96.116.29";
-    //    options0.restServer = @"39.96.116.29:8080";
-    //
-    //    options0.apnsCertName = @"demoappstore-dev";
-    //    options0.enableConsoleLog = YES;
-    //
-    //    [[EMClient sharedClient] initializeSDKWithOptions:options0];
-    //
-    //
-    //    return YES;
-    
     
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

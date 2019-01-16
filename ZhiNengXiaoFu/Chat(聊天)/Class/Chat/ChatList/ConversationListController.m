@@ -67,8 +67,6 @@
     [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBtn];
     
-    
-    
     // Do any additional setup after loading the view.
     self.showRefreshHeader = YES;
     self.delegate = self;
@@ -93,7 +91,6 @@
 /*!
  @method
  @brief 好友请求被接受时的回调
- @discussion
  @param username 之前发出的好友请求被用户username接受了
  */
 - (void)didAcceptedByBuddy:(NSString *)username
@@ -109,7 +106,6 @@
 /*!
  @method
  @brief 好友请求被拒绝时的回调
- @discussion
  @param username 之前发出的好友请求被用户username拒绝了
  */
 - (void)didRejectedByBuddy:(NSString *)username
@@ -121,11 +117,6 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-
-
-
-
 
 
 //点击登陆后的操作
@@ -183,9 +174,6 @@
     ContactListViewController *contactListVC = [ContactListViewController new];
     [self.navigationController pushViewController:contactListVC animated:YES];
 }
-
-
-
 
 
 - (void)didReceiveMemoryWarning {

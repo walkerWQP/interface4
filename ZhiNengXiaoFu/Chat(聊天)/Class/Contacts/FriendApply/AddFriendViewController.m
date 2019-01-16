@@ -16,7 +16,7 @@
 #import "AddFriendCell.h"
 #import "InvitationManager.h"
 
-@interface AddFriendViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
+@interface AddFriendViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,EMChatManagerDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataSource;
@@ -70,6 +70,14 @@
     [self.navigationItem setLeftBarButtonItem:backItem];
     
     [self.view addSubview:self.textField];
+    
+    //添加，注册好友回调代理
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+}
+
+//用户A发送加B为好友申请，用户B会受到这个回调
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername message:(NSString *)aMessage {
+    NSLog(@"用户：%@向你发送好友请求%@",aUsername,aMessage);;
 }
 
 - (void)didReceiveMemoryWarning

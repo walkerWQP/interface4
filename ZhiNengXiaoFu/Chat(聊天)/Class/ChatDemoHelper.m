@@ -744,7 +744,7 @@ static ChatDemoHelper *helper = nil;
     [[ApplyViewController shareController] addNewApply:dic];
     if (self.mainVC) {
         [self.mainVC setupUntreatedApplyCount];
-#if !TARGET_IPHONE_SIMULATOR
+//#if !TARGET_IPHONE_SIMULATOR
         [self.mainVC playSoundAndVibration];
         
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
@@ -766,7 +766,7 @@ static ChatDemoHelper *helper = nil;
                 notification.timeZone = [NSTimeZone defaultTimeZone];
             }
         }
-#endif
+//#endif
     }
     [_contactViewVC reloadApplyView];
 }
